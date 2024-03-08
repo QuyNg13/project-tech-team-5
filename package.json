@@ -1,21 +1,99 @@
-{
-  "name": "project-tech",
-  "version": "1.0.0",
-  "description": "1. herhalen javascript\r 1. beginnen met GIT\r 1. JSON\r 1. backend\r 1. frontend\r 1. concept",
-  "main": "index.js",
-  "scripts": {
-    "test": "nodemon server.js"
+[
+
+  {
+      "Title": "The Legend of Zelda: Breath of the Wild",
+      "Description": "The game follows Link, who awakens from a hundred-year slumber to defeat Calamity Ganon and save the kingdom of Hyrule.",
+      "Console": "Nintendo Switch",
+      "Type": "Action-adventure",
+      "ImageURL": "https://example.com/zelda_breath_of_the_wild.jpg"
   },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.9",
-    "express": "^4.18.3",
-    "mongodb": "^6.4.0"
+
+  {
+      "Title": "Red Dead Redemption 2",
+      "Description": "The game is set in an open world environment featuring a fictionalized version of the Western, Midwestern, and Southern United States in 1899, during the latter half of the Wild West era.",
+      "Console": "PlayStation 4, Xbox One",
+      "Type": "Action-adventure",
+      "ImageURL": "https://example.com/red_dead_redemption_2.jpg"
   },
-  "devDependencies": {
-    "eslint": "^8.57.0",
-    "nodemon": "^3.1.0"
+
+  {
+      "Title": "The Witcher 3: Wild Hunt",
+      "Description": "Players control Geralt of Rivia, a monster hunter known as a Witcher, who sets out on a quest to find his missing adopted daughter and defeat the Wild Hunt.",
+      "Console": "PlayStation 4, Xbox One, Nintendo Switch",
+      "Type": "Action role-playing",
+      "ImageURL": "https://example.com/the_witcher_3_wild_hunt.jpg"
+  },
+
+  {
+      "Title": "Fortnite",
+      "Description": "Fortnite features a variety of game modes, including the battle royale mode, where up to 100 players fight to be the last person standing.",
+      "Console": "PC, PlayStation 4, Xbox One, Nintendo Switch, iOS, Android",
+      "Type": "Battle royale",
+      "ImageURL": "https://example.com/fortnite.jpg"
+  },
+
+  {
+      "Title": "Grand Theft Auto V",
+      "Description": "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective.",
+      "Console": "PC, PlayStation 3, PlayStation 4, Xbox 360, Xbox One",
+      "Type": "Action-adventure",
+      "ImageURL": "https://example.com/grand_theft_auto_v.jpg"
+  },
+
+  {
+      "Title": "Minecraft",
+      "Description": "Minecraft is a sandbox video game developed and published by Mojang Studios.",
+      "Console": "PC, PlayStation 3, PlayStation 4, Xbox 360, Xbox One, Nintendo Switch, iOS, Android",
+      "Type": "Sandbox, survival",
+      "ImageURL": "https://example.com/minecraft.jpg"
+  },
+
+  {
+      "Title": "Counter-Strike: Global Offensive",
+      "Description": "Counter-Strike: Global Offensive is a multiplayer first-person shooter video game.",
+      "Console": "PC, PlayStation 3, Xbox 360",
+      "Type": "First-person shooter",
+      "ImageURL": "https://example.com/counter_strike_global_offensive.jpg"
+  },
+
+  {
+      "Title": "Among Us",
+      "Description": "Among Us is an online multiplayer social deduction game developed and published by InnerSloth.",
+      "Console": "PC, iOS, Android",
+      "Type": "Social deduction",
+      "ImageURL": "https://example.com/among_us.jpg"
+  },
+
+  {
+    "Title": "Cyberpunk 2077",
+    "Description": "Cyberpunk 2077 is an action role-playing video game developed and published by CD Projekt.",
+    "Console": "PC, PlayStation 4, PlayStation 5, Xbox One, Xbox Series X/S, Stadia",
+    "Type": "Action role-playing",
+    "ImageURL": "https://example.com/cyberpunk_2077.jpg"
+  },
+
+  {
+    "Title": "Call of Duty: Warzone",
+    "Description": "Call of Duty: Warzone is a free-to-play battle royale video game released as a part of Call of Duty: Modern Warfare.",
+    "Console": "PC, PlayStation 4, PlayStation 5, Xbox One, Xbox Series X/S",
+    "Type": "Battle royale, first-person shooter",
+    "ImageURL": "https://example.com/call_of_duty_warzone.jpg"
+  },
+
+  {
+    "Title": "Super Mario Odyssey",
+    "Description": "Super Mario Odyssey is a platform game developed and published by Nintendo for the Nintendo Switch.",
+    "Console": "Nintendo Switch",
+    "Type": "Platform",
+    "ImageURL": "https://example.com/super_mario_odyssey.jpg"
+  },
+
+  {
+    "Title": "League of Legends",
+    "Description": "League of Legends is a multiplayer online battle arena video game developed and published by Riot Games.",
+    "Console": "PC",
+    "Type": "MOBA",
+    "ImageURL": "https://example.com/league_of_legends.jpg"
   }
-}
+  
+]
