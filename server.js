@@ -115,3 +115,17 @@ process.on ('SIGINT', () => {
     process.exit(0)
   })
 })
+
+//Api van games code
+const fetch = require('node-fetch');
+const fetchGamesData = async () => {
+  try {
+    const response = await fetch("https://www.freetogame.com/api/games");
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+fetchGamesData();
