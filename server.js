@@ -15,6 +15,14 @@ app.use(express.static('static'))
 app.set('view engine', 'ejs')
 app.use(express.static('style'))
 
+app.get('/', (req, res) => {
+  res.render('base')
+})
+
+app.get('/register', (req, res) => {
+  res.render('register')
+})
+
 //Endpoint om gebruikers op te halen
 app.get('/users', async (req, res) => {
   try {
@@ -33,14 +41,6 @@ app.get('/users', async (req, res) => {
 
 })
 
-
-app.get('/', (req, res) => {
-  res.render('base')
-})
-
-app.get('/register', (req, res) => {
-  res.render('register')
-})
 
 // app.post('/', adduser)
 
