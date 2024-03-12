@@ -80,7 +80,7 @@ async function adduser(req,res) {
     const { username, password } = req.body
     const db = client.db("Data")
     const coll = db.collection("users")
-    const {insertId} = require("mongodb")
+    const {insertedId} = require("mongodb")
     const result = await coll.insertOne({ username, password })
     console.log(result.insertedId)
     res.send('Gebruiker toegevoegd')
