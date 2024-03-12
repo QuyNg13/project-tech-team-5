@@ -2,11 +2,11 @@ const express = require('express');
 const { MongoClient } = require("mongodb");
 const app = express();
 const port = 3000;
-
 require('dotenv').config();
-
 const uri = process.env.MONGO_DB;
 const client = new MongoClient(uri);
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,9 +48,9 @@ async function adduser(req, res) {
     const { username, password } = req.body;
     const db = client.db("Data");
     const coll = db.collection("users");
-    
+    const hashedPassword = await bcrypt.hash(password, 10);
     // De destructuring assignment hier corrigeren
-    const { insertedId } = await coll.insertOne({ username, password });
+    const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
     
     console.log(insertedId);
     res.send('Gebruiker toegevoegd');
