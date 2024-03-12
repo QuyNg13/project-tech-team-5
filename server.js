@@ -23,20 +23,20 @@ app.get('/register', (req, res) => {
 });
 
 // Endpoint om gebruikers op te halen
-// app.get('/users', async (req, res) => {
-//   try {
-//     await client.connect();
-//     const db = client.db("Data");
-//     const coll = db.collection("users");
-//     const result = await coll.find({}).toArray();
-//     res.json(result);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Er is een fout opgetreden bij het ophalen van gebruikers' });
-//   } finally {
-//     await client.close();
-//   }
-// });
+app.get('/users', async (req, res) => {
+  try {
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    const result = await coll.find({}).toArray();
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Er is een fout opgetreden bij het ophalen van gebruikers' });
+  } finally {
+    await client.close();
+  }
+});
 
 app.post('/', async (req, res) => {
   await adduser(req, res);
