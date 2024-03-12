@@ -37,7 +37,6 @@ const client = new MongoClient(uri);
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('static'))
-app.use('/css', express.static('static/css'))
 
 app.set('view engine', 'ejs')
 app.use(express.static('style'))
