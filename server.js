@@ -2,11 +2,11 @@ const express = require('express');
 const { MongoClient } = require("mongodb");
 const app = express();
 const port = 3000;
-
 require('dotenv').config();
-
 const uri = process.env.MONGO_DB;
 const client = new MongoClient(uri);
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
