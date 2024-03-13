@@ -82,15 +82,23 @@ process.on ('SIGINT', () => {
 })
 
 //Detailpagina gebruikers
-app.get('/users', async (req, res) => {
+app.get('/profile', async (req, res) => {
   try {
     await client.connect ()
     const db = client.db("Data")
     const coll = db.collection("users")
-
-    //gebruikers ophalen
-    const users = await coll.find({}).toArray()
     
+    const username = "ShooterPro25"
+
+    //gebruiker ophalen
+    const user = await coll.findOne({username})
+    if (!user) {
+      return res.status(404).json({ error: 'User not found'})
+    }
+
+    res.render('profile', {user})
+  } catch (error) {
+    console.error ('Error:', error)
+    res.status(500).json({error: 'An error has occurred'})
   }
-}
-)
+})

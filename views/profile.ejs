@@ -6,7 +6,7 @@
     <title>Profile</title>
 </head>
 <body>
-    <h1>Welcome</h1>
+    <h1>Welcome <%= user.username %></h1>
     <% if (user) { %>
         <div>
           <h2>Username: <%= user.username %></h2>
@@ -14,11 +14,10 @@
           <p>Age: <%= user.age %></p>
           <p>Language: <%= user.language %></p>
           <p>Bio: <%= user.bio %></p>
-          <!-- <img src="<%= user.photo %>" alt="Profile picture of <% user.username %>"> -->
         </div>
 
       <% } else { %>
-        <p>Geen gebruikersgegevens beschikbaar.</p>
+        <p>No user data available</p>
       <% } %>
           
 </body>
