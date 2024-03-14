@@ -15,15 +15,11 @@ app.set('view engine', 'ejs');
 app.use(express.static('style'));
 
 app.get('/', (req, res) => {
-  res.render('base');
+  res.render('register');
 });
 
 app.get('/login', (req, res) => {
   res.render('login');
-});
-
-app.get('/register', (req, res) => {
-  res.render('register');
 });
 
 app.get('/info', (req, res) => {
