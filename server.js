@@ -22,6 +22,10 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
+app.get('/info', (req, res) => {
+  res.render('info');
+});
+
 // Endpoint om gebruikers op te halen
 app.get('/users', async (req, res) => {
   try {
@@ -48,7 +52,7 @@ async function adduser(req, res) {
     const { username, password } = req.body;
     const db = client.db("Data");
     const coll = db.collection("users");
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     // De destructuring assignment hier corrigeren
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
     
