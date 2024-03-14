@@ -64,6 +64,25 @@ async function adduser(req, res) {
   }
 }
 
+app.post('/login', async (req, res) => {
+  await login(req, res);
+});
+
+async function login(req, res) {
+  try {
+    await client.connect();
+    const { username, password } = req.body;
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    const user = await coll.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: 'Gebruiker niet gevonden' });
+    }
+  } finally {
+    await client.close();
+  }
+}
+
 // Mongodb-client openen wanneer de applicatie start
 client.connect().then(() => {
   app.listen(port, () => {
