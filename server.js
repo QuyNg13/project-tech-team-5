@@ -22,6 +22,10 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
+app.get('/info', (req, res) => {
+  res.render('info');
+});
+
 // Endpoint om gebruikers op te halen
 app.get('/users', async (req, res) => {
   try {
