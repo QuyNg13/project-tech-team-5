@@ -45,16 +45,17 @@ input {
     color: #ecf0f1;
 }
 
-button {
+.knoppen input {
     background-color: #3498db;
     color: #fff;
-    padding: 14px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+    font-family: 'Techno Race', sans-serif;
+    margin: 1em;
 }
 
-button:hover {
+.knoppen input:hover {
     background-color: #2980b9;
 }
