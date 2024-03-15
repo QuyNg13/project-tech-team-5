@@ -102,3 +102,4 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({error: 'An error has occurred'})
   }
 })
+
