@@ -8,6 +8,7 @@ const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
@@ -26,7 +27,8 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
-// Endpoint om gebruikers op te halen
+
+//Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
   try {
     await client.connect();
@@ -45,6 +47,7 @@ app.get('/users', async (req, res) => {
 app.post('/', async (req, res) => {
   await adduser(req, res);
 });
+
 
 async function adduser(req, res) {
   try {
@@ -74,7 +77,29 @@ client.connect().then(() => {
 // Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
 process.on('SIGINT', () => {
   client.close().then(() => {
-    console.log('MongoDB-client gesloten.');
-    process.exit(0);
-  });
-});
+    console.log('MongoDB client gesloten.')
+    process.exit(0)
+  })
+})
+
+//Detailpagina gebruikers
+app.get('/profile', async (req, res) => {
+  try {
+    await client.connect ()
+    const db = client.db("Data")
+    const coll = db.collection("users")
+    
+    const username = "ShooterPro25"
+
+    //gebruiker ophalen
+    const user = await coll.findOne({username})
+    if (!user) {
+      return res.status(404).json({ error: 'User not found'})
+    }
+
+    res.render('profile', {user})
+  } catch (error) {
+    console.error ('Error:', error)
+    res.status(500).json({error: 'An error has occurred'})
+  }
+})
