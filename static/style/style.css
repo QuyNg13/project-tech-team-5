@@ -9,6 +9,13 @@ body {
     justify-content: center;
     height: 100vh;
 }
+
+#error-message {
+    display: block;
+    margin-bottom: 12px;
+    color: #ee2a2a;
+}
+
 .knoppen{
     display: flex;
     justify-content: center;
