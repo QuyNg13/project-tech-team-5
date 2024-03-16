@@ -19,6 +19,10 @@ app.get('/', (req, res) => {
   res.render('register');
 });
 
+app.get('/vraag1', (req, res) => {
+  res.render('vraag1');
+});
+
 app.get('/login', (req, res) => {
   res.render('login');
 });
@@ -64,7 +68,7 @@ async function adduser(req, res) {
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
     
     console.log(insertedId);
-    res.send('Gebruiker toegevoegd');
+    return res.redirect('/vraag1');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
