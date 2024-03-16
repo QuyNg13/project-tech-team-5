@@ -4,7 +4,7 @@
   "description": "1. herhalen javascript\r 1. beginnen met GIT\r 1. JSON\r 1. backend\r 1. frontend\r 1. concept",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "MIT",

@@ -13,19 +13,14 @@
     <div class="container">
         <h2>Log in or create an account!</h2>
 
-        <form id="loginForm" method="POST" action="/">
+        <form id="loginForm" method="POST" action="/login">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
-
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-
-            <div class="knoppen">
-                <input id="submit" type="submit" value="Add user"></input>
-                <input id="check" type="button" value="Log in"></input>                
-            </div>
-
+            <input id="check" type="submit" value="Log in"></input>                
         </form>
+        <a href="/" id="submit" type="button" value="Add user">register</a>
     </div>
     <script src="script.js"></script>
 </body>
