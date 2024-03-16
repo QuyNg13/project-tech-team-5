@@ -16,7 +16,8 @@
 
         // Als er een foutmelding is, toon deze dan op het scherm
         if (errorMessage) {
+            const errordiv = document.getElementById('error-message')
             const errorElement = document.createElement('p');
             errorElement.textContent = errorMessage;
-            document.body.appendChild(errorElement);
+            errordiv.appendChild(errorElement);
         }
