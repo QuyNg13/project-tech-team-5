@@ -27,6 +27,10 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
+app.get('/home', (req, res) => {
+  res.render('home');
+});
+
 
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
@@ -85,7 +89,7 @@ async function login(req, res) {
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Ongeldig wachtwoord' });
     }
-    res.status(200).json({ message: 'Inloggen geslaagd' });
+    res.redirect('/home');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het inloggen');
