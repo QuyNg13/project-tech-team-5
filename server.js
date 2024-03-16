@@ -81,6 +81,14 @@ async function login(req, res) {
     if (!user) {
       return res.status(404).json({ message: 'Gebruiker niet gevonden' });
     }
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Ongeldig wachtwoord' });
+    }
+    res.status(200).json({ message: 'Inloggen geslaagd' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het inloggen');
   } finally {
     await client.close();
   }
