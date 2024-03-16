@@ -83,7 +83,7 @@ async function login(req, res) {
     const coll = db.collection("users");
     const user = await coll.findOne({ username });
     if (!user) {
-      return res.status(404).json({ message: 'Gebruiker niet gevonden' });
+      return res.redirect('/login?error=Gebruiker niet gevonden');
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
