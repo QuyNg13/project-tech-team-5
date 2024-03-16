@@ -87,7 +87,7 @@ async function login(req, res) {
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Ongeldig wachtwoord' });
+      return res.redirect('/login?error=Ongeldig wachtwoord');
     }
     res.redirect('/home');
   } catch (error) {
