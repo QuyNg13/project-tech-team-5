@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Welcome <%= user.username %></h1>
+    <% if (user) { %>
+        <div>
+          <h2>Username: <%= user.username %></h2>
+          <p>Gender: <%= user.gender %></p>
+          <p>Age: <%= user.age %></p>
+          <p>Language: <%= user.language %></p>
+          <p>Bio: <%= user.bio %></p>
+        </div>
+
+      <% } else { %>
+        <p>No user data available</p>
+      <% } %>
+          
+</body>
+</html>
