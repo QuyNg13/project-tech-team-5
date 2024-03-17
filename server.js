@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const app = express();
 const port = 3000;
 require('dotenv').config();
@@ -83,16 +83,16 @@ process.on('SIGINT', () => {
 })
 
 //Detailpagina gebruikers
-app.get('/profile', async (req, res) => {
+app.get('/profile/:username', async (req, res) => {
   try {
     await client.connect ()
     const db = client.db("Data")
     const coll = db.collection("users")
     
-    const username = "ShooterPro25"
-
     //gebruiker ophalen
-    const user = await coll.findOne({username})
+    const username = req.params.username;
+    const user = await coll.findOne({ _id: new ObjectId(username)})
+
     if (!user) {
       return res.status(404).json({ error: 'User not found'})
     }
