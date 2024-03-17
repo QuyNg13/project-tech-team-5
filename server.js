@@ -16,15 +16,19 @@ app.set('view engine', 'ejs');
 app.use(express.static('style'));
 
 app.get('/', (req, res) => {
-  res.render('base');
+  res.render('register');
 });
 
-app.get('/register', (req, res) => {
-  res.render('register');
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 app.get('/info', (req, res) => {
   res.render('info');
+});
+
+app.get('/home', (req, res) => {
+  res.render('home');
 });
 
 
@@ -64,6 +68,33 @@ async function adduser(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
+  }
+}
+
+app.post('/login', async (req, res) => {
+  await login(req, res);
+});
+
+async function login(req, res) {
+  try {
+    await client.connect();
+    const { username, password } = req.body;
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    const user = await coll.findOne({ username });
+    if (!user) {
+      return res.redirect('/login?error=Gebruiker niet gevonden');
+    }
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.redirect('/login?error=Ongeldig wachtwoord');
+    }
+    res.redirect('/home');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het inloggen');
+  } finally {
+    await client.close();
   }
 }
 
