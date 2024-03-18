@@ -134,3 +134,21 @@ app.get('/profile/:username', async (req, res) => {
     res.status(500).json({error: 'An error has occurred'})
   }
 })
+
+//gebruiker toevoegen als vriend
+app.post('/addfriend/:friendId'), async (req, res) => {
+  try {
+    const friendId = req.params.friendId
+
+    await coll.updateOne(
+      {_id: new ObjectId(req.session.user._id)},
+      { $addToSet: {friends: new ObjectId(friendId) } }
+    )
+   
+    res.status(200).json({message: 'Friend added succesfully'})
+  } catch (error) {
+    console.error ('Error adding friend:', error)
+    res.status(500).json({error: 'An error has occurred while adding friend' })
+  }
+
+})
