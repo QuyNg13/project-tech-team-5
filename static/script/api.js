@@ -1,8 +1,10 @@
 document.getElementById('searchButton').addEventListener('click', searchGame);
+document.getElementById('gameinfo').innerHTML = gameInfo
 
 function searchGame() {
     const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
     const apiUrl = 'https://api.rawg.io/api/games';
+
     const gameName = document.getElementById('gameNameInput').value;
 
 fetch(`${apiUrl}?key=${apiKey}&search=${gameName}`)
@@ -24,6 +26,7 @@ fetch(`${apiUrl}?key=${apiKey}&search=${gameName}`)
               <p><strong>Ratings Count:</strong> ${game.ratings_count}</p>
               <p><strong>Reviews Text Count:</strong> ${game.reviews_text_count}</p>
               <p><strong>Playtime:</strong> ${game.playtime} hours</p>
+              <img scr='background_image'> ${game.background_image}</img> 
             `;
             document.getElementById('gameInfo').innerHTML = gameInfo;
         } else {
@@ -34,3 +37,4 @@ fetch(`${apiUrl}?key=${apiKey}&search=${gameName}`)
         console.error('There was a problem with the fetch operation:', error);
     });
 }
+
