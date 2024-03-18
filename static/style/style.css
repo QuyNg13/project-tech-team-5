@@ -131,7 +131,12 @@ li.hole {
     display:inline-block;
 }
 
-/* Profiel aanpassing pagina*/
+/* Detail pagina*/
+
+.white-text {
+    color: white;
+    text-align: center;
+}
 
 
 
