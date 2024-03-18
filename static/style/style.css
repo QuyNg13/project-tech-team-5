@@ -66,3 +66,72 @@ input {
 .knoppen input:hover {
     background-color: #2980b9;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Daan zijn css start voor frontend */
+
+
+/* Navigatie pagina */
+#registratievraag {
+    display: flex;
+    flex-direction: column;
+}
+
+#subvraag {
+    color: white;
+    font-size: .7em;
+
+    text-align: center;
+}
+
+#devraag {
+    color: white;
+    text-align: center;
+
+    margin: 1em 1em;
+
+    font-size: 2em;
+}
+
+#hetantwoord {
+    color: white;
+    background-color: blue;
+    margin: 0.5em 3em;
+    height: 6em;
+
+    border-style: none;
+}
+
+#nav-bar {
+    position: relative;
+    top: 1em;
+    left: 1.3em;
+    text-align: center;
+    display: flex;
+
+}
+  
+li.hole {
+    width:2em;
+    height:2em;
+    margin: 0 1em;
+    border-radius:50%;
+    border:1px solid white;
+    display:inline-block;
+}
+
+/* Profiel aanpassing pagina*/
+
+
+
