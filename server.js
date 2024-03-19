@@ -7,16 +7,26 @@ const uri = process.env.MONGO_DB;
 const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const session = require('express-session')
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
 app.set('view engine', 'ejs');
+app.use(session({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: true,
+})); 
 app.use(express.static('style'));
 
 app.get('/', (req, res) => {
   res.render('register');
+});
+
+app.get('/vraag1', (req, res) => {
+  res.render('registervragen');
 });
 
 app.get('/login', (req, res) => {
@@ -64,7 +74,7 @@ async function adduser(req, res) {
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
     
     console.log(insertedId);
-    res.send('Gebruiker toegevoegd');
+    return res.redirect('/vraag1');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
@@ -89,6 +99,8 @@ async function login(req, res) {
     if (!passwordMatch) {
       return res.redirect('/login?error=Ongeldig wachtwoord');
     }
+    req.session.loggedIn = true;
+    req.session.username = username;
     res.redirect('/home');
   } catch (error) {
     console.error(error);
