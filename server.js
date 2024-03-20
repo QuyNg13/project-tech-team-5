@@ -154,6 +154,13 @@ app.get('/profile/:username', async (req, res) => {
 //gebruiker toevoegen als vriend
 app.post('/addfriend/:friendId'), async (req, res) => {
   try {
+    // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
+    if (!req.session.user || !req.session.user._id) {
+      console.error('User session is not set or missing user ID');
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    
     const friendId = req.params.friendId
 
     await coll.updateOne(
@@ -166,5 +173,4 @@ app.post('/addfriend/:friendId'), async (req, res) => {
     console.error ('Error adding friend:', error)
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
-
 }

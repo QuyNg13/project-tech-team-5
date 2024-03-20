@@ -18,6 +18,11 @@
           <p>Bio: <%= user.bio %></p>
         </div>
 
+
+        <form action="/addfriend/<%= user._id %>" method="POST">
+          <button type="submit">Add friend</button>
+        </form>
+
       <% } else { %>
         <p>No user data available</p>
       <% } %>
