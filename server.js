@@ -101,6 +101,10 @@ async function login(req, res) {
     }
     req.session.loggedIn = true;
     req.session.username = username;
+
+    //Inlog ook met Gebruikers-ID
+    req.session.user = {_id: user._id}
+
     res.redirect('/home');
   } catch (error) {
     console.error(error);
@@ -163,4 +167,4 @@ app.post('/addfriend/:friendId'), async (req, res) => {
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 
-})
+}
