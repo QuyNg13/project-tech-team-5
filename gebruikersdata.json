@@ -1,0 +1,345 @@
+{
+    "users": [
+      {
+        "username": "NitroNinja44",
+        "age": 25,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "PC",
+        "play_duration_hours": 3,
+        "favorite_games": [
+          "Burnout Paradise",
+          "Assetto Corsa",
+          "Wipeout"
+        ],
+        "profile_picture": "avatar1.jpg",
+        "language": "English"
+      },
+      {
+        "username": "VelocityVixen",
+        "age": 30,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "Nintendo Switch",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Mario Kart",
+          "Crash Team Racing",
+          "Team Sonic Racing"
+        ],
+        "profile_picture": "avatar2.jpg",
+        "language": "English"
+      },
+      {
+        "username": "TurboThunder78",
+        "age": 22,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "Xbox One",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Forza Motorsport",
+          "Need for Speed: Heat",
+          "Project Cars 3"
+        ],
+        "profile_picture": "avatar3.jpg",
+        "language": "English"
+      },
+      {
+        "username": "AdrenalineAddict",
+        "age": 35,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "PlayStation 4",
+        "play_duration_hours": 1,
+        "favorite_games": [
+          "Gran Turismo",
+          "Driveclub",
+          "WRC"
+        ],
+        "profile_picture": "avatar4.jpg",
+        "language": "English"
+      },
+      {
+        "username": "SpeedySparks",
+        "age": 27,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "Nintendo Switch",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Mario Kart",
+          "Fast RMX",
+          "Asphalt"
+        ],
+        "profile_picture": "avatar5.jpg",
+        "language": "English"
+      },
+      {
+        "username": "FuriousFeline",
+        "age": 29,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "PC",
+        "play_duration_hours": 3,
+        "favorite_games": [
+          "Trackmania",
+          "Dirt Rally 2.0",
+          "GRID"
+        ],
+        "profile_picture": "avatar6.jpg",
+        "language": "English"
+      },
+      {
+        "username": "SonicSpeedster",
+        "age": 24,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "Xbox Series S",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Sonic & All-Stars Racing Transformed",
+          "F1 2021",
+          "Burnout Revenge"
+        ],
+        "profile_picture": "avatar7.jpg",
+        "language": "English"
+      },
+      {
+        "username": "RapidRaptor",
+        "age": 31,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "PlayStation 5",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Wipeout Omega Collection",
+          "Need for Speed: Most Wanted",
+          "DiRT 4"
+        ],
+        "profile_picture": "avatar8.jpg",
+        "language": "English"
+      },
+      {
+        "username": "VelocityViking",
+        "age": 26,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "PC",
+        "play_duration_hours": 4,
+        "favorite_games": [
+          "iRacing",
+          "Project CARS 2",
+          "Assetto Corsa Competizione"
+        ],
+        "profile_picture": "avatar9.jpg",
+        "language": "English"
+      },
+      {
+        "username": "QuickQuasar",
+        "age": 28,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "Nintendo Switch",
+        "play_duration_hours": 1,
+        "favorite_games": [
+          "Mario Kart",
+          "Sonic & Sega All-Stars Racing",
+          "F1 Race Stars"
+        ],
+        "profile_picture": "avatar10.jpg",
+        "language": "English"
+      },
+      {
+        "username": "ThunderThrottle",
+        "age": 33,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "Xbox Series X",
+        "play_duration_hours": 3,
+        "favorite_games": [
+          "Forza Horizon 4",
+          "The Crew 2",
+          "GRID Autosport"
+        ],
+        "profile_picture": "avatar11.jpg",
+        "language": "English"
+      },
+      {
+        "username": "SpeedyStarlight",
+        "age": 23,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "PC",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Trackmania Turbo",
+          "F1 2020",
+          "Blur"
+        ],
+        "profile_picture": "avatar12.jpg",
+        "language": "English"
+      },
+      {
+        "username": "NitrousNemesis",
+        "age": 27,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVP",
+        "console": "PlayStation 5",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Gran Turismo Sport",
+          "Need for Speed: Payback",
+          "Dirt 5"
+        ],
+        "profile_picture": "avatar13.jpg",
+        "language": "English"
+      },
+      {
+        "username": "BlazingBolt",
+        "age": 26,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "Xbox Series X",
+        "play_duration_hours": 3,
+        "favorite_games": [
+          "Forza Horizon 5",
+          "Dirt Rally",
+          "F1 2021"
+        ],
+        "profile_picture": "avatar14.jpg",
+        "language": "English"
+      },
+      {
+        "username": "SwiftStorm",
+        "age": 29,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "PC",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "GRID 2",
+          "Need for Speed: Underground 2",
+          "Burnout 3: Takedown"
+        ],
+        "profile_picture": "avatar15.jpg",
+        "language": "English"
+      },
+      {
+        "username": "MachSpeeder",
+        "age": 32,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "Nintendo Switch",
+        "play_duration_hours": 1,
+        "favorite_games": [
+          "Mario Kart 8 Deluxe",
+          "Fast RMX",
+          "Horizon Chase Turbo"
+        ],
+        "profile_picture": "avatar16.jpg",
+        "language": "English"
+      },
+      {
+        "username": "VelocityVroom",
+        "age": 28,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "PlayStation 4",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Gran Turismo 7",
+          "Driveclub",
+          "WRC 10"
+        ],
+        "profile_picture": "avatar17.jpg",
+        "language": "English"
+      },
+      {
+        "username": "TurboTwist",
+        "age": 27,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Duo",
+        "play_style": "PVP",
+        "console": "Xbox One",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Forza Horizon 4",
+          "Need for Speed: Heat",
+          "Project CARS 3"
+        ],
+        "profile_picture": "avatar18.jpg",
+        "language": "English"
+      },
+      {
+        "username": "RapidRacer",
+        "age": 30,
+        "gender": "Female",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "PC",
+        "play_duration_hours": 3,
+        "favorite_games": [
+          "Trackmania Turbo",
+          "Dirt Rally 2.0",
+          "GRID"
+        ],
+        "profile_picture": "avatar19.jpg",
+        "language": "English"
+      },
+      {
+        "username": "ThunderRider",
+        "age": 29,
+        "gender": "Male",
+        "genre": "Racing",
+        "search_group_or_duo": "Group",
+        "play_style": "PVE",
+        "console": "Nintendo Switch",
+        "play_duration_hours": 2,
+        "favorite_games": [
+          "Mario Kart",
+          "Crash Team Racing",
+          "Team Sonic Racing"
+        ],
+        "profile_picture": "avatar20.jpg",
+        "language": "English"
+      }
+    ]
+  }
+  

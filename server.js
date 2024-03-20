@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const app = express();
 const port = 3000;
 require('dotenv').config();
@@ -101,6 +101,10 @@ async function login(req, res) {
     }
     req.session.loggedIn = true;
     req.session.username = username;
+
+    //Inlog ook met Gebruikers-ID
+    req.session.user = {_id: user._id}
+
     res.redirect('/home');
   } catch (error) {
     console.error(error);
@@ -126,16 +130,16 @@ process.on('SIGINT', () => {
 })
 
 //Detailpagina gebruikers
-app.get('/profile', async (req, res) => {
+app.get('/profile/:username', async (req, res) => {
   try {
     await client.connect ()
     const db = client.db("Data")
     const coll = db.collection("users")
     
-    const username = "ShooterPro25"
-
     //gebruiker ophalen
-    const user = await coll.findOne({username})
+    const username = req.params.username;
+    const user = await coll.findOne({ _id: new ObjectId(username)})
+
     if (!user) {
       return res.status(404).json({ error: 'User not found'})
     }
@@ -146,3 +150,27 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({error: 'An error has occurred'})
   }
 })
+
+//gebruiker toevoegen als vriend
+app.post('/addfriend/:friendId'), async (req, res) => {
+  try {
+    // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
+    if (!req.session.user || !req.session.user._id) {
+      console.error('User session is not set or missing user ID');
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    
+    const friendId = req.params.friendId
+
+    await coll.updateOne(
+      {_id: new ObjectId(req.session.user._id)},
+      { $addToSet: {friends: new ObjectId(friendId) } }
+    )
+   
+    res.status(200).json({message: 'Friend added succesfully'})
+  } catch (error) {
+    console.error ('Error adding friend:', error)
+    res.status(500).json({error: 'An error has occurred while adding friend' })
+  }
+}
