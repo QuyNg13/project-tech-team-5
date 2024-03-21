@@ -21,26 +21,40 @@ app.use(session({
 })); 
 app.use(express.static('style'));
 
-app.get('/', (req, res) => {
-  res.render('register');
+function checkLoggedIn(req, res, next) {
+  if (req.session && req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
+function checkLoggedInRedirectHome(req, res, next) {
+  if (req.session && req.session.loggedIn) {
+    return res.redirect('/');
+  }
+  next();
+}
+
+app.get('/', checkLoggedIn,(req, res) => {
+  res.render('home');
 });
 
 app.get('/vraag1', (req, res) => {
   res.render('registervragen');
 });
 
-app.get('/login', (req, res) => {
+app.get('/login', checkLoggedInRedirectHome,(req, res) => {
   res.render('login');
+});
+
+app.get('/register', (req, res) => {
+  res.render('register');
 });
 
 app.get('/info', (req, res) => {
   res.render('info');
 });
-
-app.get('/home', (req, res) => {
-  res.render('home');
-});
-
 
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
@@ -101,7 +115,7 @@ async function login(req, res) {
     }
     req.session.loggedIn = true;
     req.session.username = username;
-    res.redirect('/home');
+    res.redirect('/');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het inloggen');
