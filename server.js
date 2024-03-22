@@ -119,7 +119,7 @@ async function login(req, res) {
     //Inlog ook met Gebruikers-ID
     req.session.user = {_id: user._id}
 
-    res.redirect('/home');
+    res.redirect('/');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het inloggen');
