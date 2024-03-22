@@ -115,9 +115,9 @@ async function login(req, res) {
     }
     req.session.loggedIn = true;
     req.session.username = username;
-
-    //Inlog ook met Gebruikers-ID
     req.session.user = {_id: user._id}
+
+    console.log(req.session.user);
 
     res.redirect('/');
   } catch (error) {
@@ -168,6 +168,12 @@ app.get('/profile/:username', async (req, res) => {
 //gebruiker toevoegen als vriend
 app.post('/addfriend/:friendId', async (req, res) => {
   try {
+    console.log('User session:', req.session);
+
+    await client.connect ()
+    const db = client.db("Data")
+    const coll = db.collection("users") 
+
     // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
     if (!req.session.user || !req.session.user._id) {
       console.error('User session is not set or missing user ID');
@@ -189,3 +195,5 @@ app.post('/addfriend/:friendId', async (req, res) => {
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 })
+
+
