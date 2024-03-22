@@ -119,7 +119,7 @@ async function login(req, res) {
     //Inlog ook met Gebruikers-ID
     req.session.user = {_id: user._id}
 
-    res.redirect('/home');
+    res.redirect('/');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het inloggen');
@@ -189,3 +189,51 @@ app.post('/addfriend/:friendId'), async (req, res) => {
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 }
+
+
+//Backend Daan Kkoekkoek Eigenschappen
+app.post('/update-properties', async (req, res) => {
+  try {
+    // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
+    if (!req.session.user || !req.session.user._id) {
+      console.error('Gebruikerssessie is niet ingesteld of gebruikers-ID ontbreekt');
+      return res.status(401).json({ error: 'Niet geautoriseerd' });
+    }
+
+    const userId = req.session.user._id;
+    const { answers } = req.body;
+
+    // Hieronder kun je logica plaatsen om op basis van de antwoorden de eigenschappen van de gebruiker bij te werken
+    // Bijvoorbeeld:
+    const extraProperties = {};
+
+    // Als het antwoord op vraag 1 is gekozen, voeg dan een nieuwe eigenschap "antwoord1" toe
+    if (answers.includes('hetantwoord1')) {
+      extraProperties.antwoord1 = true;
+    }
+
+    // Als het antwoord op vraag 2 is gekozen, voeg dan een nieuwe eigenschap "antwoord2" toe
+    if (answers.includes('hetantwoord2')) {
+      extraProperties.antwoord2 = true;
+    }
+
+    // Verbinding maken met de database
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+
+    // Werk de eigenschappen van de gebruiker bij in de database
+    await coll.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: extraProperties }
+    );
+
+    res.status(200).json({ message: 'Eigenschappen van de gebruiker succesvol bijgewerkt' });
+  } catch (error) {
+    console.error('Fout bij het bijwerken van eigenschappen van de gebruiker:', error);
+    res.status(500).json({ error: 'Er is een fout opgetreden bij het bijwerken van eigenschappen van de gebruiker' });
+  } finally {
+    // Sluit de MongoDB-client
+    await client.close();
+  }
+});
