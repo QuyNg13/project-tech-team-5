@@ -152,7 +152,7 @@ app.get('/profile/:username', async (req, res) => {
 })
 
 //gebruiker toevoegen als vriend
-app.post('/addfriend/:friendId'), async (req, res) => {
+app.post('/addfriend/:friendId', async (req, res) => {
   try {
     // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
     if (!req.session.user || !req.session.user._id) {
@@ -173,4 +173,4 @@ app.post('/addfriend/:friendId'), async (req, res) => {
     console.error ('Error adding friend:', error)
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
-}
+})
