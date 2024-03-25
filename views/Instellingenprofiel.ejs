@@ -8,75 +8,68 @@
 </head>
 <body>
     <main>       
-    <div>
-        <h1> De Titel de instelling pagina </h1>
-    </div>
+        <h1 id="titelInstellingen"> De Titel de instelling pagina </h1>
 
-    <div>
-        <h2> profiel foto </h2>
-        <img src="/" >
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.username %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> <%= user.username %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.gender %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> <%= user.gender %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.age %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> <%= user.age %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.language %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> <%= user.language %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.bio %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> <%= user.bio %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.play_style %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> <%= user.play_style %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen">  <%= user.console %> </h2>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2>  <%= user.console %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div>
-        <h2> <%= user.play_duration_hours %> </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> <%= user.play_duration_hours %> </h2>
         <p> Ik ben Max, een 25-jarige gamer die leeft voor de spanning van de virtuele wereld. Mijn hart gaat sneller kloppen van actievolle games en ik ben altijd op zoek naar nieuwe uitdagingen. Of het nu gaat om het verslaan van tegenstanders in een first-person shooter of het verkennen van epische werelden, ik ben altijd klaar voor het volgende avontuur.</p>
         <input type="text" name="username" required>
         <button id="aanpassing"> pas aan </button>
     </div>
 
-    <div>
-        <h2> Favoriete games </h2>
+    <div id="instellingenCSS">
+        <h2 id="datainstellingen"> Favoriete games </h2>
         <ul>
             <li> <%= user.favorite_games %> </li>
             <li> <%= user.favorite_games %> </li>
             <li> <%= user.favorite_games %> </li>
         </ul>
+        <button id="aanpassing"> pas aan </button>
     </div>
 
     </main>
+    <script src="/server.js"></script>
 </body>
 </html>
