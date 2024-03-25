@@ -8,21 +8,14 @@
 </head>
 <body>
     <main>
-        <article>
-            <h1 id="devraag">Wat is jouw favoriete genre? </h1>
-            <div id="registratievraag">
-                <button id="hetantwoord">  </button>
-                <button id="hetantwoord"> </button>
-                <button id="hetantwoord">  </button>
-                <button id="hetantwoord">  </button>
-            </div>
-        </article>
-
-        <div>
-            <button id="volgenderoute"> < </button>
-            <button id="volgenderoute"> > </button>
-        </div>
-        
+        <form action="/registervragen" method="POST">
+            <label>Leeftijd (geboortedatum)</label>
+            <input type="text" name="age" required>
+          
+            <!-- Andere vragen hier -->
+          
+            <button type="submit">Opslaan</button>
+        </form>
     </main>
     <script src="/static/script/registratieVraag.js">  </script>
 </body>

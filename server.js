@@ -40,7 +40,7 @@ app.get('/', checkLoggedIn,(req, res) => {
   res.render('home');
 });
 
-app.get('/vraag1', (req, res) => {
+app.get('/registervragen', (req, res) => {
   res.render('registervragen');
 });
 
@@ -56,9 +56,25 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
+ HEAD
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
+
+// Mongodb-client openen wanneer de applicatie start
+client.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+});
+
+// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
+process.on('SIGINT', () => {
+  client.close().then(() => {
+    console.log('MongoDB client gesloten.')
+    process.exit(0)
+  })
+})
 
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
@@ -92,7 +108,7 @@ async function adduser(req, res) {
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
     
     console.log(insertedId);
-    return res.redirect('/vraag1');
+    return res.redirect('/registervragen');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
@@ -131,21 +147,6 @@ async function login(req, res) {
     await client.close();
   }
 }
-
-// Mongodb-client openen wanneer de applicatie start
-client.connect().then(() => {
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
-});
-
-// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
-process.on('SIGINT', () => {
-  client.close().then(() => {
-    console.log('MongoDB client gesloten.')
-    process.exit(0)
-  })
-})
 
 //Detailpagina gebruikers
 app.get('/profile/:username', async (req, res) => {
