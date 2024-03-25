@@ -166,7 +166,7 @@ app.get('/profile/:username', async (req, res) => {
 })
 
 //gebruiker toevoegen als vriend
-app.post('/addfriend/:friendId'), async (req, res) => {
+app.post('/addfriend/:friendId', async (req, res) => {
   try {
     // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
     if (!req.session.user || !req.session.user._id) {
@@ -174,7 +174,6 @@ app.post('/addfriend/:friendId'), async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    
     const friendId = req.params.friendId
 
     await coll.updateOne(
@@ -188,7 +187,29 @@ app.post('/addfriend/:friendId'), async (req, res) => {
     console.error ('Error adding friend:', error)
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
-}
+})
+
+//vriendschapsverzoek accepteren
+app.post('/accept-friend-request/friendId', async (req, res) => {
+  try {
+    const friendId = req.params.friendId
+
+    await coll.updateOne(
+      {_id: new ObjectId(req.session.user._id)},
+      { $Set: { friendshipStatus: "pending" } }
+    )
+
+
+    res.status(200).json({message: 'Friendschip request succesfully accepted'})
+  } catch (error) {
+    
+    console.error ('Error accepting friend request:', error)
+    res.status(500).json({error: 'An error has occurred while adding friend' })
+  }
+})
+  
+
+
 
 
 //Backend Daan Kkoekkoek Eigenschappen
