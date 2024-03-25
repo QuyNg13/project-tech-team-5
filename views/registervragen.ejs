@@ -9,12 +9,52 @@
 <body>
     <main>
         <form action="/registervragen" method="POST">
-            <label>Leeftijd (geboortedatum)</label>
-            <input type="text" name="age" required>
-          
-            <!-- Andere vragen hier -->
-          
-            <button type="submit">Opslaan</button>
+            <!-- Vraag 1: Leeftijd -->
+            <label for="age">Leeftijd (geboortedatum): </label>
+            <input type="date" id="age" name="age" required><br>
+        
+            <!-- Vraag 2: Spreektaal -->
+            <label for="language">Spraaktaal: </label>
+            <input type="text" id="language" name="language" required><br>
+        
+            <!-- Vraag 3: Favoriete console -->
+            <label for="console">Favoriete console: </label>
+            <input type="text" id="console" name="console" required><br>
+            <label for="consoleLink">Link naar console account: </label>
+            <input type="url" id="consoleLink" name="consoleLink"><br>
+        
+            <!-- Vraag 4: PvP of Coöp -->
+            <label for="playStyle">PvP of Coöp: </label>
+            <select id="playStyle" name="playStyle" required>
+                <option value="PvP">PvP</option>
+                <option value="Coöp">Coöp</option>
+            </select><br>
+        
+            <!-- Vraag 5: Bio -->
+            <label for="bio">Bio: </label>
+            <textarea id="bio" name="bio"></textarea><br>
+        
+            <!-- Vraag 6: Profielfoto upload -->
+            <label for="profilePic">Upload een profielfoto: </label>
+            <input type="file" id="profilePic" name="profilePic"><br>
+        
+            <!-- Vraag 7: Favoriete genre -->
+            <label for="genre">Favoriete genre: </label>
+            <input type="text" id="genre" name="genre" required><br>
+        
+            <!-- Vraag 8: Geslacht -->
+            <label for="gender">Geslacht: </label>
+            <select id="gender" name="gender" required>
+                <option value="male">Man</option>
+                <option value="female">Vrouw</option>
+                <option value="other">Anders</option>
+            </select><br>
+        
+            <!-- Vraag 9: Favoriete games -->
+            <label for="favoriteGames">Favoriete games: </label>
+            <textarea id="favoriteGames" name="favoriteGames" required></textarea><br>
+        
+            <button type="submit">Volgende</button>
         </form>
     </main>
     <script src="/static/script/registratieVraag.js">  </script>
