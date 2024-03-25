@@ -120,7 +120,7 @@ app.post('/registervragen', async (req, res) => {
           throw new Error('Gebruikerssessie niet correct ingesteld');
       }
       
-      const userId = req.session.user; // Haal het gebruikers-ID uit de sessie
+      const userId = req.session.user._id; // Haal alleen het gebruikers-ID uit de sessie
       const profileData = {
           age: req.body.age,
           language: req.body.language,
@@ -134,7 +134,7 @@ app.post('/registervragen', async (req, res) => {
       };
       await client.connect();
       const db = client.db("Data");
-      const coll = db.collection("profiles");
+      const coll = db.collection("users");
       // Profielgegevens opslaan in de database onder het ID van de gebruiker
       await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { profileData } });
       res.redirect('/'); // Optioneel: Doorsturen naar volgende pagina
