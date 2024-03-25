@@ -56,6 +56,21 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
+// Mongodb-client openen wanneer de applicatie start
+client.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+});
+
+// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
+process.on('SIGINT', () => {
+  client.close().then(() => {
+    console.log('MongoDB client gesloten.')
+    process.exit(0)
+  })
+})
+
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
   try {
@@ -127,21 +142,6 @@ async function login(req, res) {
     await client.close();
   }
 }
-
-// Mongodb-client openen wanneer de applicatie start
-client.connect().then(() => {
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
-});
-
-// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
-process.on('SIGINT', () => {
-  client.close().then(() => {
-    console.log('MongoDB client gesloten.')
-    process.exit(0)
-  })
-})
 
 //Detailpagina gebruikers
 app.get('/profile/:username', async (req, res) => {
