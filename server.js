@@ -40,7 +40,7 @@ app.get('/', checkLoggedIn,(req, res) => {
   res.render('home');
 });
 
-app.get('/vraag1', (req, res) => {
+app.get('/registervragen', (req, res) => {
   res.render('registervragen');
 });
 
@@ -88,7 +88,7 @@ async function adduser(req, res) {
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
     
     console.log(insertedId);
-    return res.redirect('/vraag1');
+    return res.redirect('/registervragen');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
