@@ -15,6 +15,7 @@ body {
     width: 100%;
     margin-left: -0.5em;
     margin-top: -1em;
+    z-index: 1000;
 
 }
 
@@ -232,4 +233,32 @@ footer button{
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
   .show {display: block;}
   
+  /* search bar home*/
+  .search{
+    color: white;
+    margin-top: 6em;
+    width: 80%;
+    font-size: larger;
+
+  }
+  #myDropdown{
+
+    width: 450%;
+  }
+
+
+  /* van de scroll container*/
+
+  .container {
+    margin-bottom: 20px;
+  }
+  .container select{
+    width: 80%;
+    height: 10em;
+    font-size: large;
+  }
+
   
+  label {
+    margin-right: 10px;
+  }

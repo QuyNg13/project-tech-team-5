@@ -1,5 +1,7 @@
-document.getElementById('searchButton').addEventListener('click', searchGame);
-document.getElementById('gameinfo').innerHTML = gameInfo
+console.log("data")
+
+//document.getElementById('searchButton').addEventListener('click', searchGame);
+//document.getElementById('gameinfo').innerHTML = gameInfo
 
 function searchGame() {
     const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';

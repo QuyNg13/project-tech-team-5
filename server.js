@@ -249,4 +249,4 @@ app.post('/accept-friend-request/friendId', async (req, res) => {
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 })
-  
+})
