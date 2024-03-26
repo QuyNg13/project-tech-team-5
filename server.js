@@ -213,6 +213,10 @@ app.post('/addfriend/:friendId', async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
+    await client.connect ()
+    const db = client.db("Data")
+    const coll = db.collection("users")
+    
     const friendId = req.params.friendId
 
     await coll.updateOne(
@@ -238,7 +242,6 @@ app.post('/accept-friend-request/friendId', async (req, res) => {
       { $Set: { friendshipStatus: "pending" } }
     )
 
-
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
     
@@ -247,10 +250,6 @@ app.post('/accept-friend-request/friendId', async (req, res) => {
   }
 })
   
-
-
-
-
 //Backend Daan Kkoekkoek Eigenschappen
 app.post('/update-properties', async (req, res) => {
   try {
