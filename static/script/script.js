@@ -153,9 +153,3 @@ function filterGames() {
   // Voer hier je logica uit om de games te filteren op basis van de geselecteerde genres
 }
 
-fetch('https://api.rawg.io/api/platforms')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => console.error('Error fetching platforms:', error));
