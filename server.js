@@ -1,5 +1,6 @@
 const express = require('express');
-const { MongoClient, ObjectId } = require("mongodb");
+const { MongoClient} = require("mongodb");
+const { ObjectId } = require('mongodb');
 const app = express();
 const port = 3000;
 require('dotenv').config();
@@ -104,16 +105,50 @@ async function adduser(req, res) {
     const db = client.db("Data");
     const coll = db.collection("users");
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    // De destructuring assignment hier corrigeren
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
-    
+    req.session.loggedIn = true;
+    req.session.username = username;
+    req.session.user = { _id: insertedId };
     console.log(insertedId);
+    console.log(req.session);
     return res.redirect('/registervragen');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
   }
 }
+
+app.post('/registervragen', async (req, res) => {
+  try {
+      if (!req.session.user || !req.session.user._id) {
+          throw new Error('Gebruikerssessie niet correct ingesteld');
+      }
+      
+      const userId = req.session.user._id; // Haal alleen het gebruikers-ID uit de sessie
+      const profileData = {
+          age: req.body.age,
+          language: req.body.language,
+          console: req.body.console,
+          consoleLink: req.body.consoleLink,
+          playStyle: req.body.playStyle,
+          bio: req.body.bio,
+          favoriteGenres: req.body.genre,
+          gender: req.body.gender,
+          favoriteGames: req.body.favoriteGames
+      };
+      await client.connect();
+      const db = client.db("Data");
+      const coll = db.collection("users");
+      // Profielgegevens opslaan in de database onder het ID van de gebruiker
+      await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { profileData } });
+      res.redirect('/'); // Optioneel: Doorsturen naar volgende pagina
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
+  } finally {
+      await client.close();
+  }
+});
 
 app.post('/login', async (req, res) => {
   await login(req, res);
