@@ -42,7 +42,6 @@ app.get('/', checkLoggedIn,(req, res) => {
 });
 
 app.get('/registervragen', (req, res) => {
-  const { step } = req.query;
   res.render('registervragen');
 });
 
