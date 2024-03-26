@@ -57,7 +57,6 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
- HEAD
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
@@ -229,29 +228,3 @@ app.post('/addfriend/:friendId'), async (req, res) => {
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 }
-
-
-//Backend Daan Kkoekkoek Eigenschappen
-const userSchema = new mongoose.Schema({
-  username: String,
-  gender: String,
-  age: Number,
-  language: String,
-  bio: String
-});
-
-const User = mongoose.model('User', userSchema);
-
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// Routes
-app.get('/user', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
