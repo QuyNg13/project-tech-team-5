@@ -61,6 +61,7 @@ app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
 
+
 // Mongodb-client openen wanneer de applicatie start
 client.connect().then(() => {
   app.listen(port, () => {
@@ -230,4 +231,29 @@ app.post('/addfriend/:friendId', async (req, res) => {
     console.error ('Error adding friend:', error)
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
-}
+})
+
+//vriendschapsverzoek accepteren
+app.post('/accept-friend-request/friendId', async (req, res) => {
+  try {
+    const friendId = req.params.friendId
+
+    const db = client.db("Data")
+    const coll = db.collection("users")
+
+    await coll.updateOne(
+      {_id: new ObjectId(req.session.user._id)},
+      { $set: { "friends.$.friendshipStatus": "accepted" } }
+    )
+
+    const friendRequests = await coll
+    res.render('vriendschapsverzoeken', {friendRequests})
+
+
+    res.status(200).json({message: 'Friendschip request succesfully accepted'})
+  } catch (error) {
+    console.error ('Error accepting friend request:', error)
+    res.status(500).json({error: 'An error has occurred while adding friend' })
+  }
+})
+
