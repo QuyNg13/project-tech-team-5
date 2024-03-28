@@ -79,8 +79,7 @@ input {
 
 
 
-/* Daan zijn css start voor frontend */
-
+/* Daan zijn css start voor registratie vragen */
 
 /* Navigatie pagina */
 #registratievraag {
@@ -107,32 +106,59 @@ input {
 #hetantwoord {
     color: white;
     background-color: blue;
-    margin: 0.5em 3em;
+    margin: 0.8em 3em;
     height: 6em;
 
     border-style: none;
+    border-radius: 2.3em;
+}
+
+#hetantwoord:hover {
+    color: white;
+    background-color: lightseagreen;
 }
 
 #nav-bar {
     position: relative;
     top: 1em;
-    left: 1.3em;
+    left: 2em;
     text-align: center;
     display: flex;
 
 }
   
 li.hole {
-    width:2em;
-    height:2em;
+    width: 1.5em;
+    height: 1.5em;
     margin: 0 1em;
     border-radius:50%;
     border:1px solid white;
     display:inline-block;
 }
 
-/* Detail pagina*/
+#volgenderoute {
+    position: relative;
+    left: 6em;
+    top: 2em;
+    margin: 0 .7em;
 
+
+    background-color:midnightblue ;
+    color: white;
+    border-style: none;
+    width: 7em;
+    height: 4em;
+    border-radius: 2.3em;
+}
+
+#volgenderoute:hover {
+    color: white;
+    background-color: lightseagreen;
+}
+
+
+
+/* Detail pagina*/
 .white-text {
     color: white;
     text-align: center;
@@ -140,3 +166,60 @@ li.hole {
 
 
 
+
+
+
+
+
+
+
+
+
+/* Daan zijn css start voor instellingen profielen */
+
+#titelInstellingen {
+    color: white;
+    padding-right: 2em;
+    padding-left: .6em;
+    text-align: left;
+}
+
+
+#instellingenCSS input {
+    color: white;
+    width: 20em;
+    text-align: center;
+    border-radius: 2em;
+}
+
+#instellingenCSS button {
+    color: white;
+    background-color: blue;
+    border-style: none;
+    width: 8em;
+    height: 3em;
+
+    text-align: center;
+    border-radius: 2em;
+}
+
+#instellingenCSS p {
+    color: white;
+    font-weight: 100;
+    font-size: small;
+    padding: 0 1em;
+}
+
+#datainstellingen {
+    padding-left: .6em;
+    color: white;
+    font-size:larger;
+    font-style: normal;
+    font-weight: 10;
+}
+s
+#instellingenCSS ul li  {
+    color: white;
+    font-weight: 100;
+
+}

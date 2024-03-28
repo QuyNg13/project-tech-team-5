@@ -1,13 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href=/style/style.css>
+    <link rel="stylesheet" href=/style/info.css>
 </head>
+
 <body>
-    <h1>welkom</h1>
-    <h2>hier komt een website</h2>
+
+    <header>
+        <!-- Hier heb ik gekozen voor het maken van een nav met daarin een ul met vervolgends li items voor het maken van het menu waar
+		mensen uit kunnen kiezen.-->
+        <nav class="navbar"> <!-- <a href= "https://www.youtube.com/watch?v=flItyHiDm7E"> link naar video die ik heb gebruikt als referentie </a>
+		-->
+            <div class="logo">
+                <img src="/style/images/Untitled_Artwork 71.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="##">Home</a>
+                </li>
+
+                <li>
+                    <a href="##">My Friends</a>
+                </li>
+
+                <li>
+                    <a href="##">My Profile</a>
+                </li>
+
+            </ul>
+
+            <!-- Hier heb ik het hamburger menu mee gemaakt, drie streepjes boven elkaar. een "span" staat voor het aangeven van bepaalde 
+			content en heb dus hiervoor de span gemaakt om het hamburger menu te worden-->
+
+            <button>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+
+    </header>
+
+    <main id="main-content">
+        <input type="search" class="search" placeholder="Looking for a specific game?">
+
+
+        <div class="dropdown">
+            <button onclick="toggleDropdown()" class="dropbtn">Filters</button>
+            <div id="myDropdown" class="dropdown-content">
+                <aside>
+                    <h3>PvP or CO-Op</h3>
+                    <input type="checkbox" name="filter" value="all" id="filter-all" >
+                    <label for="filter-all">PvP</label>
+
+                    <input type="checkbox" name="filter" value="people" id="filter-people">
+                    <label for="filter-people">CO-OP </label>
+
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <div class="container">
+                        <label for="genres">Select Genre(s):</label>
+                        <select id="genres" multiple>
+                            <option value="action">Action</option>
+                            <option value="indie">Indie</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="rpg">RPG</option>
+                            <option value="strategy">Strategy</option>
+                            <option value="shooter">Shooter</option>
+                            <option value="casual">Casual</option>
+                            <option value="simulation">Simulation</option>
+                            <option value="puzzle">Puzzle</option>
+                            <option value="arcade">Arcade</option>
+                            <option value="platformer">Platformer</option>
+                            <option value="racing">Racing</option>
+                            <option value="massively-multiplayer">Massively Multiplayer</option>
+                            <option value="sports">Sports</option>
+                            <option value="fighting">Fighting</option>
+                            <option value="family">Family</option>
+                            <option value="board-games">Board Games</option>
+                            <option value="educational">Educational</option>
+                            <option value="card">Card</option>
+                        </select>
+                    </div>
+            
+                    <div class="container">
+                        <label for="concole">Select console(s):</label>
+                        <select id="console" multiple>
+                            <option value="action">Action</option>
+                            <option value="indie">Indie</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="rpg">RPG</option>
+                            <option value="strategy">Strategy</option>
+                            <option value="shooter">Shooter</option>
+                            <option value="casual">Casual</option>
+                            <option value="simulation">Simulation</option>
+                            <option value="puzzle">Puzzle</option>
+                            <option value="arcade">Arcade</option>
+                            <option value="platformer">Platformer</option>
+                            <option value="racing">Racing</option>
+                            <option value="massively-multiplayer">Massively Multiplayer</option>
+                            <option value="sports">Sports</option>
+                            <option value="fighting">Fighting</option>
+                            <option value="family">Family</option>
+                            <option value="board-games">Board Games</option>
+                            <option value="educational">Educational</option>
+                            <option value="card">Card</option>
+                        </select>
+                    </div>
+
+
+
+                    <br>
+                    <br>
+                    <br>
+
+                    
+                    <section>
+                        Toon in een:
+                        <input type="radio" name="view" value="list" id="view-list" checked>
+                        <label for="view-list">lijst</label>
+                        <input type="radio" name="view" value="list" id="view-grid">
+                        <label for="view-grid">grid</label>
+
+                    </section>
+                    <br>
+                    <br>
+                    <br>
+
+                    <button onclick="filterGames()">Filter</button>
+
+
+                </aside>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/script/api.js"></script>
+    <script src="/script/script.js"></script>
+    
 </body>
+
 </html>
