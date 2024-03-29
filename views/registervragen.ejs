@@ -8,48 +8,9 @@
 </head>
 <body>
     <main>
-        <!-- <form action="/registervragen" method="POST">
-            <label for="age">Leeftijd (geboortedatum): </label>
-            <input type="date" id="age" name="age" required><br>
-        
-            <label for="language">Spraaktaal: </label>
-            <input type="text" id="language" name="language" required><br>
-        
-            <label for="console">Favoriete console: </label>
-            <input type="text" id="console" name="console" required><br>
-            <label for="consoleLink">Link naar console account: </label>
-            <input type="url" id="consoleLink" name="consoleLink"><br>
-        
-            <label for="playStyle">PvP of Coöp: </label>
-            <select id="playStyle" name="playStyle" required>
-                <option value="PvP">PvP</option>
-                <option value="Coöp">Coöp</option>
-            </select><br>
-        
-            <label for="bio">Bio: </label>
-            <textarea id="bio" name="bio"></textarea><br>
-        
-            <label for="profilePic">Upload een profielfoto: </label>
-            <input type="file" id="profilePic" name="profilePic"><br>
-        
-            <label for="genre">Favoriete genre: </label>
-            <input type="text" id="genre" name="genre" required><br>
-        
-            <label for="gender">Geslacht: </label>
-            <select id="gender" name="gender" required>
-                <option value="male">Man</option>
-                <option value="female">Vrouw</option>
-                <option value="other">Anders</option>
-            </select><br>
-        
-            <label for="favoriteGames">Favoriete games: </label>
-            <textarea id="favoriteGames" name="favoriteGames" required></textarea><br>
-        
-            <button type="submit">Volgende</button>
-        </form> -->
         <form action="/registervragen" method="POST">
             <% if (currentPage === 1) { %>
-            <!-- Vraag 1: Leeftijd (geboortedatum) -->
+            <!-- Vraag 1: Leeftijd, gender (geboortedatum) -->
             <label for="age">Leeftijd (geboortedatum): </label>
             <input type="date" id="age" name="age" required><br>
             <label for="gender">Geslacht: </label>
@@ -63,7 +24,7 @@
             <label for="language">Spraaktaal: </label>
             <input type="text" id="language" name="language" required><br>
             <% } else if (currentPage === 3) { %>
-            <!-- Vraag 3: Favoriete Console en Link naar Console -->
+            <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
             <label for="console">Favoriete console: </label>
             <input type="text" id="console" name="console" required><br>
             <label for="consoleLink">Link naar console account: </label>
@@ -74,13 +35,13 @@
                 <option value="Coöp">Coöp</option>
             </select><br>
             <% } else if (currentPage === 4) { %>
-            <!-- Vraag 4: Speelstijl en Biografie -->
+            <!-- Vraag 4: genres en games -->
             <label for="genre">Favoriete genre: </label>
             <input type="text" id="genre" name="genre" required><br>
             <label for="favoriteGames">Favoriete games: </label>
-            <textarea id="favoriteGames" name="favoriteGames" required></textarea><br>
+            <select id="favoriteGames" name="favoriteGames[]" multiple="multiple" required></select><br>
             <% } else if (currentPage === 5) { %>
-            <!-- Vraag 5: Profielfoto en Favoriet Genre -->
+            <!-- Vraag 5: Profielfoto en bio -->
             <label for="profilePic">Upload een profielfoto: </label>
             <input type="file" id="profilePic" name="profilePic"><br>
             <label for="bio">Bio: </label>
