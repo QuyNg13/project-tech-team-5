@@ -246,9 +246,8 @@ app.post('/accept-friend-request/friendId', async (req, res) => {
       { $set: { "friends.$.friendshipStatus": "accepted" } }
     )
 
-    const friendRequests = await.coll
+    const friendRequests = await coll.find({ _id: new ObjectId(req.session.user._id)})
     res.render('vriendschapsverzoeken', {friendRequests})
-
 
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
