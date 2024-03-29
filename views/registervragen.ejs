@@ -39,7 +39,8 @@
             <label for="genre">Favoriete genre: </label>
             <input type="text" id="genre" name="genre" required><br>
             <label for="favoriteGames">Favoriete games: </label>
-            <select id="favoriteGames" name="favoriteGames[]" multiple="multiple" required></select><br>
+            <input type="text" id="favoriteGames" name="favoriteGames" placeholder="Zoek naar je favoriete games" autocomplete="off">
+            <div id="gameSuggestions"></div><br>
             <% } else if (currentPage === 5) { %>
             <!-- Vraag 5: Profielfoto en bio -->
             <label for="profilePic">Upload een profielfoto: </label>
@@ -58,6 +59,6 @@
             <% } %>
         </form>
     </main>
-    <script src="/static/script/registratieVraag.js">  </script>
+    <script src="/script/registervragen.js">  </script>
 </body>
 </html>
