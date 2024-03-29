@@ -144,8 +144,7 @@ app.post('/registervragen', async (req, res) => {
       profileDataUpdate.consoleLink = req.body.consoleLink;
     } else if (currentPage === 4) {
       profileDataUpdate.favoriteGenres = req.body.genre;
-      const favoriteGames = req.body.favoriteGames.split(",").map(game => game.trim());
-      profileDataUpdate.favoriteGames = favoriteGames;
+      profileDataUpdate.favoriteGames = req.body.selectedGames.split(','); // Voeg geselecteerde games toe
     } else if (currentPage === 5) {
       profileDataUpdate.bio = req.body.bio;
     }
