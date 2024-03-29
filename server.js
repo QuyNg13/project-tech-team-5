@@ -31,6 +31,22 @@ function checkLoggedIn(req, res, next) {
   }
 }
 
+// Middleware voor controle op ingelogde gebruiker
+function checkLoggedIn(req, res, next) {
+  if (req.session && req.session.loggedIn) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
+function checkLoggedInRedirectHome(req, res, next) {
+  if (req.session && req.session.loggedIn) {
+    return res.redirect('/');
+  }
+  next();
+}
+
 function checkLoggedInRedirectHome(req, res, next) {
   if (req.session && req.session.loggedIn) {
     return res.redirect('/');
@@ -253,15 +269,13 @@ app.post('/accept-friend-request/friendId', CheckLoggedIn, async (req, res) => {
     const db = client.db("Data")
     const friendRequestId = req.params.friendId
 
-cons
+    const result = await db.collection('friendshipRequests').findOneAndUpdate(
+    { _id: new ObjectId(friendRequestId), receiver_id: new ObjectId(req.session.user._id) },
+    {$Set: {status:'accepted'}},
+    { returnOriginal: false}
+  )
 
-
-
-    const friendshipRequest = await friendshipRequest.findOneAndUpdate(
-      { _id: friendRequestId, receiver_id: req.session.user._id },
-      { status: 'accepted' },
-      { new: true }
-    )
+  	const friendshipRequest = result.value
 
     if (!friendshipRequest) {
       return res.status(404).json({ error: 'Friendship request was not found'})
