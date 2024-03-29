@@ -7,28 +7,28 @@
 
     <link rel="stylesheet" href="\style\style.css">
     <link href="https://fonts.cdnfonts.com/css/techno-race" rel="stylesheet">
-    <script> src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
     <h1>Friend requests</h1>
     <table>
         <thead>
             <tr>
-                <th><%= user.username %></th>
+                <th><%= senderData.username %></th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            <% friendRequests.forEach(request => { %>
+            <% friendshipRequests.forEach((request, index) => { %>
                 <tr>
-                    <td><%= request.sender_id %></td>
-                    <td>Pending</td>
+                    <td><%= senderData[index].username %></td>
+                    <td>Status</td>
                 </tr>
             <% }) %>
         </tbody>
     </table>
 
-    <form action="//<%= user._id %>" method="POST">
+    <form action="/<%= user._id %>" method="POST">
         <button type="submit">Accept friend</button>
     </form>
 </body>
