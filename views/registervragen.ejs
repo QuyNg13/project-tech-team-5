@@ -40,7 +40,10 @@
             <input type="text" id="genre" name="genre" required><br>
             <label for="favoriteGames">Favoriete games: </label>
             <input type="text" id="favoriteGames" name="favoriteGames" placeholder="Zoek naar je favoriete games" autocomplete="off">
-            <div id="gameSuggestions"></div><br>
+            <div id="gameSuggestions"></div>
+            <button type="button" id="addGameBtn">Voeg toe</button>
+            <div id="selectedGames"></div>
+            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
             <% } else if (currentPage === 5) { %>
             <!-- Vraag 5: Profielfoto en bio -->
             <label for="profilePic">Upload een profielfoto: </label>
