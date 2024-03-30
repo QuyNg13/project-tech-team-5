@@ -7,95 +7,86 @@
     <link rel="stylesheet" href="/style/style.css">
 </head>
 <body>
-    <main>       
-        <h1 id="titelInstellingen"> De Titel de instelling pagina </h1>
+  <main>       
+    <h1 id="titelInstellingen"> De Titel de instelling pagina </h1>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.username %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.username %> </h2>
+    <input type="text" name="username" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.gender %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.gender %> </h2>
+    <input type="text" name="gender" value="<%= user.gender %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.age %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.age %> </h2>
+    <input type="text" name="age" value="<%= user.age %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.language %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.language %> </h2>
+    <input type="text" name="language" value="<%= user.language %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.bio %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.bio %> </h2>
+    <input type="text" name="bio" value="<%= user.bio %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.play_style %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.play_style %> </h2>
+    <input type="text" name="playstyles" value="<%= user.play_style %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen">  <%= user.console %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen">  <%= user.console %> </h2>
+    <input type="text" name="consoleLink" value="<%= user.consoleLink %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.play_duration_hours %> </h2>
-        <p> Ik ben Max, een 25-jarige gamer die leeft voor de spanning van de virtuele wereld. Mijn hart gaat sneller kloppen van actievolle games en ik ben altijd op zoek naar nieuwe uitdagingen. Of het nu gaat om het verslaan van tegenstanders in een first-person shooter of het verkennen van epische werelden, ik ben altijd klaar voor het volgende avontuur.</p>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.play_duration_hours %> </h2>
+    <p> Ik ben Max, een 25-jarige gamer die leeft voor de spanning van de virtuele wereld. Mijn hart gaat sneller kloppen van actievolle games en ik ben altijd op zoek naar nieuwe uitdagingen. Of het nu gaat om het verslaan van tegenstanders in een first-person shooter of het verkennen van epische werelden, ik ben altijd klaar voor het volgende avontuur.</p>
+    <input type="text" name="play_duration_hours" value="<%= user.play_duration_hours %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
 
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> Favoriete games </h2>
-        <ul>
-            <li> <%= user.favorite_games %> </li>
-            <li> <%= user.favorite_games %> </li>
-            <li> <%= user.favorite_games %> </li>
-        </ul>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-    </main>
-
-    <script>
-        document.getElementById('aanpassing').addEventListener('click', async () => {
-          const nieuweLeeftijd = document.querySelector('input[name="age"]').value;
-        
-          try {
-            // Stuur een AJAX-verzoek naar de server om de leeftijd bij te werken
-            const response = await fetch('/updateProfileSettings', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ age: nieuweLeeftijd })
-            });
-        
-            if (response.ok) {
-              console.log('Leeftijd succesvol bijgewerkt');
-              // Redirect to settings profile page or show a success message
-            } else {
-              console.error('Er is een fout opgetreden bij het bijwerken van de leeftijd');
-              // Handle error appropriately
-            }
-          } catch (error) {
-            console.error('Er is een fout opgetreden:', error);
-          }
-        });
-        </script>
-        
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> Favoriete games </h2>
+    <ul>
+        <% user.favorite_games.forEach(game => { %>
+            <li><%= game %></li>
+        <% }) %>
+    </ul>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+  </div>
+  
+  </main>        
 </body>
 </html>

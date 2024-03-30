@@ -62,18 +62,53 @@ app.get('/info', (req, res) => {
 });
 
 
-//Detailpagina gebruikers
+//route voor profiel instellingen
+app.get('/Instellingenprofiel/:username', async (req, res) => {
+  try {
+    await client.connect ()
+    const db = client.db("Data")
+    const coll = db.collection("users")
+    
+    //gebruiker ophalen
+    const username = req.params.username;
+    const user = await coll.findOne({ _id: new ObjectId(username)})
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found'})
+    }
+
+    res.render('Instellingenprofiel', {user})
+  } catch (error) {
+    console.error ('Error:', error)
+    res.status(500).json({error: 'An error has occurred'})
+  }
+})
+
+
+//DataUpdaten voor gebruiker (Testing van Daan)
 app.post('/updateProfileSettings', checkLoggedIn, async (req, res) => {
   try {
     const userId = req.session.user._id; // Haal het gebruikers-ID op uit de sessie
-    const { age } = req.body; // Haal de nieuwe leeftijd op uit het verzoek
+    const { gender, bio, favoritegenres, playstyles, favoritegames, language, consoleLink } = req.body; // Haal de nieuwe gegevens op uit het verzoek
     
     await client.connect();
     const db = client.db("Data");
     const coll = db.collection("users");
 
     // Profielinstellingen bijwerken in de database onder het ID van de gebruiker
-    await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { age } });
+    await coll.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { 
+          "profileData.gender": gender,
+          "profileData.bio": bio,
+          "profileData.favoritegenres": favoritegenres,
+          "profileData.playstyles": playstyles,
+          "profileData.favoritegames": favoritegames,
+          "profileData.language": language,
+          "profileData.consoleLink": consoleLink
+        } 
+      }
+    );
 
     res.redirect('/instellingenprofiel/' + userId); // Stuur de gebruiker terug naar het instellingenprofiel nadat de gegevens zijn bijgewerkt
   } catch (error) {
@@ -84,35 +119,6 @@ app.post('/updateProfileSettings', checkLoggedIn, async (req, res) => {
   }
 });
 
-app.get('/instellingenprofiel/:username', checkLoggedIn, async (req, res) => {
-  try {
-    const userId = req.params.username; // Haal het gebruikers-ID op uit de URL
-    const loggedInUserId = req.session.user._id; // Haal het gebruikers-ID op uit de sessie
-    
-    // Controleer of het gebruikers-ID uit de sessie overeenkomt met het gebruikers-ID in de URL
-    if (userId !== loggedInUserId.toString()) {
-      return res.status(403).send('U heeft geen toestemming om deze pagina te bekijken');
-    }
-    
-    await client.connect();
-    const db = client.db("Data");
-    const coll = db.collection("users");
-    
-    // Gebruiker ophalen
-    const user = await coll.findOne({ _id: new ObjectId(userId) });
-
-    if (!user) {
-      return res.status(404).json({ error: 'Gebruiker niet gevonden' });
-    }
-
-    res.render('instellingenprofiel', { user });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Er is een fout opgetreden' });
-  } finally {
-    await client.close();
-  }
-});
 
 
 // Mongodb-client openen wanneer de applicatie start
@@ -349,4 +355,5 @@ cons
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 })
+
 
