@@ -57,8 +57,57 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
-app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
-  res.render('instellingenprofiel');
+
+//Detailpagina gebruikers
+app.post('/updateProfileSettings', checkLoggedIn, async (req, res) => {
+  try {
+    const userId = req.session.user._id; // Haal het gebruikers-ID op uit de sessie
+    const { age } = req.body; // Haal de nieuwe leeftijd op uit het verzoek
+    
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+
+    // Profielinstellingen bijwerken in de database onder het ID van de gebruiker
+    await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { age } });
+
+    res.redirect('/instellingenprofiel/' + userId); // Stuur de gebruiker terug naar het instellingenprofiel nadat de gegevens zijn bijgewerkt
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het bijwerken van de profielinstellingen');
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/instellingenprofiel/:username', checkLoggedIn, async (req, res) => {
+  try {
+    const userId = req.params.username; // Haal het gebruikers-ID op uit de URL
+    const loggedInUserId = req.session.user._id; // Haal het gebruikers-ID op uit de sessie
+    
+    // Controleer of het gebruikers-ID uit de sessie overeenkomt met het gebruikers-ID in de URL
+    if (userId !== loggedInUserId.toString()) {
+      return res.status(403).send('U heeft geen toestemming om deze pagina te bekijken');
+    }
+    
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    
+    // Gebruiker ophalen
+    const user = await coll.findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: 'Gebruiker niet gevonden' });
+    }
+
+    res.render('instellingenprofiel', { user });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Er is een fout opgetreden' });
+  } finally {
+    await client.close();
+  }
 });
 
 

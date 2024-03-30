@@ -4,8 +4,6 @@ console.log("data")
 //document.getElementById('gameinfo').innerHTML = gameInfo
 
 function searchGame() {
-    const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
-    const apiUrl = 'https://api.rawg.io/api/games';
 
     const gameName = document.getElementById('gameNameInput').value;
 

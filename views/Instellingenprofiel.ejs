@@ -68,7 +68,34 @@
         </ul>
         <button id="aanpassing"> pas aan </button>
     </div>
-
     </main>
+
+    <script>
+        document.getElementById('aanpassing').addEventListener('click', async () => {
+          const nieuweLeeftijd = document.querySelector('input[name="age"]').value;
+        
+          try {
+            // Stuur een AJAX-verzoek naar de server om de leeftijd bij te werken
+            const response = await fetch('/updateProfileSettings', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ age: nieuweLeeftijd })
+            });
+        
+            if (response.ok) {
+              console.log('Leeftijd succesvol bijgewerkt');
+              // Redirect to settings profile page or show a success message
+            } else {
+              console.error('Er is een fout opgetreden bij het bijwerken van de leeftijd');
+              // Handle error appropriately
+            }
+          } catch (error) {
+            console.error('Er is een fout opgetreden:', error);
+          }
+        });
+        </script>
+        
 </body>
 </html>
