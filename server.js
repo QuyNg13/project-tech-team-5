@@ -9,7 +9,8 @@ const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const session = require('express-session')
-
+const mongoose = require('mongoose')
+const Swal = require('sweetalert2')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,8 +42,11 @@ app.get('/', checkLoggedIn,(req, res) => {
   res.render('home');
 });
 
-app.get('/registervragen', (req, res) => {
-  res.render('registervragen');
+app.get('/registervragen/:page', (req, res) => {
+  // Gebruik de paginanummer van de URL-parameters
+  let currentPage = parseInt(req.params.page) || 1;
+  const totalPages = 5; // Het totale aantal vragen
+  res.render('registervragen', { currentPage, totalPages });
 });
 
 app.get('/login', checkLoggedInRedirectHome,(req, res) => {
@@ -160,7 +164,7 @@ async function adduser(req, res) {
     req.session.user = { _id: insertedId };
     console.log(insertedId);
     console.log(req.session);
-    return res.redirect('/registervragen');
+    return res.redirect('/registervragen/1');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
@@ -169,33 +173,52 @@ async function adduser(req, res) {
 
 app.post('/registervragen', async (req, res) => {
   try {
-      if (!req.session.user || !req.session.user._id) {
-          throw new Error('Gebruikerssessie niet correct ingesteld');
-      }
-      
-      const userId = req.session.user._id; // Haal alleen het gebruikers-ID uit de sessie
-      const profileData = {
-          age: req.body.age,
-          language: req.body.language,
-          console: req.body.console,
-          consoleLink: req.body.consoleLink,
-          playStyle: req.body.playStyle,
-          bio: req.body.bio,
-          favoriteGenres: req.body.genre,
-          gender: req.body.gender,
-          favoriteGames: req.body.favoriteGames
-      };
-      await client.connect();
-      const db = client.db("Data");
-      const coll = db.collection("users");
-      // Profielgegevens opslaan in de database onder het ID van de gebruiker
-      await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { profileData } });
-      res.redirect('/'); // Optioneel: Doorsturen naar volgende pagina
+    // Controleer of de gebruikerssessie correct is ingesteld en haal het gebruikers-ID op
+    if (!req.session.user || !req.session.user._id) {
+      throw new Error('Gebruikerssessie niet correct ingesteld');
+    }
+    const userId = req.session.user._id;
+
+    // Haal de huidige pagina op uit het formulier
+    const currentPage = parseInt(req.body.currentPage);
+
+    // Update het profielgegevensobject afhankelijk van de huidige pagina
+    let profileDataUpdate = {};
+    if (currentPage === 1) {
+      profileDataUpdate.age = req.body.age;
+      profileDataUpdate.gender = req.body.gender;
+    } else if (currentPage === 2) {
+      profileDataUpdate.language = req.body.language;
+    } else if (currentPage === 3) {
+      profileDataUpdate.console = req.body.console;
+      profileDataUpdate.consoleLink = req.body.consoleLink;
+    } else if (currentPage === 4) {
+      profileDataUpdate.favoriteGenres = req.body.genre;
+      const favoriteGames = req.body.favoriteGames.split(",").map(game => game.trim());
+      profileDataUpdate.favoriteGames = favoriteGames;
+    } else if (currentPage === 5) {
+      profileDataUpdate.bio = req.body.bio;
+    }
+
+    // Verbind met de database, werk het profielgegevensobject bij en sluit de verbinding
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    await coll.updateOne({ _id: new ObjectId(userId) }, { $set: profileDataUpdate });
+    await client.close();
+
+    // Controleer of er nog meer pagina's zijn of dat het formulier compleet is
+    const totalPages = 5;
+    if (currentPage < totalPages) {
+      // Als er nog meer pagina's zijn, stuur de gebruiker naar de volgende pagina
+      res.redirect(`/registervragen/${currentPage + 1}`);
+    } else {
+      // Als het formulier compleet is, stuur de gebruiker naar de startpagina
+      res.redirect('/');
+    }
   } catch (error) {
-      console.error(error);
-      res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
-  } finally {
-      await client.close();
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
   }
 });
 
@@ -282,22 +305,44 @@ app.post('/addfriend/:friendId', async (req, res) => {
   }
 })
 
-//vriendschapsverzoek accepteren
-app.post('/accept-friend-request/friendId', async (req, res) => {
+//Endpoint voor lijst met vriendschapsverzoeken
+app.get('/friendrequests', checkLoggedIn,  async (req, res) => {
   try {
-    const friendId = req.params.friendId
-
     const db = client.db("Data")
-    const coll = db.collection("users")
+    const friendshipRequests = await db.collection.find('friendshipRequests').find({ receiver_id: new ObjectId(req.session.user._id), status: 'pending'}).toArray()
 
-    await coll.updateOne(
-      {_id: new ObjectId(req.session.user._id)},
-      { $set: { "friends.$.friendshipStatus": "accepted" } }
+  res.render('vriendschapsverzoeken', {friendshipRequests})
+} catch (error) {
+  console.error('Error fetching friendship requests:', error)
+  res.status(500).send('An error occured while fetching the friendship requests')
+}
+})
+
+//vriendschapsverzoek accepteren
+app.post('/accept-friend-request/friendId', CheckLoggedIn, async (req, res) => {
+  try {
+    const db = client.db("Data")
+    const friendRequestId = req.params.friendId
+
+cons
+
+
+
+    const friendshipRequest = await friendshipRequest.findOneAndUpdate(
+      { _id: friendRequestId, receiver_id: req.session.user._id },
+      { status: 'accepted' },
+      { new: true }
     )
 
-    const friendRequests = await coll
-    res.render('vriendschapsverzoeken', {friendRequests})
+    if (!friendshipRequest) {
+      return res.status(404).json({ error: 'Friendship request was not found'})
+    }
 
+    Swal.fire({
+      title: "Confirmation",
+      text: "Friendship request accepted",
+      icon: "success"
+    })
 
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
