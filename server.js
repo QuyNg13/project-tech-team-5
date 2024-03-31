@@ -42,8 +42,11 @@ app.get('/', checkLoggedIn,(req, res) => {
   res.render('home');
 });
 
-app.get('/registervragen', (req, res) => {
-  res.render('registervragen');
+app.get('/registervragen/:page', (req, res) => {
+  // Gebruik de paginanummer van de URL-parameters
+  let currentPage = parseInt(req.params.page) || 1;
+  const totalPages = 5; // Het totale aantal vragen
+  res.render('registervragen', { currentPage, totalPages });
 });
 
 app.get('/login', checkLoggedInRedirectHome,(req, res) => {
@@ -112,7 +115,7 @@ async function adduser(req, res) {
     req.session.user = { _id: insertedId };
     console.log(insertedId);
     console.log(req.session);
-    return res.redirect('/registervragen');
+    return res.redirect('/registervragen/1');
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
@@ -121,33 +124,52 @@ async function adduser(req, res) {
 
 app.post('/registervragen', async (req, res) => {
   try {
-      if (!req.session.user || !req.session.user._id) {
-          throw new Error('Gebruikerssessie niet correct ingesteld');
-      }
-      
-      const userId = req.session.user._id; // Haal alleen het gebruikers-ID uit de sessie
-      const profileData = {
-          age: req.body.age,
-          language: req.body.language,
-          console: req.body.console,
-          consoleLink: req.body.consoleLink,
-          playStyle: req.body.playStyle,
-          bio: req.body.bio,
-          favoriteGenres: req.body.genre,
-          gender: req.body.gender,
-          favoriteGames: req.body.favoriteGames
-      };
-      await client.connect();
-      const db = client.db("Data");
-      const coll = db.collection("users");
-      // Profielgegevens opslaan in de database onder het ID van de gebruiker
-      await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { profileData } });
-      res.redirect('/'); // Optioneel: Doorsturen naar volgende pagina
+    // Controleer of de gebruikerssessie correct is ingesteld en haal het gebruikers-ID op
+    if (!req.session.user || !req.session.user._id) {
+      throw new Error('Gebruikerssessie niet correct ingesteld');
+    }
+    const userId = req.session.user._id;
+
+    // Haal de huidige pagina op uit het formulier
+    const currentPage = parseInt(req.body.currentPage);
+
+    // Update het profielgegevensobject afhankelijk van de huidige pagina
+    let profileDataUpdate = {};
+    if (currentPage === 1) {
+      profileDataUpdate.age = req.body.age;
+      profileDataUpdate.gender = req.body.gender;
+    } else if (currentPage === 2) {
+      profileDataUpdate.language = req.body.language;
+    } else if (currentPage === 3) {
+      profileDataUpdate.console = req.body.console;
+      profileDataUpdate.consoleLink = req.body.consoleLink;
+    } else if (currentPage === 4) {
+      profileDataUpdate.favoriteGenres = req.body.genre;
+      const favoriteGames = req.body.favoriteGames.split(",").map(game => game.trim());
+      profileDataUpdate.favoriteGames = favoriteGames;
+    } else if (currentPage === 5) {
+      profileDataUpdate.bio = req.body.bio;
+    }
+
+    // Verbind met de database, werk het profielgegevensobject bij en sluit de verbinding
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    await coll.updateOne({ _id: new ObjectId(userId) }, { $set: profileDataUpdate });
+    await client.close();
+
+    // Controleer of er nog meer pagina's zijn of dat het formulier compleet is
+    const totalPages = 5;
+    if (currentPage < totalPages) {
+      // Als er nog meer pagina's zijn, stuur de gebruiker naar de volgende pagina
+      res.redirect(`/registervragen/${currentPage + 1}`);
+    } else {
+      // Als het formulier compleet is, stuur de gebruiker naar de startpagina
+      res.redirect('/');
+    }
   } catch (error) {
-      console.error(error);
-      res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
-  } finally {
-      await client.close();
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
   }
 });
 
