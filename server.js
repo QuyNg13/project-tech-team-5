@@ -247,6 +247,12 @@ app.post('/addfriend/:friendId', async (req, res) => {
       {_id: new ObjectId(req.session.user._id)},
       { $addToSet: {friends: new ObjectId(friendId) } }
     )
+
+    Swal.fire({
+      title: "Confirmation",
+      text: "Friendship added succesfully",
+      icon: "success"
+    })
    
     res.status(200).json({message: 'Friend added succesfully'})
   } catch (error) {
