@@ -10,6 +10,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const session = require('express-session')
 const Swal = require('sweetalert2')
+const multer = require('multer');
+const fs = require ('fs')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +38,24 @@ function checkLoggedInRedirectHome(req, res, next) {
   }
   next();
 }
+
+// Multer-configuratie voor het opslaan van geüploade profielfoto's
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const userId = req.session.user._id; // Haal gebruikers-ID op
+    const userUploadsDir = `static/style/images/uploads/${userId}`; // Maak een submap voor de gebruiker
+    fs.mkdirSync(userUploadsDir, { recursive: true }); // Zorg ervoor dat de submap bestaat
+    cb(null, userUploadsDir); // Bewaar geüploade profielfoto's in de submap van de gebruiker
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = file.originalname.split('.').pop();
+    console.log(file)
+    cb(null, 'profile-' + uniqueSuffix + '.' + ext); // Geef het bestand een unieke naam
+  }
+});
+
+const upload = multer({ storage: storage });
 
 app.get('/', checkLoggedIn,(req, res) => {
   res.render('home');
@@ -121,7 +141,7 @@ async function adduser(req, res) {
   }
 }
 
-app.post('/registervragen', async (req, res) => {
+app.post('/registervragen', upload.single('profilePic'), async (req, res) => {
   try {
     // Controleer of de gebruikerssessie correct is ingesteld en haal het gebruikers-ID op
     if (!req.session.user || !req.session.user._id) {
@@ -147,6 +167,9 @@ app.post('/registervragen', async (req, res) => {
       profileDataUpdate.favoriteGames = req.body.selectedGames.split(','); // Voeg geselecteerde games toe
     } else if (currentPage === 5) {
       profileDataUpdate.bio = req.body.bio;
+      if (req.file) {
+        profileDataUpdate.profilePic = req.file.filename;
+      }
     }
 
     // Verbind met de database, werk het profielgegevensobject bij en sluit de verbinding
