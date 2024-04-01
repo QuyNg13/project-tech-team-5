@@ -1,42 +1,37 @@
-console.log("data")
-
-//document.getElementById('searchButton').addEventListener('click', searchGame);
-//document.getElementById('gameinfo').innerHTML = gameInfo
-
-function searchGame() {
-    const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
+document.addEventListener('DOMContentLoaded', function () {
     const apiUrl = 'https://api.rawg.io/api/games';
+    const inputField = document.getElementById('gameNameInput'); // Inputveld voor de spelnaam
 
-    const gameName = document.getElementById('gameNameInput').value;
+    // Functie om gegevens van de API op te halen en in te vullen op basis van de ingevoerde spelnaam
+    function fetchGameData(gameName) {
+        // Haal de gegevens van de API op
+        fetch(apiUrl + `?search=${gameName}`)
+            .then(response => response.json())
+            .then(data => {
+                // Controleer of er resultaten zijn gevonden
+                if (data.results.length > 0) {
+                    const gameData = data.results[0]; // Neem het eerste resultaat
+                    // Vul de HTML-inhoud in met de informatie van het spel
+                    document.querySelector('h1').textContent = gameData.name;
+                    document.querySelector('img').src = gameData.background_image;
+                    document.querySelector('ul li:nth-child(1) p').textContent = `Op de volgende console beschikbaar: ${gameData.platforms.map(platform => platform.platform.name).join(', ')}`;
+                    document.querySelector('ul li:nth-child(2) p').textContent = `Genre: ${gameData.genres.map(genre => genre.name).join(', ')}`;
+                    document.querySelector('ul li:nth-child(3) p').textContent = gameData.game_modes.includes('coop') ? 'CO-OP' : 'PVP';
+                    document.querySelector('ul li:nth-child(4) p').textContent = `Koop dit spel nu hier: ${gameData.stores.map(store => store.store.name).join(', ')}`;
+                    document.querySelector('ul li:nth-child(5) p').textContent = `Korte beschrijving: ${gameData.description}`;
+                } else {
+                    // Geen resultaten gevonden
+                    console.log('Geen resultaten gevonden voor de ingevoerde spelnaam.');
+                }
+            })
+            .catch(error => console.error('Er is een fout opgetreden bij het laden van de gegevens:', error));
+    }
 
-fetch(`${apiUrl}?key=${apiKey}&search=${gameName}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    // Event listener voor het invoerveld, om de gegevens op te halen wanneer de gebruiker iets invoert
+    inputField.addEventListener('input', function () {
+        const gameName = inputField.value.trim(); // Trim om eventuele extra spaties te verwijderen
+        if (gameName !== '') {
+            fetchGameData(gameName);
         }
-        return response.json();
-    })
-    .then(data => {
-        const game = data.results[0]; // Assuming first result is the desired game
-
-        if (game) {
-            const gameInfo = `
-              <h1>${game.name}</h1>
-              <p><strong>Released:</strong> ${game.released}</p>
-              <p><strong>Rating:</strong> ${game.rating}</p>
-              <p><strong>Metacritic:</strong> ${game.metacritic}</p>
-              <p><strong>Ratings Count:</strong> ${game.ratings_count}</p>
-              <p><strong>Reviews Text Count:</strong> ${game.reviews_text_count}</p>
-              <p><strong>Playtime:</strong> ${game.playtime} hours</p>
-              <img scr='background_image'> ${game.background_image}</img> 
-            `;
-            document.getElementById('gameInfo').innerHTML = gameInfo;
-        } else {
-            document.getElementById('gameInfo').innerHTML = "<p>Game not found.</p>";
-        }
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
     });
-}
-
+});
