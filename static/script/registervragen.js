@@ -36,7 +36,7 @@ document.getElementById("favoriteGames").addEventListener("input", async functio
     const inputValue = event.target.value;
     if (inputValue.trim() !== "") {
         const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
-        const response = await fetch(`https://api.rawg.io/api/games?search=${inputValue}&page_size=5&key=${apiKey}`);
+        const response = await fetch(`https://api.rawg.io/api/games?search=${inputValue}&page_size=5&key=${apiKey}&search_exact=true&multiplayer_modes=true`);
         const data = await response.json();
         const gameSuggestions = document.getElementById("gameSuggestions");
         gameSuggestions.innerHTML = "";
