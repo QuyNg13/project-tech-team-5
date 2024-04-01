@@ -12,7 +12,7 @@
 
 <div id="instellingenCSS">
     <h2 id="datainstellingen"> <%= user.username %> </h2>
-    <input type="text" name="username" required>
+    <input type="text" name="username" value="<%= user.username %>" required>
     <form action="/updateProfileSettings" method="POST">
         <button type="submit"> pas aan </button>
     </form>
@@ -20,15 +20,7 @@
 
 <div id="instellingenCSS">
     <h2 id="datainstellingen"> <%= user.gender %> </h2>
-    <input type="text" name="gender" value="<%= user.gender %>" required>
-    <form action="/updateProfileSettings" method="POST">
-        <button type="submit"> pas aan </button>
-    </form>
-</div>
-
-<div id="instellingenCSS">
-    <h2 id="datainstellingen"> <%= user.age %> </h2>
-    <input type="text" name="age" value="<%= user.age %>" required>
+    <input type="text" name="gender" value="<%= user.profileData.gender %>" required>
     <form action="/updateProfileSettings" method="POST">
         <button type="submit"> pas aan </button>
     </form>
@@ -36,6 +28,14 @@
 
 <div id="instellingenCSS">
     <h2 id="datainstellingen"> <%= user.language %> </h2>
+    <input type="text" name="age" value="<%= user.age %>" required>
+    <form action="/updateProfileSettings" method="POST">
+        <button type="submit"> pas aan </button>
+    </form>
+</div>
+
+<div id="instellingenCSS">
+    <h2 id="datainstellingen"> <%= user.console %> </h2>
     <input type="text" name="language" value="<%= user.language %>" required>
     <form action="/updateProfileSettings" method="POST">
         <button type="submit"> pas aan </button>
@@ -51,42 +51,21 @@
 </div>
 
 <div id="instellingenCSS">
-    <h2 id="datainstellingen"> <%= user.play_style %> </h2>
-    <input type="text" name="playstyles" value="<%= user.play_style %>" required>
+    <h2 id="datainstellingen"> <%= user.favoriteGames %> </h2>
+    <input type="text" name="playstyles" value="<%= user.playstyles %>" required>
     <form action="/updateProfileSettings" method="POST">
         <button type="submit"> pas aan </button>
     </form>
 </div>
 
 <div id="instellingenCSS">
-    <h2 id="datainstellingen">  <%= user.console %> </h2>
+    <h2 id="datainstellingen"> <%= user.favoriteGenres %> </h2>
     <input type="text" name="consoleLink" value="<%= user.consoleLink %>" required>
     <form action="/updateProfileSettings" method="POST">
         <button type="submit"> pas aan </button>
     </form>
 </div>
 
-<div id="instellingenCSS">
-    <h2 id="datainstellingen"> <%= user.play_duration_hours %> </h2>
-    <p> Ik ben Max, een 25-jarige gamer die leeft voor de spanning van de virtuele wereld. Mijn hart gaat sneller kloppen van actievolle games en ik ben altijd op zoek naar nieuwe uitdagingen. Of het nu gaat om het verslaan van tegenstanders in een first-person shooter of het verkennen van epische werelden, ik ben altijd klaar voor het volgende avontuur.</p>
-    <input type="text" name="play_duration_hours" value="<%= user.play_duration_hours %>" required>
-    <form action="/updateProfileSettings" method="POST">
-        <button type="submit"> pas aan </button>
-    </form>
-</div>
-
-<div id="instellingenCSS">
-    <h2 id="datainstellingen"> Favoriete games </h2>
-    <ul>
-        <% user.favorite_games.forEach(game => { %>
-            <li><%= game %></li>
-        <% }) %>
-    </ul>
-    <form action="/updateProfileSettings" method="POST">
-        <button type="submit"> pas aan </button>
-    </form>
-  </div>
-  
   </main>        
 </body>
 </html>

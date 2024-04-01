@@ -85,7 +85,7 @@ app.get('/Instellingenprofiel/:username', async (req, res) => {
 
 
 //DataUpdaten voor gebruiker (Testing van Daan)
-app.post('/updateProfileSettings', checkLoggedIn, async (req, res) => {
+app.post('/updateProfileSettings', async (req, res) => {
   try {
     const userId = req.session.user._id; // Haal het gebruikers-ID op uit de sessie
     const { gender, bio, favoritegenres, playstyles, favoritegames, language, consoleLink } = req.body; // Haal de nieuwe gegevens op uit het verzoek
