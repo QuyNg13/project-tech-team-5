@@ -15,7 +15,6 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "mongodb": "^6.5.0",
-    "mongoose": "^8.2.4",
     "server.js": "^1.0.0",
     "sweetalert2": "^11.10.7"
   },
