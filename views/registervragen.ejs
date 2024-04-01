@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <form action="/registervragen" method="POST">
+        <form action="/registervragen" method="POST" enctype="multipart/form-data">
             <% if (currentPage === 1) { %>
             <!-- Vraag 1: Leeftijd, gender (geboortedatum) -->
             <label for="age">Leeftijd (geboortedatum): </label>
@@ -40,11 +40,15 @@
             <input type="text" id="genre" name="genre" required><br>
             <label for="favoriteGames">Favoriete games: </label>
             <input type="text" id="favoriteGames" name="favoriteGames" placeholder="Zoek naar je favoriete games" autocomplete="off">
-            <div id="gameSuggestions"></div><br>
+            <div id="gameSuggestions"></div>
+            <button type="button" id="addGameBtn">Voeg toe</button>
+            <div id="selectedGames"></div>
+            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
             <% } else if (currentPage === 5) { %>
             <!-- Vraag 5: Profielfoto en bio -->
             <label for="profilePic">Upload een profielfoto: </label>
-            <input type="file" id="profilePic" name="profilePic"><br>
+            <input type="file" id="profilePic" name="profilePic" accept="image/*" required><br>
+            <button type="submit">Uploaden</button>
             <label for="bio">Bio: </label>
             <textarea id="bio" name="bio"></textarea><br>
             <% } %>
