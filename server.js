@@ -118,13 +118,14 @@ app.post('/updateProfileSettings', async (req, res) => {
     await coll.updateOne(
       { _id: new ObjectId(userId) },
       { $set: { 
-          "profileData.gender": gender,
-          "profileData.bio": bio,
-          "profileData.favoritegenres": favoritegenres,
-          "profileData.playstyles": playstyles,
-          "profileData.favoritegames": favoritegames,
-          "profileData.language": language,
-          "profileData.consoleLink": consoleLink
+          "users.gender": gender,
+          "users.bio": bio,
+          "users.favoriteGenres": favoriteGenres,
+          "users.age": age,
+          "users.favoriteGames": favoriteGames,
+          "users.language": language,
+          "users.consoleLink": consoleLink,
+          "users.console": console
         } 
       }
     );
