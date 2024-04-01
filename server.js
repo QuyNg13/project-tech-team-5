@@ -9,7 +9,6 @@ const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const session = require('express-session')
-const mongoose = require('mongoose')
 const Swal = require('sweetalert2')
 
 app.use(express.json());
@@ -270,7 +269,7 @@ app.get('/friendrequests', checkLoggedIn,  async (req, res) => {
 })
 
 //vriendschapsverzoek accepteren
-app.post('/accept-friend-request/friendId', CheckLoggedIn, async (req, res) => {
+app.post('/accept-friend-request/friendId', checkLoggedIn, async (req, res) => {
   try {
     const db = client.db("Data")
     const friendRequestId = req.params.friendId
