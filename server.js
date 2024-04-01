@@ -9,7 +9,8 @@ const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const session = require('express-session')
-
+const mongoose = require('mongoose')
+const Swal = require('sweetalert2')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -254,22 +255,44 @@ app.post('/addfriend/:friendId', async (req, res) => {
   }
 })
 
-//vriendschapsverzoek accepteren
-app.post('/accept-friend-request/friendId', async (req, res) => {
+//Endpoint voor lijst met vriendschapsverzoeken
+app.get('/friendrequests', checkLoggedIn,  async (req, res) => {
   try {
-    const friendId = req.params.friendId
-
     const db = client.db("Data")
-    const coll = db.collection("users")
+    const friendshipRequests = await db.collection.find('friendshipRequests').find({ receiver_id: new ObjectId(req.session.user._id), status: 'pending'}).toArray()
 
-    await coll.updateOne(
-      {_id: new ObjectId(req.session.user._id)},
-      { $set: { "friends.$.friendshipStatus": "accepted" } }
+  res.render('vriendschapsverzoeken', {friendshipRequests})
+} catch (error) {
+  console.error('Error fetching friendship requests:', error)
+  res.status(500).send('An error occured while fetching the friendship requests')
+}
+})
+
+//vriendschapsverzoek accepteren
+app.post('/accept-friend-request/friendId', CheckLoggedIn, async (req, res) => {
+  try {
+    const db = client.db("Data")
+    const friendRequestId = req.params.friendId
+
+cons
+
+
+
+    const friendshipRequest = await friendshipRequest.findOneAndUpdate(
+      { _id: friendRequestId, receiver_id: req.session.user._id },
+      { status: 'accepted' },
+      { new: true }
     )
 
-    const friendRequests = await coll
-    res.render('vriendschapsverzoeken', {friendRequests})
+    if (!friendshipRequest) {
+      return res.status(404).json({ error: 'Friendship request was not found'})
+    }
 
+    Swal.fire({
+      title: "Confirmation",
+      text: "Friendship request accepted",
+      icon: "success"
+    })
 
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
