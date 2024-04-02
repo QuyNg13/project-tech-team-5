@@ -269,11 +269,11 @@ app.post('/addfriend/:friendId', async (req, res) => {
       { $addToSet: {friends: new ObjectId(friendId) } }
     )
 
-    Swal.fire({
-      title: "Confirmation",
-      text: "Friendship added succesfully",
-      icon: "success"
-    })
+    // Swal.fire({
+    //   title: "Confirmation",
+    //   text: "Friendship added succesfully",
+    //   icon: "success"
+    // })
    
     res.status(200).json({message: 'Friend added succesfully'})
   } catch (error) {
@@ -286,21 +286,18 @@ app.post('/addfriend/:friendId', async (req, res) => {
 //Endpoint voor lijst met vriendschapsverzoeken
 app.get('/friendrequests', checkLoggedIn,  async (req, res) => {
   try {
-    await client.connect()
+    if (!req.session.user || !req.session.user._id) {
+      console.error('User session is not set or missing user ID')
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
+
+    const receiverId = req.session.user._id
 
     const db = client.db("Data")
-    const friendshipRequests = await db.collection('friendshipRequests').find({ receiver_id: new ObjectId(req.session.user._id), status: 'pending'}).toArray()
-    
-    // Array om gebruikersgegevens van afzenders op te slaan
-    const senderData = [];
+    const coll = db.collection("users")
 
-    // Loop door de vriendschapsverzoeken en haal de afzendergegevens op
-    for (const request of friendshipRequests) {
-      const senderId = request.sender_id;
-      // Gebruik de afzender-ID om de gebruiker op te halen uit de 'users' collectie
-      const sender = await db.collection('users').findOne({ _id: senderId });
-      senderData.push(sender); // Voeg afzendergegevens toe aan array
-    }
+    const senderData = await usersColl.find({ friendshipRequests: receiverId}).toArray()
+   
     res.render('vriendschapsverzoeken', {friendshipRequests, senderData, user: req.session.user })
     
   } catch (error) {
