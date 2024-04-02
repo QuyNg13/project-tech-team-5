@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend requests</title>
+</head>
+<body>
+    <h1>Friend requests</h1>
+    <ul>
+        <% friendRequests.forEach(function(requests) { %>
+            <li><% request.senderName %>Wants to add you as a friend</li>
+        <% }) %>
+    </ul>
+
+    <form action="//<%= user._id %>" method="POST">
+        <button type="submit">Accept friend</button>
+    </form>
+</body>
+</html>
