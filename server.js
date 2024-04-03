@@ -91,8 +91,9 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-app.get('/info', (req, res) => {
-  res.render('info');
+app.get('/info/:gameName', (req, res) => {
+  const gameName = req.params.gameName;
+  res.render('info', { gameName: gameName }); 
 });
 
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
