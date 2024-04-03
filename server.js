@@ -123,17 +123,17 @@ app.post('/', async (req, res) => {
 async function adduser(req, res) {
   try {
     await client.connect();
-    const { username, password } = req.body;
+    const { username, password } = req.body; // Haal de gebruikersnaam en het wachtwoord op uit de request body.
     const db = client.db("Data");
     const coll = db.collection("users");
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
-    req.session.loggedIn = true;
+    const hashedPassword = await bcrypt.hash(password, saltRounds); // Hash het wachtwoord met bcrypt
+    const { insertedId } = await coll.insertOne({ username, password: hashedPassword }); // gebruiker word aangemaakt in "users" met gehashed wachtwoord.
+    req.session.loggedIn = true; //sessievariablen
     req.session.username = username;
     req.session.user = { _id: insertedId };
-    console.log(insertedId);
+    console.log(insertedId); //log sessie en id
     console.log(req.session);
-    return res.redirect('/registervragen/1');
+    return res.redirect('/registervragen/1'); //gebruiker wordt doorgestuurd naar vragenlijst
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
@@ -147,12 +147,8 @@ app.post('/registervragen', upload.single('profilePic'), async (req, res) => {
       throw new Error('Gebruikerssessie niet correct ingesteld');
     }
     const userId = req.session.user._id;
-
-    // Haal de huidige pagina op uit het formulier
-    const currentPage = parseInt(req.body.currentPage);
-
-    // Update het profielgegevensobject afhankelijk van de huidige pagina
-    let profileDataUpdate = {};
+    const currentPage = parseInt(req.body.currentPage);// Haal de huidige pagina op uit het formulier
+    let profileDataUpdate = {};// Update het profielgegevensobject afhankelijk van de huidige pagina
     if (currentPage === 1) {
       profileDataUpdate.age = req.body.age;
       profileDataUpdate.gender = req.body.gender;
@@ -177,15 +173,11 @@ app.post('/registervragen', upload.single('profilePic'), async (req, res) => {
     const coll = db.collection("users");
     await coll.updateOne({ _id: new ObjectId(userId) }, { $set: profileDataUpdate });
     await client.close();
-
-    // Controleer of er nog meer pagina's zijn of dat het formulier compleet is
     const totalPages = 5;
-    if (currentPage < totalPages) {
-      // Als er nog meer pagina's zijn, stuur de gebruiker naar de volgende pagina
+    if (currentPage < totalPages) {// Als er nog meer pagina's zijn, stuur de gebruiker naar de volgende pagina
       res.redirect(`/registervragen/${currentPage + 1}`);
     } else {
-      // Als het formulier compleet is, stuur de gebruiker naar de startpagina
-      res.redirect('/');
+      res.redirect('/'); // Als het formulier compleet is, stuur de gebruiker naar de startpagina
     }
   } catch (error) {
     console.error(error);
@@ -200,24 +192,22 @@ app.post('/login', async (req, res) => {
 async function login(req, res) {
   try {
     await client.connect();
-    const { username, password } = req.body;
+    const { username, password } = req.body;// Haal de gebruikersnaam en het wachtwoord op uit de request body.
     const db = client.db("Data");
     const coll = db.collection("users");
-    const user = await coll.findOne({ username });
-    if (!user) {
+    const user = await coll.findOne({ username });// Zoek naar een gebruiker met de opgegeven gebruikersnaam in "users" collectie.
+    if (!user) {// Als de gebruiker niet bestaat, redirect naar '/login' met een foutmelding.
       return res.redirect('/login?error=Gebruiker niet gevonden');
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
+    const passwordMatch = await bcrypt.compare(password, user.password);// Controleer het wachtwoord
+    if (!passwordMatch) {// Als het wachtwoord niet overeenkomt redirect naar '/login' met een foutmelding.
       return res.redirect('/login?error=Ongeldig wachtwoord');
     }
-    req.session.loggedIn = true;
+    req.session.loggedIn = true;//sessievariablen
     req.session.username = username;
-
-    //Inlog ook met Gebruikers-ID
     req.session.user = {_id: user._id}
 
-    res.redirect('/');
+    res.redirect('/');//redirect naar home
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het inloggen');
@@ -229,21 +219,12 @@ async function login(req, res) {
 app.get('/friends', async (req, res) => {
   try {
       const userId = req.session.user._id; // Haal de ID van de huidige gebruiker op
-
-      // Maak verbinding met de MongoDB
       await client.connect ()
       const db = client.db("Data")
-
-      // Zoek de gebruiker in de database
-      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) }, { username: 1, profilePic: 1 });
-
-      // Haal de vrienden van de gebruiker op
-      const friendIds = user.friends.map(friendId => new ObjectId(friendId));
+      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) }, { username: 1, profilePic: 1 });// Zoek de gebruiker in de database
+      const friendIds = user.friends.map(friendId => new ObjectId(friendId));// Haal de vrienden van de gebruiker op
       const friends = await db.collection('users').find({ _id: { $in: friendIds } }).toArray();
-
-      // Sluit de databaseverbinding
       await client.close();
-
       res.render('vriendenlijst', { friends }); // Render de 'friends' view en geef de vrienden door
   } catch (err) {
       console.error(err);

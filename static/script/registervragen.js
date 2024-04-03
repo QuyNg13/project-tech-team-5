@@ -1,57 +1,70 @@
+// Elementen selecteren
 const selectedGamesContainer = document.getElementById("selectedGames");
-const addGameBtn = document.getElementById("addGameBtn");
+const favoriteGamesInput = document.getElementById("favoriteGames");
+const gameSuggestions = document.getElementById("gameSuggestions");
 
+// Array voor geselecteerde spellen
 let selectedGames = [];
 
-addGameBtn.addEventListener("click", function() {
-    const favoriteGamesInput = document.getElementById("favoriteGames");
+// Voeg een event listener toe aan de toevoegknop
+document.getElementById("addGameBtn").addEventListener("click", addGame);
+
+// Voeg een event listener toe aan het inputveld voor favoriete spellen
+favoriteGamesInput.addEventListener("input", getGameSuggestions);
+
+// Functie om een spel toe te voegen
+function addGame() {
     const gameName = favoriteGamesInput.value.trim();
-    
     if (gameName !== "" && !selectedGames.includes(gameName)) {
         selectedGames.push(gameName);
-        
+        renderSelectedGames();
+    }
+}
+
+// Functie om geselecteerde spellen weer te geven
+function renderSelectedGames() {
+    selectedGamesContainer.innerHTML = "";
+    selectedGames.forEach(gameName => {
         const gameTag = document.createElement("div");
         gameTag.textContent = gameName;
-        gameTag.classList.add("selected-game");
         
         const removeButton = document.createElement("button");
         removeButton.textContent = "Verwijder";
-        removeButton.id = "verwijder";
-        removeButton.addEventListener("click", function() {
-            const index = selectedGames.indexOf(gameName);
-            if (index !== -1) {
-                selectedGames.splice(index, 1);
-                selectedGamesContainer.removeChild(gameTag);
-            }
+        removeButton.addEventListener("click", () => {
+            selectedGames = selectedGames.filter(name => name !== gameName);
+            renderSelectedGames();
         });
         
         gameTag.appendChild(removeButton);
         selectedGamesContainer.appendChild(gameTag);
-        document.getElementById("selectedGamesInput").value = selectedGames.join(',');
-        
-        favoriteGamesInput.value = "";
-    }
-});
+    });
+    document.getElementById("selectedGamesInput").value = selectedGames.join(',');
+    favoriteGamesInput.value = "";
+}
 
-document.getElementById("favoriteGames").addEventListener("input", async function(event) {
-    const inputValue = event.target.value;
-    if (inputValue.trim() !== "") {
+// Functie om spellensuggesties op te halen
+async function getGameSuggestions() {
+    const inputValue = favoriteGamesInput.value.trim();
+    if (inputValue !== "") {
         const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
-        const response = await fetch(`https://api.rawg.io/api/games?search=${inputValue}&page_size=5&key=${apiKey}&search_exact=true&multiplayer_modes=true`);
+        const response = await fetch(`https://api.rawg.io/api/games?search=${inputValue}&page_size=5&key=${apiKey}&multiplayer_modes=true`);
         const data = await response.json();
-        const gameSuggestions = document.getElementById("gameSuggestions");
-        gameSuggestions.innerHTML = "";
-        data.results.forEach(game => {
-            const gameOption = document.createElement("div");
-            gameOption.textContent = game.name;
-            gameOption.classList.add("game-option");
-            gameOption.addEventListener("click", function() {
-                document.getElementById("favoriteGames").value = game.name;
-                gameSuggestions.innerHTML = "";
-            });
-            gameSuggestions.appendChild(gameOption);
-        });
+        displayGameSuggestions(data.results);
     } else {
-        document.getElementById("gameSuggestions").innerHTML = "";
+        gameSuggestions.innerHTML = "";
     }
-});
+}
+
+// Functie om spellensuggesties weer te geven
+function displayGameSuggestions(results) {
+    gameSuggestions.innerHTML = "";
+    results.forEach(game => {
+        const gameOption = document.createElement("div");
+        gameOption.textContent = game.name;
+        gameOption.addEventListener("click", () => {
+            favoriteGamesInput.value = game.name;
+            gameSuggestions.innerHTML = "";
+        });
+        gameSuggestions.appendChild(gameOption);
+    });
+}
