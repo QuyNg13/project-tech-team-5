@@ -95,24 +95,6 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
-app.get('/friends', async (req, res) => {
-  try {
-    const currentUser = req.session.user; // De huidige gebruiker
-    const db = client.db('Data'); // Geef je databasenaam op
-
-    // Zoek vrienden van de huidige gebruiker in de database
-    const friends = await db.collection('users')
-      .find({ _id: { $in: currentUser.friends } })
-      .project({ username: 1, profilePic: 1 })
-      .toArray();
-
-    res.json(friends); // Stuur vriendengegevens terug naar de frontend
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server Error' });
-  }
-});
-
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
@@ -243,6 +225,31 @@ async function login(req, res) {
     await client.close();
   }
 }
+
+app.get('/friends', async (req, res) => {
+  try {
+      const userId = req.session.user._id; // Haal de ID van de huidige gebruiker op
+
+      // Maak verbinding met de MongoDB
+      await client.connect ()
+      const db = client.db("Data")
+
+      // Zoek de gebruiker in de database
+      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+
+      // Haal de vrienden van de gebruiker op
+      const friendIds = user.friends.map(friendId => new ObjectId(friendId));
+      const friends = await db.collection('users').find({ _id: { $in: friendIds } }).toArray();
+
+      // Sluit de databaseverbinding
+      await client.close();
+
+      res.render('vriendenlijst', { friends }); // Render de 'friends' view en geef de vrienden door
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Er is een fout opgetreden');
+  }
+});
 
 //Detailpagina gebruikers
 app.get('/profile/:username', async (req, res) => {

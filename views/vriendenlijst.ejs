@@ -8,7 +8,13 @@
 </head>
 <body>
     <h1>Jouw vrienden</h1>
-    <div id="friends-list"></div>
-    <script src="/script/fetchfriends.js">  </script>
+    <ul id="vrienden">
+        <% friends.forEach(friend => { %>
+            <li>
+                <img src="/style/images/uploads/<%= friend._id %>/<%= friend.profilePic %>" alt="Profielfoto">
+                <span><%= friend.username %></span>
+            </li>
+        <% }); %>
+    </ul>
 </body>
 </html>
