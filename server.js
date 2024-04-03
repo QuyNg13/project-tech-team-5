@@ -24,6 +24,21 @@ app.use(session({
 })); 
 app.use(express.static('style'));
 
+// Mongodb-client openen wanneer de applicatie start
+client.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+});
+
+// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
+process.on('SIGINT', () => {
+  client.close().then(() => {
+    console.log('MongoDB client gesloten.')
+    process.exit(0)
+  })
+})
+
 function checkLoggedIn(req, res, next) {
   if (req.session && req.session.loggedIn) {
     next();
@@ -80,29 +95,27 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
-app.get('/friends', (req, res) => {
-  res.render('vriendenlijst');
+app.get('/friends', async (req, res) => {
+  try {
+    const currentUser = req.session.user; // De huidige gebruiker
+    const db = client.db('Data'); // Geef je databasenaam op
+
+    // Zoek vrienden van de huidige gebruiker in de database
+    const friends = await db.collection('users')
+      .find({ _id: { $in: currentUser.friends } })
+      .project({ username: 1, profilePic: 1 })
+      .toArray();
+
+    res.json(friends); // Stuur vriendengegevens terug naar de frontend
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
 });
 
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
-
-
-// Mongodb-client openen wanneer de applicatie start
-client.connect().then(() => {
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
-});
-
-// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
-process.on('SIGINT', () => {
-  client.close().then(() => {
-    console.log('MongoDB client gesloten.')
-    process.exit(0)
-  })
-})
 
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
