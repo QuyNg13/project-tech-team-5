@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vriendenlijst</title>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    <h1>Jouw vrienden</h1>
+    <ul id="vrienden">
+        <% friends.forEach(friend => { %>
+            <li>
+                <a href="/profile/<%= friend._id %>">
+                    <img src="/style/images/uploads/<%= friend._id %>/<%= friend.profilePic %>" alt="Profielfoto">
+                    <span><%= friend.username %></span>
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

@@ -9,7 +9,9 @@ const client = new MongoClient(uri);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const session = require('express-session')
-
+const Swal = require('sweetalert2')
+const multer = require('multer');
+const fs = require ('fs')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +23,21 @@ app.use(session({
   saveUninitialized: true,
 })); 
 app.use(express.static('style'));
+
+// Mongodb-client openen wanneer de applicatie start
+client.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+});
+
+// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
+process.on('SIGINT', () => {
+  client.close().then(() => {
+    console.log('MongoDB client gesloten.')
+    process.exit(0)
+  })
+})
 
 function checkLoggedIn(req, res, next) {
   if (req.session && req.session.loggedIn) {
@@ -37,12 +54,33 @@ function checkLoggedInRedirectHome(req, res, next) {
   next();
 }
 
+// Multer-configuratie voor het opslaan van geüploade profielfoto's
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const userId = req.session.user._id; // Haal gebruikers-ID op
+    const userUploadsDir = `static/style/images/uploads/${userId}`; // Maak een submap voor de gebruiker
+    fs.mkdirSync(userUploadsDir, { recursive: true }); // Zorg ervoor dat de submap bestaat
+    cb(null, userUploadsDir); // Bewaar geüploade profielfoto's in de submap van de gebruiker
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = file.originalname.split('.').pop();
+    console.log(file)
+    cb(null, 'profile-' + uniqueSuffix + '.' + ext); // Geef het bestand een unieke naam
+  }
+});
+
+const upload = multer({ storage: storage });
+
 app.get('/', checkLoggedIn,(req, res) => {
   res.render('home');
 });
 
-app.get('/registervragen', (req, res) => {
-  res.render('registervragen');
+app.get('/registervragen/:page', (req, res) => {
+  // Gebruik de paginanummer van de URL-parameters
+  let currentPage = parseInt(req.params.page) || 1;
+  const totalPages = 5; // Het totale aantal vragen
+  res.render('registervragen', { currentPage, totalPages });
 });
 
 app.get('/login', checkLoggedInRedirectHome,(req, res) => {
@@ -60,21 +98,6 @@ app.get('/info', (req, res) => {
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
-
-// Mongodb-client openen wanneer de applicatie start
-client.connect().then(() => {
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
-});
-
-// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
-process.on('SIGINT', () => {
-  client.close().then(() => {
-    console.log('MongoDB client gesloten.')
-    process.exit(0)
-  })
-})
 
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
@@ -100,52 +123,65 @@ app.post('/', async (req, res) => {
 async function adduser(req, res) {
   try {
     await client.connect();
-    const { username, password } = req.body;
+    const { username, password } = req.body; // Haal de gebruikersnaam en het wachtwoord op uit de request body.
     const db = client.db("Data");
     const coll = db.collection("users");
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const { insertedId } = await coll.insertOne({ username, password: hashedPassword });
-    req.session.loggedIn = true;
+    const hashedPassword = await bcrypt.hash(password, saltRounds); // Hash het wachtwoord met bcrypt
+    const { insertedId } = await coll.insertOne({ username, password: hashedPassword }); // gebruiker word aangemaakt in "users" met gehashed wachtwoord.
+    req.session.loggedIn = true; //sessievariablen
     req.session.username = username;
     req.session.user = { _id: insertedId };
-    console.log(insertedId);
+    console.log(insertedId); //log sessie en id
     console.log(req.session);
-    return res.redirect('/registervragen');
+    return res.redirect('/registervragen/1'); //gebruiker wordt doorgestuurd naar vragenlijst
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het toevoegen van de gebruiker');
   }
 }
 
-app.post('/registervragen', async (req, res) => {
+app.post('/registervragen', upload.single('profilePic'), async (req, res) => {
   try {
-      if (!req.session.user || !req.session.user._id) {
-          throw new Error('Gebruikerssessie niet correct ingesteld');
+    // Controleer of de gebruikerssessie correct is ingesteld en haal het gebruikers-ID op
+    if (!req.session.user || !req.session.user._id) {
+      throw new Error('Gebruikerssessie niet correct ingesteld');
+    }
+    const userId = req.session.user._id;
+    const currentPage = parseInt(req.body.currentPage);// Haal de huidige pagina op uit het formulier
+    let profileDataUpdate = {};// Update het profielgegevensobject afhankelijk van de huidige pagina
+    if (currentPage === 1) {
+      profileDataUpdate.age = req.body.age;
+      profileDataUpdate.gender = req.body.gender;
+    } else if (currentPage === 2) {
+      profileDataUpdate.language = req.body.language;
+    } else if (currentPage === 3) {
+      profileDataUpdate.console = req.body.console;
+      profileDataUpdate.consoleLink = req.body.consoleLink;
+    } else if (currentPage === 4) {
+      profileDataUpdate.favoriteGenres = req.body.genre;
+      profileDataUpdate.favoriteGames = req.body.selectedGames.split(','); // Voeg geselecteerde games toe
+    } else if (currentPage === 5) {
+      profileDataUpdate.bio = req.body.bio;
+      if (req.file) {
+        profileDataUpdate.profilePic = req.file.filename;
       }
-      
-      const userId = req.session.user._id; // Haal alleen het gebruikers-ID uit de sessie
-      const profileData = {
-          age: req.body.age,
-          language: req.body.language,
-          console: req.body.console,
-          consoleLink: req.body.consoleLink,
-          playStyle: req.body.playStyle,
-          bio: req.body.bio,
-          favoriteGenres: req.body.genre,
-          gender: req.body.gender,
-          favoriteGames: req.body.favoriteGames
-      };
-      await client.connect();
-      const db = client.db("Data");
-      const coll = db.collection("users");
-      // Profielgegevens opslaan in de database onder het ID van de gebruiker
-      await coll.updateOne({ _id: new ObjectId(userId) }, { $set: { profileData } });
-      res.redirect('/'); // Optioneel: Doorsturen naar volgende pagina
+    }
+
+    // Verbind met de database, werk het profielgegevensobject bij en sluit de verbinding
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    await coll.updateOne({ _id: new ObjectId(userId) }, { $set: profileDataUpdate });
+    await client.close();
+    const totalPages = 5;
+    if (currentPage < totalPages) {// Als er nog meer pagina's zijn, stuur de gebruiker naar de volgende pagina
+      res.redirect(`/registervragen/${currentPage + 1}`);
+    } else {
+      res.redirect('/'); // Als het formulier compleet is, stuur de gebruiker naar de startpagina
+    }
   } catch (error) {
-      console.error(error);
-      res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
-  } finally {
-      await client.close();
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het opslaan van het profiel');
   }
 });
 
@@ -156,24 +192,22 @@ app.post('/login', async (req, res) => {
 async function login(req, res) {
   try {
     await client.connect();
-    const { username, password } = req.body;
+    const { username, password } = req.body;// Haal de gebruikersnaam en het wachtwoord op uit de request body.
     const db = client.db("Data");
     const coll = db.collection("users");
-    const user = await coll.findOne({ username });
-    if (!user) {
+    const user = await coll.findOne({ username });// Zoek naar een gebruiker met de opgegeven gebruikersnaam in "users" collectie.
+    if (!user) {// Als de gebruiker niet bestaat, redirect naar '/login' met een foutmelding.
       return res.redirect('/login?error=Gebruiker niet gevonden');
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
+    const passwordMatch = await bcrypt.compare(password, user.password);// Controleer het wachtwoord
+    if (!passwordMatch) {// Als het wachtwoord niet overeenkomt redirect naar '/login' met een foutmelding.
       return res.redirect('/login?error=Ongeldig wachtwoord');
     }
-    req.session.loggedIn = true;
+    req.session.loggedIn = true;//sessievariablen
     req.session.username = username;
-
-    //Inlog ook met Gebruikers-ID
     req.session.user = {_id: user._id}
 
-    res.redirect('/');
+    res.redirect('/');//redirect naar home
   } catch (error) {
     console.error(error);
     res.status(500).send('Er is een fout opgetreden bij het inloggen');
@@ -181,6 +215,22 @@ async function login(req, res) {
     await client.close();
   }
 }
+
+app.get('/friends', async (req, res) => {
+  try {
+      const userId = req.session.user._id; // Haal de ID van de huidige gebruiker op
+      await client.connect ()
+      const db = client.db("Data")
+      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) }, { username: 1, profilePic: 1 });// Zoek de gebruiker in de database
+      const friendIds = user.friends.map(friendId => new ObjectId(friendId));// Haal de vrienden van de gebruiker op
+      const friends = await db.collection('users').find({ _id: { $in: friendIds } }).toArray();
+      await client.close();
+      res.render('vriendenlijst', { friends }); // Render de 'friends' view en geef de vrienden door
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Er is een fout opgetreden');
+  }
+});
 
 //Detailpagina gebruikers
 app.get('/profile/:username', async (req, res) => {
@@ -232,20 +282,49 @@ app.post('/addfriend/:friendId', async (req, res) => {
   }
 })
 
-//vriendschapsverzoek accepteren
-app.post('/accept-friend-request/friendId', async (req, res) => {
+//Endpoint voor lijst met vriendschapsverzoeken
+app.get('/friendrequests', checkLoggedIn,  async (req, res) => {
   try {
-    const friendId = req.params.friendId
+    const db = client.db("Data")
+    const friendshipRequests = await db.collection.find('friendshipRequests').find({ receiver_id: new ObjectId(req.session.user._id), status: 'pending'}).toArray()
 
-    await coll.updateOne(
-      {_id: new ObjectId(req.session.user._id)},
-      { $Set: { friendshipStatus: "pending" } }
+  res.render('vriendschapsverzoeken', {friendshipRequests})
+} catch (error) {
+  console.error('Error fetching friendship requests:', error)
+  res.status(500).send('An error occured while fetching the friendship requests')
+}
+})
+
+//vriendschapsverzoek accepteren
+app.post('/accept-friend-request/friendId', checkLoggedIn, async (req, res) => {
+  try {
+    const db = client.db("Data")
+    const friendRequestId = req.params.friendId
+
+cons
+
+
+
+    const friendshipRequest = await friendshipRequest.findOneAndUpdate(
+      { _id: friendRequestId, receiver_id: req.session.user._id },
+      { status: 'accepted' },
+      { new: true }
     )
+
+    if (!friendshipRequest) {
+      return res.status(404).json({ error: 'Friendship request was not found'})
+    }
+
+    Swal.fire({
+      title: "Confirmation",
+      text: "Friendship request accepted",
+      icon: "success"
+    })
 
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
-    
     console.error ('Error accepting friend request:', error)
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 })
+
