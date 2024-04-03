@@ -1,68 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/register.css">
 </head>
+
 <body>
     <main>
         <form action="/registervragen" method="POST" enctype="multipart/form-data">
-            <% if (currentPage === 1) { %>
-            <!-- Vraag 1: Leeftijd, gender (geboortedatum) -->
-            <label for="age">Leeftijd (geboortedatum): </label>
-            <input type="date" id="age" name="age" required><br>
-            <label for="gender">Geslacht: </label>
-            <select id="gender" name="gender" required>
-                <option value="male">Man</option>
-                <option value="female">Vrouw</option>
-                <option value="other">Anders</option>
-            </select><br>
-            <% } else if (currentPage === 2) { %>
-            <!-- Vraag 2: Taal -->
-            <label for="language">Spraaktaal: </label>
-            <input type="text" id="language" name="language" required><br>
-            <% } else if (currentPage === 3) { %>
-            <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
-            <label for="console">Favoriete console: </label>
-            <input type="text" id="console" name="console" required><br>
-            <label for="consoleLink">Link naar console account: </label>
-            <input type="url" id="consoleLink" name="consoleLink"><br>
-            <label for="playStyle">PvP of Coöp: </label>
-            <select id="playStyle" name="playStyle" required>
-                <option value="PvP">PvP</option>
-                <option value="Coöp">Coöp</option>
-            </select><br>
-            <% } else if (currentPage === 4) { %>
-            <!-- Vraag 4: genres en games -->
-            <label for="genre">Favoriete genre: </label>
-            <input type="text" id="genre" name="genre" required><br>
-            <label for="favoriteGames">Favoriete games: </label>
-            <input type="text" id="favoriteGames" name="favoriteGames" placeholder="Zoek naar je favoriete games" autocomplete="off">
-            <div id="gameSuggestions"></div>
-            <button type="button" id="addGameBtn">Voeg toe</button>
-            <div id="selectedGames"></div>
-            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
-            <% } else if (currentPage === 5) { %>
-            <!-- Vraag 5: Profielfoto en bio -->
-            <label for="profilePic">Upload een profielfoto: </label>
-            <input type="file" id="profilePic" name="profilePic" accept="image/*" required><br>
-            <button type="submit">Uploaden</button>
-            <label for="bio">Bio: </label>
-            <textarea id="bio" name="bio"></textarea><br>
-            <% } %>
-            <!-- Verborgen veld om de huidige pagina bij te houden -->
-            <input type="hidden" name="currentPage" value="<%= currentPage %>">
-            <!-- Knop om naar de volgende pagina te gaan -->
-            <% if (currentPage < totalPages) { %>
-            <button type="submit">Volgende</button>
-            <% } else { %>
-            <!-- Laatste pagina, toon verzendknop -->
-            <button type="submit">Verzenden</button>
-            <% } %>
+            <% if (currentPage===1) { %>
+                <!-- Vraag 1: Leeftijd, gender (geboortedatum) -->
+                <label for="age">Leeftijd (geboortedatum): </label>
+                <input type="date" id="age" name="age" required><br>
+                <label for="gender">Geslacht: </label>
+                <section>
+                    <select id="gender" name="gender" required>
+                        <option value="male">Man</option>
+                        <option value="female">Vrouw</option>
+                        <option value="other">Anders</option>
+                    </select>
+                </section>
+                <br>
+                <% } else if (currentPage===2) { %>
+                    <!-- Vraag 2: Taal -->
+                    <label for="language">Spraaktaal: </label>
+                    <input type="text" id="language" name="language" required><br>
+                    <% } else if (currentPage===3) { %>
+                        
+                        <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
+                        <label for="console">Favoriete console: </label>
+                        <input type="text" id="console" name="console" required><br>
+                        <label for="consoleLink">Link naar console account: </label>
+                        <input type="url" id="consoleLink" name="consoleLink"><br>
+                        <label for="playStyle">PvP of Coöp: </label>
+                        <section>
+                            <select id="playStyle" name="playStyle" required>
+                                <option value="PvP">PvP</option>
+                                <option value="Coöp">Coöp</option>
+                            </select>
+                        </section>
+                        <br>
+                        <% } else if (currentPage===4) { %>
+                            <!-- Vraag 4: genres en games -->
+                            <label for="genre">Favoriete genre: </label>
+                            <input type="text" id="genre" name="genre" required><br>
+                            <label for="favoriteGames">Favoriete games: </label>
+                            <input type="text" id="favoriteGames" name="favoriteGames"
+                                placeholder="Typ en zoek naar je favoriete games..." autocomplete="off">
+                            <div id="gameSuggestions"></div>
+                            <button type="button" id="addGameBtn">Voeg toe</button>
+                            <div id="selectedGames"></div>
+                            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
+                            <% } else if (currentPage===5) { %>
+                                <!-- Vraag 5: Profielfoto en bio -->
+                                <label for="profilePic">Upload een profielfoto: </label>
+                                <input type="file" id="profilePic" name="profilePic" accept="image/*" required><br>
+                                <label for="bio">Bio: </label>
+                                <section>
+                                    <textarea id="bio" name="bio"></textarea><br>
+                                </section>
+                                <% } %>
+                                    <!-- Verborgen veld om de huidige pagina bij te houden -->
+                                    <input type="hidden" name="currentPage" value="<%= currentPage %>">
+                                    <!-- Knop om naar de volgende pagina te gaan -->
+                                    <% if (currentPage < totalPages) { %>
+                                        <button class="next" type="submit">Volgende</button>
+                                        <% } else { %>
+                                            <!-- Laatste pagina, toon verzendknop -->
+                                            <button class="next" type="submit">Verzenden</button>
+                                            <% } %>
         </form>
     </main>
     <script src="/script/registervragen.js">  </script>
 </body>
+
 </html>
