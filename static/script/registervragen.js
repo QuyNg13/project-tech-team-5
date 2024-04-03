@@ -16,6 +16,7 @@ addGameBtn.addEventListener("click", function() {
         
         const removeButton = document.createElement("button");
         removeButton.textContent = "Verwijder";
+        removeButton.id = "verwijder";
         removeButton.addEventListener("click", function() {
             const index = selectedGames.indexOf(gameName);
             if (index !== -1) {
