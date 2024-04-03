@@ -80,6 +80,10 @@ app.get('/info', (req, res) => {
   res.render('info');
 });
 
+app.get('/friends', (req, res) => {
+  res.render('vriendenlijst');
+});
+
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
