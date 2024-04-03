@@ -5,7 +5,6 @@ const hamburger = document.querySelector("header nav button");
 const navMenu = document.querySelector("header nav ul");
 
 
-
 hamburger.addEventListener("click", () =>{
     hamburger.classList.toggle("active");
     navMenu.classList.toggle("active");
@@ -157,26 +156,7 @@ function filterGames() {
 
 
 
-// Fetch API voor Home pagina (Daan) (Deze werkt)
-// document.addEventListener('DOMContentLoaded', function () {
-//     const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
-//     const apiUrl = 'https://api.rawg.io/api/games';
-//     const exampleGameId = '3498'; // ID van het voorbeeldspel
-//     const exampleApiUrl = `${apiUrl}/${exampleGameId}?key=${apiKey}`;
 
-//     function fillGameBox(gameData) {
-//         document.getElementById('gameBoxTitle').textContent = gameData.name;
-//         document.getElementById('gameBoxFoto').src = gameData.background_image;
-//         document.getElementById('gameboxDescriptie').textContent = gameData.metacritic;
-//     }
-
-//     fetch(exampleApiUrl)
-//         .then(response => response.json())
-//         .then(data => {
-//             fillGameBox(data);
-//         })
-//         .catch(error => console.error('Er is een fout opgetreden bij het laden van de gegevens:', error));
-// });
 
 
 // Fetch API voor Home pagina (Daan) 
@@ -215,8 +195,9 @@ document.addEventListener('DOMContentLoaded', function () {
         gameboxDescriptie.textContent = gameData.description_raw;
 
         const gameLink = document.createElement('a');
-        gameLink.href = '#'; // Je kunt hier de link naar meer informatie toevoegen
-        gameLink.textContent = 'Meer info';
+        const gameNameEncoded = encodeURIComponent(gameData.name);
+        gameLink.href = `/info/${gameNameEncoded}`; // Voeg gamenaam toe aan de URL
+        gameLink.textContent = gameData.name;
 
         gameBox.appendChild(gameBoxFoto);
         gameBox.appendChild(gameBoxTitle);
