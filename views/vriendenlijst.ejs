@@ -11,8 +11,10 @@
     <ul id="vrienden">
         <% friends.forEach(friend => { %>
             <li>
-                <img src="/style/images/uploads/<%= friend._id %>/<%= friend.profilePic %>" alt="Profielfoto">
-                <span><%= friend.username %></span>
+                <a href="/profile/<%= friend._id %>">
+                    <img src="/style/images/uploads/<%= friend._id %>/<%= friend.profilePic %>" alt="Profielfoto">
+                    <span><%= friend.username %></span>
+                </a>
             </li>
         <% }); %>
     </ul>

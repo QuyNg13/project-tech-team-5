@@ -235,7 +235,7 @@ app.get('/friends', async (req, res) => {
       const db = client.db("Data")
 
       // Zoek de gebruiker in de database
-      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) }, { username: 1, profilePic: 1 });
 
       // Haal de vrienden van de gebruiker op
       const friendIds = user.friends.map(friendId => new ObjectId(friendId));
