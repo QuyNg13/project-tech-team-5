@@ -24,6 +24,21 @@ app.use(session({
 })); 
 app.use(express.static('style'));
 
+// Mongodb-client openen wanneer de applicatie start
+client.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+});
+
+// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
+process.on('SIGINT', () => {
+  client.close().then(() => {
+    console.log('MongoDB client gesloten.')
+    process.exit(0)
+  })
+})
+
 function checkLoggedIn(req, res, next) {
   if (req.session && req.session.loggedIn) {
     next();
@@ -83,22 +98,6 @@ app.get('/info', (req, res) => {
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
   res.render('instellingenprofiel');
 });
-
-
-// Mongodb-client openen wanneer de applicatie start
-client.connect().then(() => {
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
-});
-
-// Afsluiten van mongodb-client wanneer de applicatie wordt gesloten
-process.on('SIGINT', () => {
-  client.close().then(() => {
-    console.log('MongoDB client gesloten.')
-    process.exit(0)
-  })
-})
 
 //Endpoint om gebruikers op te halen 
 app.get('/users', async (req, res) => {
@@ -226,6 +225,31 @@ async function login(req, res) {
     await client.close();
   }
 }
+
+app.get('/friends', async (req, res) => {
+  try {
+      const userId = req.session.user._id; // Haal de ID van de huidige gebruiker op
+
+      // Maak verbinding met de MongoDB
+      await client.connect ()
+      const db = client.db("Data")
+
+      // Zoek de gebruiker in de database
+      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) }, { username: 1, profilePic: 1 });
+
+      // Haal de vrienden van de gebruiker op
+      const friendIds = user.friends.map(friendId => new ObjectId(friendId));
+      const friends = await db.collection('users').find({ _id: { $in: friendIds } }).toArray();
+
+      // Sluit de databaseverbinding
+      await client.close();
+
+      res.render('vriendenlijst', { friends }); // Render de 'friends' view en geef de vrienden door
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Er is een fout opgetreden');
+  }
+});
 
 //Detailpagina gebruikers
 app.get('/profile/:username', async (req, res) => {
