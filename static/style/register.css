@@ -111,3 +111,20 @@ input {
     right: 0; /* Plaats de knop aan de rechterkant van de container */
 
 }
+
+.taal{
+    font-size: 1.6em;
+}
+
+#taal-select{
+    background-color: #2c3e50;
+    padding: 5% 5% 5% 5%;
+    color: #ecf0f1;
+    border: 1px solid #34495e;
+    font-family: 'Techno Race', sans-serif;
+    width: 100%;
+    margin-top: 2em;
+
+
+
+}
