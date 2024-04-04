@@ -10,26 +10,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
-    <h1>Friend requests</h1>
-    <table>
-        <thead>
-            <tr>
-                <th><%= senderData.username %></th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% friendshipRequests.forEach((request, index) => { %>
-                <tr>
-                    <td><%= senderData[index].username %></td>
-                    <td>Status</td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
-
-    <form action="/<%= user._id %>" method="POST">
-        <button type="submit">Accept friend</button>
-    </form>
+    <h1>Vriendschapsverzoeken</h1>
+    <ul id="vrienden">
+        <% friendshipRequests.forEach(requests => { %> 
+        <li>
+             <a href="/profile/<%= friend._id %>">
+                <img src="/style/images/uploads/<%= friend._id %>/<%= friend.profilePic %>" alt="Profielfoto">
+                <span><%= friend.username %></span>
+            </a>
+                <form action="/<%= user._id %>" method="POST">
+                    <button type="submit">Accept friend</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+   
 </body>
 </html>

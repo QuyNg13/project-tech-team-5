@@ -308,24 +308,33 @@ app.post('/addfriend/:friendId', async (req, res) => {
 })
 
 //Endpoint voor lijst met vriendschapsverzoeken
-app.get('/friendrequests', checkLoggedIn,  async (req, res) => {
+app.get('/friendrequests', checkLoggedIn, async (req, res) => {
   try {
     if (!req.session.user || !req.session.user._id) {
       console.error('User session is not set or missing user ID')
       return res.status(401).json({ error: 'Unauthorized' })
     }
-    //ID van de ontvanger ophalen
-    const receiverId = req.session.user._id
+
+    const userId = req.session.user._id
+
+    // //ID van de ontvanger ophalen
+    // const receiverId = req.session.user._id
 
     await client.connect ()
     const db = client.db("Data")
     const coll = db.collection("users")
-    const user = await coll.findOne({_id: new ObjectId(receiverId)})
+
+    const user = await db.collection("users").findOne({_id: new ObjectId(userId)})
+    if (!user) {
+      return res.status(404).json({error: 'User not found'})
+    }
+
 
     const friendshipRequests = user.friendshipRequests || []
 
-    res.render('vriendschapsverzoeken', {friendshipRequests, user: req.session.user})
+    await client.close()
 
+    res.render('vriendschapsverzoeken', {friendshipRequests})
   } catch (error) {
     console.error('Error fetching friendship requests:', error)
     res.status(500).send('An error occured while fetching the friendship requests')
