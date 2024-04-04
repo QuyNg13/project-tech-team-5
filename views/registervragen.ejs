@@ -26,10 +26,14 @@
                 <br>
                 <% } else if (currentPage===2) { %>
                     <!-- Vraag 2: Taal -->
-                    <label for="language">Spraaktaal: </label>
-                    <input type="text" id="language" name="language" required><br>
+                    
+                    <label class="taal" for="taal-select">Selecteer een taal die u spreekt:</label>
+                    <select id="taal-select" required>
+                        <option value="" disabled selected>Selecteer hier</option>
+                    </select>
+                    
                     <% } else if (currentPage===3) { %>
-                        
+
                         <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
                         <label for="console">Favoriete console: </label>
                         <input type="text" id="console" name="console" required><br>
@@ -75,6 +79,10 @@
         </form>
     </main>
     <script src="/script/registervragen.js">  </script>
+    <script src="/script/countries.js"></script>
+
+
+
 </body>
 
 </html>
