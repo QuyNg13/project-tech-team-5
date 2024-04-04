@@ -91,9 +91,22 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-app.get('/info/:gameName', (req, res) => {
-  const gameName = req.params.gameName;
-  res.render('info', { gameName: gameName }); 
+// app.get('/info/:gameName', (req, res) => {
+//   const gameName = req.params.gameName;
+//   res.render('info', { gameName: gameName }, {users: users}); 
+// });
+
+app.get('/info/:gameName', async (req, res) => {
+  try {
+    await client.connect();
+    const gameName = req.params.gameName;
+    const db = client.db("Data"); // Maak een referentie naar de database
+    const users = await db.collection('users').find({ favoriteGames: gameName }).toArray(); // Zoek gebruikers die de game als favoriet hebben opgeslagen
+    res.render('info', { gameName: gameName, users: users }); // Rendert het EJS-bestand met de gebruikersgegevens
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Er is een fout opgetreden bij het ophalen van gebruikers.');
+  }
 });
 
 app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {

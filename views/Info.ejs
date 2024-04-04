@@ -104,34 +104,17 @@
 			</div>
 		  </div>
 		  
-		<ul>
-			<li>
-				<img src="/style/images/testmeisje1.png" alt="test meisje 1">
-				<p>Test naam: Lola</p>
-			</li>
-			<li>
-				<img src="/style/images/testjongen1.png" alt="test jongen 1">
-				<p>Test naam: Mike</p>
-			</li>
-			<li>
-				<img src="/style/images/testmeisje2.png" alt="test meisje 2">
-				<p>Test naam: Ilse</p>
-
-			</li>
-			<li>
-				<img src="/style/images/testjongen2.png" alt="test jongen 2">
-				<p>Test naam: Jack</p>
-			</li>
-			<li>
-				<img src="/style/images/testmeisje2.png" alt="test meisje 2">
-				<p>Test naam: Ilse</p>
-
-			</li>
-			<li>
-				<img src="/style/images/testjongen2.png" alt="test jongen 2">
-				<p>Test naam: Jack</p>
-			</li>
-			
+		  <ul>
+			<% users.forEach(function(user) { %>
+				<li>
+					<a href="/profile/<%= user._id %>">
+						<img src="/style/images/uploads/<%= user._id %>/<%= user.profilePic %>" alt="<%= user.username %>">
+						<p><%= user.username %></p>
+						<p><%= user.age %></p>
+						<p><%= user.gender %></p>
+					</a>
+				</li>
+			<% }); %>
 		</ul>
 
 		<button>Toon meer!</button>
