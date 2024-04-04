@@ -289,6 +289,8 @@ app.post('/addfriend/:friendId', async (req, res) => {
   }
 })
 
+
+
 //Endpoint voor lijst met vriendschapsverzoeken
 app.get('/friendrequests', checkLoggedIn, async (req, res) => {
   try {
@@ -299,9 +301,6 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
 
     const userId = req.session.user._id
 
-    // //ID van de ontvanger ophalen
-    // const receiverId = req.session.user._id
-
     await client.connect ()
     const db = client.db("Data")
     const coll = db.collection("users")
@@ -311,8 +310,9 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
       return res.status(404).json({error: 'User not found'})
     }
 
-
     const friendshipRequests = user.friendshipRequests || []
+
+    console.log('Friendship requests:', friendshipRequests)
 
     await client.close()
 

@@ -12,18 +12,24 @@
 <body>
     <h1>Vriendschapsverzoeken</h1>
     <ul id="vrienden">
-        <% friendshipRequests.forEach(requests => { %> 
-        <li>
-             <a href="/profile/<%= friend._id %>">
-                <img src="/style/images/uploads/<%= friend._id %>/<%= friend.profilePic %>" alt="Profielfoto">
-                <span><%= friend.username %></span>
-            </a>
-                <form action="/<%= user._id %>" method="POST">
-                    <button type="submit">Accept friend</button>
+        <% if (friendshipRequests !== undefined && friendshipRequests.length > 0) { %>
+            <% friendshipRequests.forEach(request => { %> 
+            <li>
+                <a href="/profile/<%= request._id %>">
+                    <img src="/style/images/uploads/<%= request._id %>/<%= request.profilePic %>" alt="Profielfoto">
+                    <span><%= request.username %></span>
+                </a>
+                <form action="/<%= request._id %>" method="POST">
+                    <button type="submit">Accepteren</button>
+                </form>
+                <form action="/<%= request._id %>" method="POST">
+                    <button type="submit">Weigeren</button>
                 </form>
             </li>
-        <% }) %>
+            <% }) %>
+        <% } else { %>
+            <p>Er zijn geen vriendschapsverzoeken</p>
+        <% } %>
     </ul>
-   
 </body>
 </html>
