@@ -5,7 +5,6 @@ const hamburger = document.querySelector("header nav button");
 const navMenu = document.querySelector("header nav ul");
 
 
-
 hamburger.addEventListener("click", () =>{
     hamburger.classList.toggle("active");
     navMenu.classList.toggle("active");
@@ -153,3 +152,60 @@ function filterGames() {
   // Voer hier je logica uit om de games te filteren op basis van de geselecteerde genres
 }
 
+
+
+
+
+
+
+
+// Fetch API voor Home pagina (Daan) 
+document.addEventListener('DOMContentLoaded', function () {
+    const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
+    const apiUrl = 'https://api.rawg.io/api/games';
+    const gameContainer = document.getElementById('gameContainer');
+
+    function fetchRandomGames() {
+        const randomPage = Math.floor(Math.random() * 100) + 1; // Random pagina tussen 1 en 100
+        const randomUrl = `${apiUrl}?page=${randomPage}&key=${apiKey}`;
+
+        fetch(randomUrl)
+            .then(response => response.json())
+            .then(data => {
+                const games = data.results.slice(0, 10); // Maximaal 10 spellen
+                games.forEach(game => {
+                    createGameElement(game);
+                });
+            })
+            .catch(error => console.error('Er is een fout opgetreden bij het laden van de gegevens:', error));
+    }
+
+    function createGameElement(gameData) {
+        const gameBox = document.createElement('div');
+        gameBox.classList.add('gameBox');
+
+        const gameBoxFoto = document.createElement('img');
+        gameBoxFoto.src = gameData.background_image;
+        gameBoxFoto.alt = 'Game Image';
+
+        const gameBoxTitle = document.createElement('h2');
+        gameBoxTitle.textContent = gameData.name;
+
+        const gameboxDescriptie = document.createElement('p');
+        gameboxDescriptie.textContent = gameData.description_raw;
+
+        const gameLink = document.createElement('a');
+        const gameNameEncoded = encodeURIComponent(gameData.name);
+        gameLink.href = `/info/${gameNameEncoded}`; // Voeg gamenaam toe aan de URL
+        gameLink.textContent = gameData.name;
+
+        gameBox.appendChild(gameBoxFoto);
+        gameBox.appendChild(gameBoxTitle);
+        gameBox.appendChild(gameboxDescriptie);
+        gameBox.appendChild(gameLink);
+
+        gameContainer.appendChild(gameBox);
+    }
+
+    fetchRandomGames();
+});
