@@ -277,12 +277,18 @@ app.post('/addfriend/:friendId', async (req, res) => {
     const coll = db.collection("users")
     
     const friendId = req.params.friendId
+    const senderId = req.session.user._id
 
     await coll.updateOne(
-      {_id: new ObjectId(req.session.user._id)},
+      {_id: new ObjectId(senderId)},
       { $addToSet: {friends: new ObjectId(friendId) } }
     )
 
+    await coll.updateOne(
+      {_id: new ObjectId(friendId)},
+      { $addToSet: {friendRequests: new ObjectId(senderId) } }
+    )
+  
     // Swal.fire({
     //   title: "Confirmation",
     //   text: "Friendship added succesfully",
@@ -307,13 +313,14 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' })
     }
 
-    const userId = req.session.user._id
-
-    await client.connect ()
+    const senderId = req.session.user._id
+ 
+    await client.connect()
     const db = client.db("Data")
     const coll = db.collection("users")
 
-    const user = await db.collection("users").findOne({_id: new ObjectId(userId)})
+    const user = await coll.findOne({ _id: new ObjectId(senderId)})
+
     if (!user) {
       return res.status(404).json({error: 'User not found'})
     }
