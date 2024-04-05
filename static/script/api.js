@@ -28,10 +28,4 @@ document.addEventListener('DOMContentLoaded', function () {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('gameId');
     }
-
-    // Controleer of er een gameId in de URL is en laad de gegevens als dat het geval is
-    const gameIdFromUrl = getGameIdFromUrl();
-    if (gameIdFromUrl) {
-        fetchGameData(gameIdFromUrl);
-    }
 });
