@@ -11,19 +11,19 @@
 </head>
 <body>
     <h1>Vriendschapsverzoeken</h1>
-    <p>requestid:<%= friendshipRequests %></p>
+    <p>Request ID:<%= friendRequests %></p>
     <ul id="vrienden">
-        <% if ((friendshipRequests !== undefined )&& (friendshipRequests.length > 0)) { %>
-            <% friendshipRequests.forEach(request => { %> 
+        <% if ((friendRequests !== undefined )&& (friendRequests.length > 0)) { %>
+            <% friendRequests.forEach(request => { %> 
             <li>
                 <a href="/profile/<%= request._id %>">
                     <img src="/style/images/uploads/<%= request._id %>/<%= request.profilePic %>" alt="Profielfoto">
                     <span><%= request.username %></span>
                 </a>
-                <form action="/accept-friend-request/<%= request.toString() %>" method="POST">
+                <form action="/accept-friend-request/<%= request._id %>" method="POST">
                     <button type="submit">Accepteren</button>
                 </form>
-                <p>requestid:<%= request._id %></p>
+                <p>Request ID:<%= request._id %></p>
             </li>
             <% }) %>
         <% } else { %>
