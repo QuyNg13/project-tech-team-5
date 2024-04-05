@@ -127,7 +127,8 @@ async function adduser(req, res) {
     const { username, password } = req.body; // Haal de gebruikersnaam en het wachtwoord op uit de request body.
     const db = client.db("Data");
     const coll = db.collection("users");
-    const hashedPassword = await bcrypt.hash(password, saltRounds); // Hash het wachtwoord met bcrypt
+    console.log('unp', username, password)
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash het wachtwoord met bcrypt
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword }); // gebruiker word aangemaakt in "users" met gehashed wachtwoord.
     req.session.loggedIn = true; //sessievariablen
     req.session.username = username;
@@ -295,8 +296,6 @@ app.post('/addfriend/:friendId', async (req, res) => {
   }
 })
 
-
-
 //Endpoint voor lijst met vriendschapsverzoeken
 app.get('/friendrequests', checkLoggedIn, async (req, res) => {
   try {
@@ -319,7 +318,7 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
 
     const friendshipRequests = user.friendshipRequests || []
 
-    console.log('Friendship requests:', friendshipRequests)
+    console.log('Friendship requests:', typeof friendshipRequests)
 
     await client.close()
 
@@ -331,28 +330,27 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
   })
 
 //vriendschapsverzoek accepteren
-app.post('/accept-friend-request/friendId', checkLoggedIn, async (req, res) => {
+app.post('/accept-friend-request/:friendId', checkLoggedIn, async (req, res) => {
   try {
+    await client.connect()
     const db = client.db("Data")
     const friendRequestId = req.params.friendId
+    const currentUserId = req.session.user._id
 
-    const result = await db.collection('friendshipRequests').findOneAndUpdate(
-    { _id: new ObjectId(friendRequestId), receiver_id: new ObjectId(req.session.user._id) },
-    {$Set: {status:'accepted'}},
-    { returnOriginal: false}
-  )
-
-  	const friendshipRequest = result.value
-
-    if (!friendshipRequest) {
+    const result = await db.collection('users').updateOne(
+      {_id: new ObjectId(currentUserId), "friendshipRequests._id": new ObjectId (friendRequestId) },
+      {$set: {"friendshipRequests.$.status": "accepted" }}
+    )
+    
+    if (result.modifiedCount === 0) {
       return res.status(404).json({ error: 'Friendship request was not found'})
     }
 
-    Swal.fire({
-      title: "Confirmation",
-      text: "Friendship request accepted",
-      icon: "success"
-    })
+    // Swal.fire({
+    //   title: "Confirmation",
+    //   text: "Friendship request accepted",
+    //   icon: "success"
+    // })
 
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
