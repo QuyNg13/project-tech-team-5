@@ -10,6 +10,40 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
+    <header>
+		<!-- Hier heb ik gekozen voor het maken van een nav met daarin een ul met vervolgends li items voor het maken van het menu waar
+		mensen uit kunnen kiezen.-->
+		<nav class="navbar"> <!-- <a href= "https://www.youtube.com/watch?v=flItyHiDm7E"> link naar video die ik heb gebruikt als referentie </a>
+		-->
+			<div class="logo">
+				<img src="/style/images/Untitled_Artwork 71.png" alt="Logo">
+			</div>
+			<ul class="nav-links">
+				<li>
+					<a href="##">Home</a>
+				</li>
+
+				<li>
+					<a href="##">My Friends</a>
+				</li>
+
+				<li>
+					<a href="##">My Profile</a>
+				</li>
+
+			</ul>
+
+			<!-- Hier heb ik het hamburger menu mee gemaakt, drie streepjes boven elkaar. een "span" staat voor het aangeven van bepaalde 
+			content en heb dus hiervoor de span gemaakt om het hamburger menu te worden-->
+
+			<button>
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</nav>
+
+	</header>
     <h1>Vriendschapsverzoeken</h1>
     <ul id="vrienden">
         <% if (friendshipRequests !== undefined && friendshipRequests.length > 0) { %>
