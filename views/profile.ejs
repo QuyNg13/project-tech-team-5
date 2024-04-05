@@ -5,34 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
 
-    <link rel="stylesheet" href="\style\style.css">
+    <link rel="stylesheet" href="\style\info.css">
     <link href="https://fonts.cdnfonts.com/css/techno-race" rel="stylesheet">
     <script src="popup.js"></script>
+    <link rel="stylesheet" href=/style/main.css>
+    <link rel="stylesheet" href=/style/info.css>
 </head>
 <body>
-    <h1><%= user.username %></h1>
-    <% if (user) { %>
-        <div>
-          <img src="/style/images/uploads/<%= user._id %>/<%= user.profilePic %>" alt="Profielfoto">
-          <p>Age: <%= user.age %></p>
-          <p>Language: <%= user.language %></p>
-          <p>Console: <%= user.console %></p>
-          <p>Console Link: <%= user.ConsoleLink %></p>
-          <p>PlayStyle: <%= user.playstyle %></p>
-          <p>Bio: <%= user.bio %></p>
-          <p>Favorite Genres: <%= user.FavoriteGenres %></p>
-          <p>Gender: <%= user.gender %></p>
-          <p>Favorite Games: <%= user.FavoriteGames %></p>
+  <header>
+    <!-- Hier heb ik gekozen voor het maken van een nav met daarin een ul met vervolgends li items voor het maken van het menu waar
+mensen uit kunnen kiezen.-->
+    <nav class="navbar"> <!-- <a href= "https://www.youtube.com/watch?v=flItyHiDm7E"> link naar video die ik heb gebruikt als referentie </a>
+-->
+        <div class="logo">
+            <img src="/style/images/Untitled_Artwork 71.png" alt="Logo">
         </div>
+        <ul class="nav-links">
+            <li>
+                <a href="##">Home</a>
+            </li>
+
+            <li>
+                <a href="##">My Friends</a>
+            </li>
+
+            <li>
+                <a href="##">My Profile</a>
+            </li>
+
+        </ul>
+
+        <!-- Hier heb ik het hamburger menu mee gemaakt, drie streepjes boven elkaar. een "span" staat voor het aangeven van bepaalde 
+  content en heb dus hiervoor de span gemaakt om het hamburger menu te worden-->
+
+        <button>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+</header>
+<main>
+  <h1><%= user.username %></h1>
+  <% if (user) { %>
+      <div>
+        <img src="/style/images/uploads/<%= user._id %>/<%= user.profilePic %>" alt="Profielfoto">
+        <p>Age: <%= user.age %></p>
+        <p>Language: <%= user.language %></p>
+        <p>Console: <%= user.console %></p>
+        <p>Console Link: <%= user.ConsoleLink %></p>
+        <p>PlayStyle: <%= user.playstyle %></p>
+        <p>Bio: <%= user.bio %></p>
+        <p>Favorite Genres: <%= user.FavoriteGenres %></p>
+        <p>Gender: <%= user.gender %></p>
+        <p>Favorite Games: <%= user.FavoriteGames %></p>
+      </div>
 
 
-        <form action="/addfriend/<%= user._id %>" method="POST">
-          <button type="submit">Add friend</button>
-        </form>
+      <form action="/addfriend/<%= user._id %>" method="POST">
+        <button type="submit">Add friend</button>
+      </form>
 
-      <% } else { %>
-        <p>No user data available</p>
-      <% } %>
-          
+    <% } else { %>
+      <p>No user data available</p>
+    <% } %>
+</main>
+<script src="/script/hamburger.js"></script>
 </body>
 </html>
