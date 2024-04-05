@@ -26,16 +26,16 @@
                 <br>
                 <% } else if (currentPage===2) { %>
                     <!-- Vraag 2: Taal -->
-                    
+
                     <label class="taal" for="taal-select">Selecteer een taal die u spreekt:</label>
                     <select class="dropdown" id="taal-select" required>
                         <option value="" disabled selected>Selecteer hier</option>
                     </select>
-                    
+
                     <% } else if (currentPage===3) { %>
 
                         <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
-                    
+
                         <label class="console" for="console-select">Selecteer favoriete console:</label><br>
                         <select class="dropdown" id="console-select" required>
                             <option value="" disabled selected>Selecteer hier</option>
@@ -53,7 +53,7 @@
                         </section>
                         <br>
                         <% } else if (currentPage===4) { %>
-                            
+
                             <!-- Vraag 4: genres en games -->
                             <label class="genre" for="genre">Selecteer favoriete genre:</label><br>
                             <select class="dropdown" id="genre-select" required>
@@ -89,9 +89,12 @@
                                             <% } %>
         </form>
     </main>
+
+
     <script src="/script/registervragen.js">  </script>
-    <script src="/script/countries.js"></script>
     <script src="/script/genre.js"></script>
+    <script src="/script/countries.js"></script>
+   
 
 
 

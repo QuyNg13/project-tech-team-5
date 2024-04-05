@@ -1,20 +1,20 @@
-const apiKey = '6e440f5967c14e1a94ac6f44d69c4386';
-const apiUrl = 'https://api.rawg.io/api/genres';
+const apiKey1 = '10645c8e398d4448b53875f7a8a2ae0c';
+const apiUrl1 = 'https://api.rawg.io/api/genres';
 
 // Functie om genres op te halen en in dropdownlijst in te voegen
 async function fetchGenres() {
     try {
-        const response = await fetch(`${apiUrl}?key=${apiKey}`);
+        const response = await fetch(`${apiUrl1}?key=${apiKey1}`);
         const data = await response.json();
 
-        const select = document.getElementById('genre-select');
+        const genreSelect = document.getElementById('genre-select');
 
         // Loop door de genres en voeg elke genre toe als een option in de dropdownlijst
         data.results.forEach(genre => {
             const option = document.createElement('option');
             option.text = genre.name;
             option.value = genre.slug;
-            select.appendChild(option);
+            genreSelect.appendChild(option);
         });
     } catch (error) {
         console.error('Fout bij ophalen genres:', error);
