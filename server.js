@@ -261,7 +261,7 @@ app.post('/updateprofiel', upload.single('profilePic'), async (req, res) => {
       consoleLink: req.body.consoleLink,
       playStyle: req.body.playStyle,
       favoriteGenres: req.body.genre,
-      selectedGames: req.body.favoriteGames.split(','),
+      favoriteGames: req.body.selectedGames.split(','),
       bio: req.body.bio
     };
 
