@@ -68,3 +68,21 @@ function displayGameSuggestions(results) {
         gameSuggestions.appendChild(gameOption);
     });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const selectedGamesContainer = document.getElementById("selectedGamesContainer");
+    selectedGamesContainer.addEventListener("click", function(event) {
+        if (event.target.classList.contains("removeGameBtn")) {
+            const gameElement = event.target.parentNode;
+            const gameToRemove = gameElement.textContent.trim();
+            gameElement.parentNode.removeChild(gameElement);
+            const selectedGamesInput = document.getElementById("selectedGamesInput");
+            const selectedGames = selectedGamesInput.value.split(",");
+            const index = selectedGames.indexOf(gameToRemove);
+            if (index !== -1) {
+                selectedGames.splice(index, 1);
+                selectedGamesInput.value = selectedGames.join(",");
+            }
+        }
+    });
+});

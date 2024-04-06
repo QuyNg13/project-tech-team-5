@@ -104,8 +104,27 @@ app.get('/info/:gameName', async (req, res) => {
   }
 });
 
-app.get('/instellingenprofiel', checkLoggedIn, (req, res) => {
-  res.render('instellingenprofiel');
+app.get('/instellingenprofiel', async (req, res) => {
+  try {
+    // Controleer of de gebruikerssessie correct is ingesteld en haal het gebruikers-ID op
+    if (!req.session.user || !req.session.user._id) {
+      throw new Error('Gebruikerssessie niet correct ingesteld');
+    }
+    const userId = req.session.user._id;
+
+    // Verbind met de database en haal de gebruikersgegevens op
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    const user = await coll.findOne({ _id: new ObjectId(userId) });
+    await client.close();
+
+    // Render de instellingenprofiel.ejs-weergave en geef de gebruikersgegevens door
+    res.render('instellingenprofiel', { user: user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het laden van de profielpagina');
+  }
 });
 
 //Endpoint om gebruikers op te halen 
@@ -225,6 +244,46 @@ async function login(req, res) {
     await client.close();
   }
 }
+
+app.post('/updateprofiel', upload.single('profilePic'), async (req, res) => {
+  try {
+    // Controleer of de gebruikerssessie correct is ingesteld en haal het gebruikers-ID op
+    if (!req.session.user || !req.session.user._id) {
+      throw new Error('Gebruikerssessie niet correct ingesteld');
+    }
+    const userId = req.session.user._id;
+
+    // Update het profielgegevensobject met de ontvangen gegevens uit het formulier
+    let profileDataUpdate = {
+      age: req.body.age,
+      gender: req.body.gender,
+      language: req.body.language,
+      console: req.body.console,
+      consoleLink: req.body.consoleLink,
+      playStyle: req.body.playStyle,
+      favoriteGenres: req.body.genre,
+      favoriteGames: req.body.selectedGames.split(','),
+      bio: req.body.bio
+    };
+
+    // Voeg profielfoto toe aan update als deze is geüpload
+    if (req.file) {
+      profileDataUpdate.profilePic = req.file.filename;
+    }
+
+    // Verbind met de database, werk het profielgegevensobject bij en sluit de verbinding
+    await client.connect();
+    const db = client.db("Data");
+    const coll = db.collection("users");
+    await coll.updateOne({ _id: new ObjectId(userId) }, { $set: profileDataUpdate });
+    await client.close();
+
+    res.redirect('/instellingenprofiel'); // Stuur de gebruiker terug naar de profielpagina
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Er is een fout opgetreden bij het bijwerken van het profiel');
+  }
+});
 
 app.get('/friends', async (req, res) => {
   try {
