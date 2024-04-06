@@ -10,72 +10,61 @@
     <main>       
         <h1 id="titelInstellingen"> De Titel de instelling pagina </h1>
 
-        <div id="instellingenCSS">
-            <h2 id="datainstellingen"> <%= user.username %> </h2>
-            <input type="text" name="username" required>
-            <button id="aanpassing"> Multer Foto' </button>
-        </div>
+        <form action="/updateprofiel" method="POST" enctype="multipart/form-data">
+            <!-- Leeftijd en geslacht -->
+            <label for="age">Leeftijd (geboortedatum): </label>
+            <input type="date" id="age" name="age" value="<%= user.age %>" required><br>
+            <label for="gender">Geslacht: </label>
+            <select id="gender" name="gender" required>
+                <option value="male" <%= user.gender === 'male' ? 'selected' : '' %>>Man</option>
+                <option value="female" <%= user.gender === 'female' ? 'selected' : '' %>>Vrouw</option>
+                <option value="other" <%= user.gender === 'other' ? 'selected' : '' %>>Anders</option>
+            </select>
+            <br>
         
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.username %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.gender %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.age %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.language %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.bio %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.play_style %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen">  <%= user.console %> </h2>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> <%= user.play_duration_hours %> </h2>
-        <p> Ik ben Max, een 25-jarige gamer die leeft voor de spanning van de virtuele wereld. Mijn hart gaat sneller kloppen van actievolle games en ik ben altijd op zoek naar nieuwe uitdagingen. Of het nu gaat om het verslaan van tegenstanders in een first-person shooter of het verkennen van epische werelden, ik ben altijd klaar voor het volgende avontuur.</p>
-        <input type="text" name="username" required>
-        <button id="aanpassing"> pas aan </button>
-    </div>
-
-    <div id="instellingenCSS">
-        <h2 id="datainstellingen"> Favoriete games </h2>
-        <ul>
-            <li> <%= user.favorite_games %> </li>
-            <li> <%= user.favorite_games %> </li>
-            <li> <%= user.favorite_games %> </li>
-        </ul>
-        <button id="aanpassing"> pas aan </button>
-    </div>
+            <!-- Taal -->
+            <label class="taal" for="taal-select">Selecteer een taal die u spreekt:</label>
+            <select id="taal-select" required>
+                <option value="" disabled selected>Selecteer hier</option>
+            </select>
+            <br>
+        
+            <!-- Favoriete console, link naar console en speelstijl -->
+            <label for="console">Favoriete console: </label>
+            <input type="text" id="console" name="console" value="<%= user.console %>" required><br>
+            <label for="consoleLink">Link naar console account: </label>
+            <input type="url" id="consoleLink" name="consoleLink" value="<%= user.consoleLink %>"><br>
+            <label for="playStyle">PvP of Coöp: </label>
+            <select id="playStyle" name="playStyle" required>
+                <option value="PvP" <%= user.playStyle === 'PvP' ? 'selected' : '' %>>PvP</option>
+                <option value="Coöp" <%= user.playStyle === 'Coöp' ? 'selected' : '' %>>Coöp</option>
+            </select>
+            <br>
+        
+            <!-- Favoriete genre en games -->
+            <label for="genre">Favoriete genre: </label>
+            <input type="text" id="genre" name="genre" value="<%= user.favoriteGenres %>" required><br>
+            <label for="favoriteGames">Favoriete games: </label>
+            <input type="text" id="favoriteGames" name="favoriteGames" value="<%= user.favoriteGames.join(', ') %>"
+                placeholder="Typ en zoek naar je favoriete games..." autocomplete="off">
+            <div id="gameSuggestions"></div>
+            <button type="button" id="addGameBtn">Voeg toe</button>
+            <div id="selectedGames"></div>
+            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
+            <br>
+        
+            <!-- Profielfoto en bio -->
+            <label for="profilePic">Upload een profielfoto: </label>
+            <input type="file" id="profilePic" name="profilePic" accept="image/*"><br>
+            <label for="bio">Bio: </label>
+            <textarea id="bio" name="bio"><%= user.bio %></textarea><br>
+        
+            <!-- Knop om profiel bij te werken -->
+            <button class="next" type="submit">Opslaan</button>
+        </form>
 
     </main>
+    <script src="/script/registervragen.js">  </script>
+    <script src="/script/countries.js"></script>
 </body>
 </html>
