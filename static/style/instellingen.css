@@ -1,0 +1,49 @@
+/* Daan zijn css start voor instellingen profielen */
+#titelInstellingen {
+    color: white;
+    padding-right: 2em;
+    padding-left: .6em;
+    text-align: left;
+}
+
+
+#instellingenCSS input {
+    color: white;
+    width: 20em;
+    text-align: center;
+    border-radius: 2em;
+}
+
+#instellingenCSS button {
+    color: white;
+    background-color: blue;
+    border-style: none;
+    width: 8em;
+    height: 3em;
+
+    text-align: center;
+    border-radius: 2em;
+}
+
+#instellingenCSS p {
+    color: white;
+    font-weight: 100;
+    font-size: small;
+    padding: 0 1em;
+}
+
+#datainstellingen {
+    padding-left: .6em;
+    color: white;
+    font-size:larger;
+    font-style: normal;
+    font-weight: 10;
+}
+s
+#instellingenCSS ul li  {
+    color: white;
+    font-weight: 100;
+
+}
+
+
