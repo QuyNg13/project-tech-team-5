@@ -154,7 +154,8 @@ async function adduser(req, res) {
     const { username, password } = req.body; // Haal de gebruikersnaam en het wachtwoord op uit de request body.
     const db = client.db("Data");
     const coll = db.collection("users");
-    const hashedPassword = await bcrypt.hash(password, saltRounds); // Hash het wachtwoord met bcrypt
+    console.log('unp', username, password)
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash het wachtwoord met bcrypt
     const { insertedId } = await coll.insertOne({ username, password: hashedPassword }); // gebruiker word aangemaakt in "users" met gehashed wachtwoord.
     req.session.loggedIn = true; //sessievariablen
     req.session.username = username;
@@ -338,6 +339,9 @@ app.post('/addfriend/:friendId', async (req, res) => {
     const friendId = req.params.friendId
     const senderId = req.session.user._id
 
+    console.log(friendId);
+    console.log(senderId);
+
     await coll.updateOne(
       {_id: new ObjectId(senderId)},
       { $addToSet: {friends: new ObjectId(friendId) } }
@@ -345,7 +349,7 @@ app.post('/addfriend/:friendId', async (req, res) => {
 
     await coll.updateOne(
       {_id: new ObjectId(friendId)},
-      { $addToSet: {friendRequests: new ObjectId(senderId) } }
+      { $addToSet: {friendRequests: new ObjectId(friendId) } }
     )
   
     // Swal.fire({
@@ -361,8 +365,6 @@ app.post('/addfriend/:friendId', async (req, res) => {
     res.status(500).json({error: 'An error has occurred while adding friend' })
   }
 })
-
-
 
 //Endpoint voor lijst met vriendschapsverzoeken
 app.get('/friendrequests', checkLoggedIn, async (req, res) => {
@@ -384,13 +386,13 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
       return res.status(404).json({error: 'User not found'})
     }
 
-    const friendshipRequests = user.friendshipRequests || []
+    const friendRequests = user.friendRequests || []
 
-    console.log('Friendship requests:', friendshipRequests)
+    console.log('Friendship requests:', typeof friendRequests)
 
     await client.close()
 
-    res.render('vriendschapsverzoeken', {friendshipRequests})
+    res.render('vriendschapsverzoeken', {friendRequests})
   } catch (error) {
     console.error('Error fetching friendship requests:', error)
     res.status(500).send('An error occured while fetching the friendship requests')
@@ -398,29 +400,34 @@ app.get('/friendrequests', checkLoggedIn, async (req, res) => {
   })
 
 //vriendschapsverzoek accepteren
-app.post('/accept-friend-request/friendId', checkLoggedIn, async (req, res) => {
+app.post('/accept-friend-request/:friendId', checkLoggedIn, async (req, res) => {
   try {
     const db = client.db("Data")
     const friendRequestId = req.params.friendId
+    const currentUserid = req.session.user._id
 
-    const result = await db.collection('friendshipRequests').findOneAndUpdate(
-    { _id: new ObjectId(friendRequestId), receiver_id: new ObjectId(req.session.user._id) },
-    {$Set: {status:'accepted'}},
-    { returnOriginal: false}
-  )
+    const currentUser = await db.collection('users').findOne({ _id: new ObjectId(currentUserid)})
 
-  	const friendshipRequest = result.value
-
-    if (!friendshipRequest) {
-      return res.status(404).json({ error: 'Friendship request was not found'})
+    if (!currentUser || !currentUser.friendRequests) {
+      return res.status(404).json({ error: 'User was not found'})
     }
 
-    Swal.fire({
-      title: "Confirmation",
-      text: "Friendship request accepted",
-      icon: "success"
-    })
+    const friendRequest = currentUser.friendRequests.find(request => request._id.toString() === friendRequestId && request.status === 'pending')
 
+    if (!friendRequest) {
+      return res.status(404).json({ error: 'Frienship request was not found'})
+    }
+
+    //verzoek geaccepteerd
+    friendRequest.status = 'accepted'
+
+    //gebruiker toevoegen aan friends array van de huidige gebruiker
+    currentUser.friends.push(new ObjectId(friendRequest.senderId))
+
+      await db.collection('users').updateOne(
+      { _id: new ObjectId(currentUserid)} ,
+      {$set: {friendRequests: currentUser.friendRequests, friends: currentUser.friends}},
+    )
     res.status(200).json({message: 'Friendschip request succesfully accepted'})
   } catch (error) {
     console.error ('Error accepting friend request:', error)

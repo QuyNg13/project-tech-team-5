@@ -10,7 +10,7 @@
 
 <body>
     <main>
-        <form action="/registervragen" method="POST" enctype="multipart/form-data">
+        <form action="/register&login" method="POST" enctype="multipart/form-data">
             <% if (currentPage===1) { %>
                 <!-- Vraag 1: Leeftijd, gender (geboortedatum) -->
                 <label for="age">Leeftijd (geboortedatum): </label>
@@ -26,17 +26,22 @@
                 <br>
                 <% } else if (currentPage===2) { %>
                     <!-- Vraag 2: Taal -->
-                    
+
                     <label class="taal" for="taal-select">Selecteer een taal die u spreekt:</label>
-                    <select id="taal-select" name="language" required>
+                    <select class="dropdown" id="taal-select" name="language" required>
                         <option value="" disabled selected>Selecteer hier</option>
                     </select>
-                    
+
                     <% } else if (currentPage===3) { %>
 
                         <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
-                        <label for="console">Favoriete console: </label>
-                        <input type="text" id="console" name="console" required><br>
+
+                        <label class="console" for="console-select">Selecteer favoriete console:</label><br>
+                        <select class="dropdown" id="console-select" name="console" required>
+                            <option value="" disabled selected>Selecteer hier</option>
+                        </select> <br><br>
+
+
                         <label for="consoleLink">Link naar console account: </label>
                         <input type="url" id="consoleLink" name="consoleLink"><br>
                         <label for="playStyle">PvP of Coöp: </label>
@@ -48,9 +53,15 @@
                         </section>
                         <br>
                         <% } else if (currentPage===4) { %>
+
                             <!-- Vraag 4: genres en games -->
-                            <label for="genre">Favoriete genre: </label>
-                            <input type="text" id="genre" name="genre" required><br>
+                            <label class="genre" for="genre">Selecteer favoriete genre:</label><br>
+                            <select class="dropdown" id="genre-select" name="genre" required>
+                                <option value="" disabled selected>Selecteer hier</option>
+                            </select> <br><br>
+
+
+
                             <label for="favoriteGames">Favoriete games: </label>
                             <input type="text" id="favoriteGames" name="favoriteGames"
                                 placeholder="Typ en zoek naar je favoriete games..." autocomplete="off">
@@ -78,8 +89,13 @@
                                             <% } %>
         </form>
     </main>
+
+
     <script src="/script/registervragen.js">  </script>
+    <script src="/script/genre.js"></script>
     <script src="/script/countries.js"></script>
+   
+
 
 
 
