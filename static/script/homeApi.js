@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displayGameData(gameData) {
-        window.location.href = `/info/${encodeURIComponent(gameData.name)}`;
+        window.location.href = `/info/${gameData.id}`;
     }
 
     function createGameElement(gameData) {
@@ -30,11 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const gameBoxTitle = document.createElement('h2');
         gameBoxTitle.textContent = gameData.name;
 
-        const gameboxDescriptie = document.createElement('p');
-        gameboxDescriptie.textContent = gameData.description_raw;
 
         const gameLink = document.createElement('a');
-        gameLink.href = '#'; // We gebruiken een dummy href omdat we de standaardgedraging van de link willen voorkomen
+        gameLink.href = `#${gameData.id}`; // Hier wordt de gameId toegevoegd aan de href van de link
         gameLink.textContent = gameData.name;
 
         // Voeg een event listener toe aan de game link om de API opnieuw te fetchen bij klikken
@@ -45,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         gameBox.appendChild(gameBoxFoto);
         gameBox.appendChild(gameBoxTitle);
-        gameBox.appendChild(gameboxDescriptie);
         gameBox.appendChild(gameLink);
 
         // Voeg gameBox alleen toe als we op de homepagina zijn
@@ -77,3 +74,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetchRandomGames();
 });
+

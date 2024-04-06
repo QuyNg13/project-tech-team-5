@@ -14,18 +14,27 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Er is een fout opgetreden bij het laden van de gegevens:', error));
     }
-
+    
     function displayGameData(gameData) {
-        const gameImage = document.querySelector('#gameImage');
-        gameImage.src = gameData.background_image;
+        const gameInfo = document.getElementById('gameInfo');
+        gameInfo.innerHTML = ''; // Clear previous game info
+    
+        const gameBoxFoto = document.createElement('img');
+        gameBoxFoto.src = gameData.background_image;
+        gameBoxFoto.alt = 'Game Image';
+    
+        const gameBoxTitle = document.createElement('h2');
+        gameBoxTitle.textContent = gameData.name;
 
-        const gameTitle = document.querySelector('#gameTitle');
-        gameTitle.textContent = gameData.name;
+        const gameboxDescriptie = document.createElement('p');
+        gameboxDescriptie.textContent = gameData.description_raw;
+    
+        gameInfo.appendChild(gameBoxFoto);
+        gameInfo.appendChild(gameBoxTitle);
+        gameInfo.appendChild(gameboxDescriptie);
     }
 
-    // Functie om de gameId uit de URL te halen
-    function getGameIdFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('gameId');
-    }
+    // Haal gameId uit de URL
+    const gameId = window.location.pathname.split('/').pop();
+    fetchGameData(gameId);
 });
