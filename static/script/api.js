@@ -38,3 +38,4 @@ document.addEventListener('DOMContentLoaded', function () {
     const gameId = window.location.pathname.split('/').pop();
     fetchGameData(gameId);
 });
+

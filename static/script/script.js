@@ -146,11 +146,6 @@ function toggleDropdown() {
 // // stap 6.
 // // in de CSS
 
-function filterGames() {
-  const selectedGenres = Array.from(document.getElementById('genres').selectedOptions).map(option => option.value);
-  console.log(selectedGenres); // Dit logt een array van de geselecteerde genres in de console
-  // Voer hier je logica uit om de games te filteren op basis van de geselecteerde genres
-}
 
 
 
