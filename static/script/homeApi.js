@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displayGameData(gameData) {
-        window.location.href = `/info/${gameData.id}`; // Gebruik het ID van het spel in plaats van de naam
+        window.location.href = `/info/${gameData.id}/${gameData.name}`; // Gebruik het ID van het spel in plaats van de naam
     }
     
     function createGameElement(gameData) {
