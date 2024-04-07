@@ -5,6 +5,15 @@
     color: white;
 }
 
+#gameContainer a {
+    margin-top: -1em;
+}
+
+#gameContainer img {
+    margin-top: 1em;
+}
+
+
 
 
 

@@ -16,25 +16,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function displayGameData(gameData) {
-        const gameInfo = document.getElementById('gameInfo');
-        gameInfo.innerHTML = ''; // Clear previous game info
-    
-        const gameBoxFoto = document.createElement('img');
-        gameBoxFoto.src = gameData.background_image;
-        gameBoxFoto.alt = 'Game Image';
-    
-        const gameBoxTitle = document.createElement('h2');
-        gameBoxTitle.textContent = gameData.name;
-        const gameboxDescriptie = document.createElement('p');
-        gameboxDescriptie.textContent = gameData.description_raw;
-    
-        gameInfo.appendChild(gameBoxFoto);
-        gameInfo.appendChild(gameBoxTitle);
-        gameInfo.appendChild(gameboxDescriptie);
+        document.getElementById('gameTitle').textContent = gameData.name;
+        document.getElementById('platforms').textContent = gameData.platforms.map(platform => platform.platform.name).join(', ');
+        document.getElementById('genres').textContent = gameData.genres.map(genre => genre.name).join(', ');
+        document.getElementById('multiplayer').textContent = gameData.tags.some(tag => tag.slug === 'multiplayer') ? 'Yes' : 'No';
+
+        const currentUrl = window.location.href;
+        const storesList = gameData.stores.map(store => `<a href="${store.store.domain}" target="_blank">${store.store.name}</a>`).join(', ');
+        document.getElementById('buy').innerHTML = `${storesList}`;        
+
+        document.getElementById('description').textContent = gameData.description_raw;
+        document.getElementById('gameImage').src = gameData.background_image;
+
+        const maxWords = 50;
+        const descriptionWords = gameData.description_raw.split(' ').slice(0, maxWords).join(' ');
+        document.getElementById('description').textContent = descriptionWords.length < gameData.description_raw.length ? descriptionWords + '...' : descriptionWords;
+
+        document.getElementById('gameImage').src = gameData.background_image;
+
     }
 
+    
     // Haal gameId uit de URL
     const gameId = window.location.pathname.split('/').pop();
     fetchGameData(gameId);
 });
-
