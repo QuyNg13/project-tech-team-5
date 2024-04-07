@@ -26,13 +26,22 @@
                 <br>
                 <% } else if (currentPage===2) { %>
                     <!-- Vraag 2: Taal -->
-                    <label for="language">Spraaktaal: </label>
-                    <input type="text" id="language" name="language" required><br>
+
+                    <label class="taal" for="taal-select">Selecteer een taal die u spreekt:</label>
+                    <select class="dropdown" id="taal-select" name="language" required>
+                        <option value="" disabled selected>Selecteer hier</option>
+                    </select>
+
                     <% } else if (currentPage===3) { %>
-                        
+
                         <!-- Vraag 3: Favoriete Console, Link naar Console en speelstijl -->
-                        <label for="console">Favoriete console: </label>
-                        <input type="text" id="console" name="console" required><br>
+
+                        <label class="console" for="console-select">Selecteer favoriete console:</label><br>
+                        <select class="dropdown" id="console-select" name="console" required>
+                            <option value="" disabled selected>Selecteer hier</option>
+                        </select> <br><br>
+
+
                         <label for="consoleLink">Link naar console account: </label>
                         <input type="url" id="consoleLink" name="consoleLink"><br>
                         <label for="playStyle">PvP of Coöp: </label>
@@ -44,15 +53,21 @@
                         </section>
                         <br>
                         <% } else if (currentPage===4) { %>
+
                             <!-- Vraag 4: genres en games -->
-                            <label for="genre">Favoriete genre: </label>
-                            <input type="text" id="genre" name="genre" required><br>
+                            <label class="genre" for="genre">Selecteer favoriete genre:</label><br>
+                            <select class="dropdown" id="genre-select" name="genre" required>
+                                <option value="" disabled selected>Selecteer hier</option>
+                            </select> <br><br>
+
+
+
                             <label for="favoriteGames">Favoriete games: </label>
                             <input type="text" id="favoriteGames" name="favoriteGames"
                                 placeholder="Typ en zoek naar je favoriete games..." autocomplete="off">
                             <div id="gameSuggestions"></div>
                             <button type="button" id="addGameBtn">Voeg toe</button>
-                            <div id="selectedGames"></div>
+                            <div class="selected-game" id="selectedGames"></div>
                             <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
                             <% } else if (currentPage===5) { %>
                                 <!-- Vraag 5: Profielfoto en bio -->
@@ -74,7 +89,16 @@
                                             <% } %>
         </form>
     </main>
+
+
     <script src="/script/registervragen.js">  </script>
+    <script src="/script/genre.js"></script>
+    <script src="/script/countries.js"></script>
+   
+
+
+
+
 </body>
 
 </html>

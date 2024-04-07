@@ -1,0 +1,26 @@
+#vrienden {
+    list-style: none;
+    padding: 0;
+}
+
+#vrienden li {
+    margin-bottom: 0.5em;
+}
+
+#vrienden li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #555;
+}
+
+#vrienden li a img {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
+
+#vrienden li a span {
+    font-size: 1.2em;
+}

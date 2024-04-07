@@ -40,6 +40,43 @@ input {
     font-family: 'Techno Race', sans-serif;
 
 }
+
+.selectGames{
+
+margin-top: 2em;
+display: flex;
+
+}
+
+  
+
+#taal-select{
+    background-color: #2c3e50;
+    padding: 5% 25% 5% 5%;
+    color: #ecf0f1;
+    border: 1px solid #34495e;
+    font-size: large;
+    margin: 10px 0 0 0;
+    font-family: 'Techno Race', sans-serif;
+}
+
+#titelInstellingen{
+
+   margin-top: 40em; 
+    display: flex;
+    justify-content: center;
+}
+.console{
+    margin-top: 2em;
+    display: flex;
+}
+
+.genre{
+    margin-top: 2em;
+    display: flex;
+}
+
+
 #playStyle {
     background-color: #2c3e50;
     padding: 5% 75% 5% 5%;
@@ -89,7 +126,7 @@ input {
 }
 
 .selected-game{
-    margin-top: 2em;
+    margin-top: 2em
 }
 
 #bio{
@@ -109,5 +146,23 @@ input {
     color: #ecf0f1;
     position: absolute; /* Stel de positie van de knop in als absoluut */
     right: 0; /* Plaats de knop aan de rechterkant van de container */
+
+}
+
+.taal{
+    font-size: 1.6em;
+    margin-top: 2em;
+    display: flex;
+}
+
+.dropdown{
+    background-color: #2c3e50;
+    padding: 5% 5% 5% 5%;
+    color: #ecf0f1;
+    border: 1px solid #34495e;
+    font-family: 'Techno Race', sans-serif;
+    width: 100%;
+
+
 
 }

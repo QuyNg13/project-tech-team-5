@@ -21,26 +21,27 @@ function addGame() {
     }
 }
 
-// Functie om geselecteerde spellen weer te geven
 function renderSelectedGames() {
-    selectedGamesContainer.innerHTML = "";
-    selectedGames.forEach(gameName => {
-        const gameTag = document.createElement("div");
-        gameTag.textContent = gameName;
-        
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Verwijder";
-        removeButton.addEventListener("click", () => {
-            selectedGames = selectedGames.filter(name => name !== gameName);
-            renderSelectedGames();
-        });
-        
-        gameTag.appendChild(removeButton);
-        selectedGamesContainer.appendChild(gameTag);
-    });
-    document.getElementById("selectedGamesInput").value = selectedGames.join(',');
-    favoriteGamesInput.value = "";
+  selectedGamesContainer.innerHTML = "";
+  selectedGames.forEach(gameName => {
+      const gameTag = document.createElement("div");
+      gameTag.textContent = gameName;
+      
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "Verwijder";
+      removeButton.id = "verwijder";
+      removeButton.addEventListener("click", () => {
+          selectedGames = selectedGames.filter(name => name !== gameName);
+          renderSelectedGames();
+      });
+      
+      gameTag.appendChild(removeButton);
+      selectedGamesContainer.appendChild(gameTag);
+  });
+  document.getElementById("selectedGamesInput").value = selectedGames.join(',');
+  favoriteGamesInput.value = "";
 }
+
 
 // Functie om spellensuggesties op te halen
 async function getGameSuggestions() {
@@ -68,3 +69,21 @@ function displayGameSuggestions(results) {
         gameSuggestions.appendChild(gameOption);
     });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const selectedGamesContainer = document.getElementById("selectedGamesContainer");
+    selectedGamesContainer.addEventListener("click", function(event) {
+        if (event.target.classList.contains("removeGameBtn")) {
+            const gameElement = event.target.parentNode;
+            const gameToRemove = gameElement.textContent.trim();
+            gameElement.parentNode.removeChild(gameElement);
+            const selectedGamesInput = document.getElementById("selectedGamesInput");
+            const selectedGames = selectedGamesInput.value.split(",");
+            const index = selectedGames.indexOf(gameToRemove);
+            if (index !== -1) {
+                selectedGames.splice(index, 1);
+                selectedGamesInput.value = selectedGames.join(",");
+            }
+        }
+    });
+});

@@ -1,20 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friend requests</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vriendschapsverzoeken</title>
+
+  <link rel="stylesheet" href="/style/main.css">
+  <link rel="stylesheet" href="/style/vrienden.css">
+
+  <link href="https://fonts.cdnfonts.com/css/techno-race" rel="stylesheet">
 </head>
 <body>
-    <h1>Friend requests</h1>
-    <ul>
-        <% friendRequests.forEach(function(requests) { %>
-            <li><% request.senderName %>Wants to add you as a friend</li>
-        <% }) %>
-    </ul>
-
-    <form action="//<%= user._id %>" method="POST">
-        <button type="submit">Accept friend</button>
-    </form>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/style/images/Untitled_Artwork 71.png" alt="Logo">
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">My Friends</a>
+        </li>
+        <li>
+          <a href="#">My Profile</a>
+        </li>
+      </ul>
+      <button>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+  <main>
+  <h1>Vriendschapsverzoeken</h1>
+  <ul id="vrienden">
+    <% if (friendRequests && friendRequests.length > 0) { %>
+      <% friendRequests.forEach(request => { %>
+        <li>
+          <a href="/profile/<%= request.userId %>">
+            <img src="/style/images/uploads/<%= request.userId %>/<%= request.profilePic %>" alt="Profielfoto">
+            <span><%= request.username %></span>
+          </a>
+          <form action="/accept-friend-request/<%= request %>" method="POST">
+            <button type="submit" class="accept-button">Accepteren</button>
+          </form>
+          <p>Request ID: <%= request %></p>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <p>Er zijn geen vriendschapsverzoeken</p>
+    <% } %>
+  </ul>
+</main>
 </body>
+<script src="/script/hamburger.js"></script>
 </html>
