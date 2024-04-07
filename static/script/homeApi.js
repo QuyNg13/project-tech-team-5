@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displayGameData(gameData) {
-        window.location.href = `/info/${gameData.id}`; // Gebruik het ID van het spel in plaats van de naam
+        window.location.href = `/info/${gameData.id}/${gameData.name}`; // Gebruik het ID van het spel in plaats van de naam
     }
     
     function createGameElement(gameData) {
@@ -99,6 +99,22 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Er is een fout opgetreden bij het laden van de gegevens:', error));
     }
 
+    // Nieuwe functie voor het ophalen van games op basis van geselecteerde platforms
+    function fetchGamesByPlatforms(platforms) {
+        const platformQueryString = platforms.map(platform => `platforms=${platform}`).join('&');
+        const url = `${apiUrl}?${platformQueryString}&key=${apiKey}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const games = data.results;
+                games.forEach(game => {
+                    createGameElement(game);
+                });
+            })
+            .catch(error => console.error('Er is een fout opgetreden bij het laden van de gegevens:', error));
+    }
+
     // Voeg een eventlistener toe aan het zoekveld, alleen als we op de homepagina zijn
     if (isHomePage()) {
         const searchInput = document.querySelector('.search');
@@ -133,9 +149,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 fetchRandomGames();
             }
         });
+
+        const platformDropdown = document.getElementById('console');
+        platformDropdown.addEventListener('change', function(event) {
+            const selectedPlatforms = Array.from(event.target.selectedOptions, option => option.value);
+            if (selectedPlatforms.length > 0) {
+                // Haal de games op die overeenkomen met de geselecteerde platforms
+                fetchGamesByPlatforms(selectedPlatforms);
+            } else {
+                // Als er geen platforms zijn geselecteerd, haal willekeurige games op
+                fetchRandomGames();
+            }
+        });
     }
 
-    // Haal willekeurige games op bij het laden van de pagina, alleen als we op de homepagina zijn
+    // Haal wille
     if (isHomePage()) {
         fetchRandomGames();
     }

@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
     // Haal gameId uit de URL
-    const gameId = window.location.pathname.split('/').pop();
+    const parts = window.location.pathname.split('/');
+    const gameIdIndex = parts.indexOf('info') + 1;
+    const gameId = parts[gameIdIndex];
+    
     fetchGameData(gameId);
 });
