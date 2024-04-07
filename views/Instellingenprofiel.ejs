@@ -66,8 +66,10 @@
             <br>
 
             <!-- Favoriete console, link naar console en speelstijl -->
-            <label for="console">Favoriete console: </label>
-            <input type="text" id="console" name="console" value="<%= user.console %>" required><br>
+            <label class="console" for="console-select">Selecteer favoriete console:</label><br>
+            <select class="dropdown" id="console-select" name="console">
+                <option value="<%= user.console %>" disabled selected>Selecteer hier</option>
+            </select> <br><br>
             <label for="consoleLink">Link naar console account: </label>
             <input type="url" id="consoleLink" name="consoleLink" value="<%= user.consoleLink %>"><br>
             <label for="playStyle">PvP of Coöp: </label>
@@ -96,8 +98,7 @@
             <div id="gameSuggestions"></div>
             <button type="button" id="addGameBtn">Voeg toe</button>
             <div id="selectedGames"></div>
-            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="">
-            <br>
+            <input type="hidden" id="selectedGamesInput" name="selectedGames" value="<%= user.favoriteGames %>">
             <br>
 
             <!-- Profielfoto en bio -->
