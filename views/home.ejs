@@ -56,90 +56,42 @@
                     <h3>PvP or CO-Op</h3>
                     <input type="checkbox" name="filter" value="all" id="filter-all" >
                     <label for="filter-all">PvP</label>
-
+        
                     <input type="checkbox" name="filter" value="people" id="filter-people">
                     <label for="filter-people">CO-OP </label>
-
+        
                     <br>
                     <br>
                     <br>
-
-
-                    <div class="container">
-                        <label for="genres">Select Genre(s):</label>
-                        <select id="genres" multiple>
-                            <option value="action">Action</option>
-                            <option value="indie">Indie</option>
-                            <option value="adventure">Adventure</option>
-                            <option value="rpg">RPG</option>
-                            <option value="strategy">Strategy</option>
-                            <option value="shooter">Shooter</option>
-                            <option value="casual">Casual</option>
-                            <option value="simulation">Simulation</option>
-                            <option value="puzzle">Puzzle</option>
-                            <option value="arcade">Arcade</option>
-                            <option value="platformer">Platformer</option>
-                            <option value="racing">Racing</option>
-                            <option value="massively-multiplayer">Massively Multiplayer</option>
-                            <option value="sports">Sports</option>
-                            <option value="fighting">Fighting</option>
-                            <option value="family">Family</option>
-                            <option value="board-games">Board Games</option>
-                            <option value="educational">Educational</option>
-                            <option value="card">Card</option>
-                        </select>
-                    </div>
-            
-                    <div class="container">
-                        <label for="concole">Select console(s):</label>
-                        <select id="console" multiple>
-                            <option value="action">Action</option>
-                            <option value="indie">Indie</option>
-                            <option value="adventure">Adventure</option>
-                            <option value="rpg">RPG</option>
-                            <option value="strategy">Strategy</option>
-                            <option value="shooter">Shooter</option>
-                            <option value="casual">Casual</option>
-                            <option value="simulation">Simulation</option>
-                            <option value="puzzle">Puzzle</option>
-                            <option value="arcade">Arcade</option>
-                            <option value="platformer">Platformer</option>
-                            <option value="racing">Racing</option>
-                            <option value="massively-multiplayer">Massively Multiplayer</option>
-                            <option value="sports">Sports</option>
-                            <option value="fighting">Fighting</option>
-                            <option value="family">Family</option>
-                            <option value="board-games">Board Games</option>
-                            <option value="educational">Educational</option>
-                            <option value="card">Card</option>
-                        </select>
-                    </div>
-
-
-
+        
+                    <label class="console" for="console-select"> <h3>Console:</h3></label><br>
+                    <select class="dropdown" id="console-select" name="console" multiple required>
+                        <!-- Options worden dynamisch ingevuld door JavaScript -->
+                    </select> <br><br>
+        
+        
+                    <label class="genre" for="genre"><h3>Genre:</h3></label><br>
+                    <select class="dropdown" id="genre-select" name="genre" multiple required>
+                        <!-- Options worden dynamisch ingevuld door JavaScript -->
+                    </select> <br><br>
+        
                     <br>
                     <br>
                     <br>
-
+        
                     
-                    <section>
-                        Toon in een:
-                        <input type="radio" name="view" value="list" id="view-list" checked>
-                        <label for="view-list">lijst</label>
-                        <input type="radio" name="view" value="list" id="view-grid">
-                        <label for="view-grid">grid</label>
-
-                    </section>
+    
                     <br>
                     <br>
                     <br>
-
-                    <button onclick="filterGames()">Filter</button>
-
-
+        
+                    <button class="buttonHome" onclick="filterGames()">Filter</button>
+        
+        
                 </aside>
             </div>
         </div>
+         
     
         <input type="search" class="search" placeholder="Looking for a specific game?">
 
@@ -153,6 +105,8 @@
     <script src="/script/script.js"></script>
 	<script src="/script/hamburger.js"></script>
     <script src="/script/homeApi.js"></script>
+    <script src="/script/genre.js"></script>
+    <script src="/script/countries.js"></script>
 </body>
 
 </html>
