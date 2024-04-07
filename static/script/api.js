@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
         const gameBoxTitle = document.createElement('h2');
         gameBoxTitle.textContent = gameData.name;
-
         const gameboxDescriptie = document.createElement('p');
         gameboxDescriptie.textContent = gameData.description_raw;
     
