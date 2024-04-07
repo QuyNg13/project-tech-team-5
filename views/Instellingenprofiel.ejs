@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href=/style/main.css>
+    <link rel="stylesheet" href=/style/register.css>
+
+
+
 </head>
 
 <body>
@@ -44,7 +48,7 @@
 
     </header>
     <main>
-        <h1 id="titelInstellingen"> De Titel de instelling pagina </h1>
+        <h1 id="titelInstellingen"> Jouw profiel: </h1>
 
         <form action="/updateprofiel" method="POST" enctype="multipart/form-data">
             <!-- Leeftijd en geslacht -->
@@ -70,9 +74,9 @@
             <select class="dropdown" id="console-select" name="console">
                 <option value="<%= user.console %>" disabled selected>Selecteer hier</option>
             </select> <br><br>
-            <label for="consoleLink">Link naar console account: </label>
+            <label class="console" for="consoleLink">Link naar console account: </label>
             <input type="url" id="consoleLink" name="consoleLink" value="<%= user.consoleLink %>"><br>
-            <label for="playStyle">PvP of Coöp: </label>
+            <label class="console" for="playStyle">PvP of Coöp: </label>
             <select id="playStyle" name="playStyle" required>
                 <option value="PvP" <%=user.playStyle==='PvP' ? 'selected' : '' %>>PvP</option>
                 <option value="Coöp" <%=user.playStyle==='Coöp' ? 'selected' : '' %>>Coöp</option>
@@ -82,9 +86,9 @@
             <!-- Favoriete genre en games -->
             <label class="genre" for="genre">Selecteer favoriete genre:</label><br>
             <select class="dropdown" id="genre-select" name="genre">
-                <option value="<%= user.favoriteGenres %>" disabled selected>Selecteer hier</option>
+                <option class="console" value="<%= user.favoriteGenres %>" disabled selected>Selecteer hier</option>
             </select> <br>
-            <label for="selectedGames">Favoriete games:</label>
+            <label class="selectGames" for="selectedGames">Favoriete games:</label>
             <div id="selectedGamesContainer">
                 <% user.favoriteGames.forEach(function(game) { %>
                     <div class="selected-game">
@@ -102,9 +106,9 @@
             <br>
 
             <!-- Profielfoto en bio -->
-            <label for="profilePic">Upload een profielfoto: </label>
+            <label class="console" for="profilePic">Upload een profielfoto: </label>
             <input type="file" id="profilePic" name="profilePic" accept="image/*"><br>
-            <label for="bio">Bio: </label>
+            <label class="console" for="bio">Bio: </label>
             <textarea id="bio" name="bio"><%= user.bio %></textarea><br>
 
             <!-- Knop om profiel bij te werken -->
