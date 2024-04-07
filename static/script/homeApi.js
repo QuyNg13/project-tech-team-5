@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
         gameBoxFoto.src = gameData.background_image;
         gameBoxFoto.alt = 'Game Image';
 
-        const gameBoxTitle = document.createElement('h2');
+        const gameBoxTitle = document.createElement('p');
         gameBoxTitle.textContent = gameData.name;
 
         const gameLink = document.createElement('a');
         gameLink.href = `#${gameData.id}`; // Verwijs naar het ID van het spel
-        gameLink.textContent = gameData.name;        
+        gameLink.textContent = 'Click here for more!';        
 
         // Voeg een event listener toe aan de game link om de API opnieuw te fetchen bij klikken
         gameLink.addEventListener('click', function(event) {
