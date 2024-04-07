@@ -59,7 +59,14 @@ mensen uit kunnen kiezen.-->
         <p>Bio: <%= user.bio %></p>
         <p>Console Link: <a href="<%= user.consoleLink %>"><%= user.consoleLink %></a></p>
         <p>Gender: <%= user.gender %></p>
-        <p>Favorite Games: <%= user.FavoriteGames %></p>
+        <p>Favorite Games:</p>
+        <ul>
+            <% user.favoriteGames.forEach(function(game) { %>
+                <li>
+                    <p><%= game %></p>
+                </li>
+                <% }); %>
+        </ul>
       </div>
 
 
