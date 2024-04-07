@@ -78,8 +78,10 @@
             <br>
 
             <!-- Favoriete genre en games -->
-            <label for="genre">Favoriete genre: </label>
-            <input type="text" id="genre" name="genre" value="<%= user.favoriteGenres %>" required><br>
+            <label class="genre" for="genre">Selecteer favoriete genre:</label><br>
+            <select class="dropdown" id="genre-select" name="genre">
+                <option value="<%= user.favoriteGenres %>" disabled selected>Selecteer hier</option>
+            </select> <br>
             <label for="selectedGames">Favoriete games:</label>
             <div id="selectedGamesContainer">
                 <% user.favoriteGames.forEach(function(game) { %>
@@ -112,6 +114,7 @@
     <script src="/script/registervragen.js">  </script>
     <script src="/script/countries.js"></script>
     <script src="/script/hamburger.js"></script>
+    <script src="/script/genre.js"></script>
 </body>
 
 </html>
