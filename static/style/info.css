@@ -38,4 +38,20 @@ footer button{
 #gameInfo {
     padding-top: 10em;
     color: white;
+    text-align: left;
+    padding-left: 1em;
 }
+
+
+#gameInfo h2 {
+    font-size: 2em;
+    color: white;
+    text-align: center;
+}
+
+#gameInfo p {
+    text-align: left;
+    font-size: .8em;
+    padding: 0 2em;
+}
+
