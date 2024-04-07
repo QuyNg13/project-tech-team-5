@@ -342,25 +342,24 @@ app.get('/profile/:username', async (req, res) => {
 //gebruiker toevoegen als vriend
 app.post('/addfriend/:friendId', async (req, res) => {
   try {
-    // Controleer of de gebruikerssessie is ingesteld en of de gebruikers-ID beschikbaar is
     if (!req.session.user || !req.session.user._id) {
-      console.error('Gebruikerssessie niet ingesteld of gebruikers-ID ontbreekt');
-      return res.status(401).json({ error: 'Unauthorized' });
+      console.error('Gebruikerssessie niet ingesteld of gebruikers-ID ontbreekt')
+      return res.status(401).json({ error: 'Unauthorized' })
     }
 
-    await client.connect();
-    const db = client.db("Data");
-    const coll = db.collection("users");
+    await client.connect()
+    const db = client.db("Data")
+    const coll = db.collection("users")
 
     const friendId = req.params.friendId;
     const senderId = req.session.user._id;
 
     await coll.updateOne(
-      { _id: new ObjectId(friendId) }, // Update de ontvanger van het vriendverzoek
-      { $addToSet: { friendRequests: new ObjectId(senderId) } } // Voeg het vriendverzoek toe aan de ontvanger
-    );
+      { _id: new ObjectId(friendId) },
+      { $addToSet: { friendRequests: new ObjectId(senderId) } } 
+    )
 
-    res.status(200).json({ message: 'Vriendverzoek succesvol verstuurd' });
+    res.status(200).json({ message: 'Vriendverzoek succesvol verstuurd' })
   } catch (error) {
     console.error('Fout bij versturen van vriendverzoek:', error);
     res.status(500).json({ error: 'Er is een fout opgetreden bij het versturen van vriendverzoek' });
@@ -369,36 +368,33 @@ app.post('/addfriend/:friendId', async (req, res) => {
   }
 });
 
-
-
-
 //Endpoint voor lijst met vriendschapsverzoeken
 app.get('/friendrequests', checkLoggedIn, async (req, res) => {
   try {
-    const userId = req.session.user._id;
+    const userId = req.session.user._id
 
     await client.connect();
     const db = client.db("Data");
-    const usersCollection = db.collection("users");
+    const usersCollection = db.collection("users")
 
     // Huidige gebruiker ophalen
-    const currentUser = await usersCollection.findOne({ _id: new ObjectId(userId) });
+    const currentUser = await usersCollection.findOne({ _id: new ObjectId(userId) })
 
     if (!currentUser) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'User not found' })
     }
 
     // Ophalen van de verzoeken 
-    const friendRequests = currentUser.friendRequests || [];
+    const friendRequests = currentUser.friendRequests || []
 
     await client.close();
 
-    res.render('vriendschapsverzoeken', { friendRequests });
+    res.render('vriendschapsverzoeken', { friendRequests })
   } catch (error) {
-    console.error('Error fetching friend requests:', error);
-    res.status(500).send('An error occurred while fetching friend requests');
+    console.error('Error fetching friend requests:', error)
+    res.status(500).send('An error occurred while fetching friend requests')
   }
-});
+})
 
 
 //vriendschapsverzoek accepteren
@@ -431,10 +427,11 @@ app.post('/accept-friend-request/:friendId', checkLoggedIn, async (req, res) => 
     console.log('Current user friend requests:', currentUser.friendRequests);
 
     //Controle om te kijken of het vriendverzoek-ID bestaat in de friendRequests array van de huidige gebruiker
-    const friendRequestIndex = currentUser.friendRequests.findIndex(request => request.toString() === friendRequestId.toString());
+    const friendRequestIndex = currentUser.friendRequests.findIndex(request => request.toString() === friendRequestId.toString())
     if (friendRequestIndex === -1) {
       return res.status(404).json({ error: 'Friendship request not found' })
     }
+    
     //Verwijderen verzoeken uit de friendRequests array na het accepteren
     currentUser.friendRequests.splice(friendRequestIndex, 1)
 
