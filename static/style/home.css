@@ -8,14 +8,15 @@
     
 }
 
-#gameContainer img{
-    width: fit-content;
-    height: auto;
+
+
+#gameContainer a {
+    margin-top: -1em;
 }
-#gameContainer p{
-    font-size: small;
-    max-width: 80%;
-    margin-bottom: 0px;
+
+#gameContainer img {
+    margin-top: 1em;
+}
 
 }
 

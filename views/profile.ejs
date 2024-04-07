@@ -22,15 +22,15 @@ mensen uit kunnen kiezen.-->
         </div>
         <ul class="nav-links">
             <li>
-                <a href="##">Home</a>
+                <a href="/">Home</a>
             </li>
 
             <li>
-                <a href="##">My Friends</a>
+                <a href="/friends">My Friends</a>
             </li>
 
             <li>
-                <a href="##">My Profile</a>
+                <a href="/instellingenprofiel">My Profile</a>
             </li>
 
         </ul>
@@ -54,17 +54,23 @@ mensen uit kunnen kiezen.-->
         <p>Age: <%= user.age %></p>
         <p>Language: <%= user.language %></p>
         <p>Console: <%= user.console %></p>
-        <p>Console Link: <%= user.ConsoleLink %></p>
+        <p>Console Link: <%= user.consoleLink %></p>
         <p>PlayStyle: <%= user.playstyle %></p>
         <p>Bio: <%= user.bio %></p>
-        <p>Favorite Genres: <%= user.FavoriteGenres %></p>
+        <p>Console Link: <a href="<%= user.consoleLink %>"><%= user.consoleLink %></a></p>
         <p>Gender: <%= user.gender %></p>
-        <p>Favorite Games: <%= user.FavoriteGames %></p>
+        <p>Favorite Games:</p>
+        <ul>
+            <% user.favoriteGames.forEach(function(game) { %>
+                <li>
+                    <p><%= game %></p>
+                </li>
+                <% }); %>
+        </ul>
       </div>
 
-
       <form action="/addfriend/<%= user._id %>" method="POST">
-        <button type="submit">Add friend</button>
+        <button type="submit" class="add-friend">Voeg toe als vriend</button>
       </form>
 
     <% } else { %>

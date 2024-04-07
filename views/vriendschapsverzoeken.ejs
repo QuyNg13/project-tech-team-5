@@ -1,68 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friend requests</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vriendschapsverzoeken</title>
 
-    <link rel="stylesheet" href="\style\style.css">
-    <link href="https://fonts.cdnfonts.com/css/techno-race" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" href="/style/main.css">
+  <link rel="stylesheet" href="/style/vrienden.css">
+
+  <link href="https://fonts.cdnfonts.com/css/techno-race" rel="stylesheet">
 </head>
 <body>
-    <header>
-		<!-- Hier heb ik gekozen voor het maken van een nav met daarin een ul met vervolgends li items voor het maken van het menu waar
-		mensen uit kunnen kiezen.-->
-		<nav class="navbar"> <!-- <a href= "https://www.youtube.com/watch?v=flItyHiDm7E"> link naar video die ik heb gebruikt als referentie </a>
-		-->
-			<div class="logo">
-				<img src="/style/images/Untitled_Artwork 71.png" alt="Logo">
-			</div>
-			<ul class="nav-links">
-				<li>
-					<a href="##">Home</a>
-				</li>
-
-				<li>
-					<a href="##">My Friends</a>
-				</li>
-
-				<li>
-					<a href="##">My Profile</a>
-				</li>
-
-			</ul>
-
-			<!-- Hier heb ik het hamburger menu mee gemaakt, drie streepjes boven elkaar. een "span" staat voor het aangeven van bepaalde 
-			content en heb dus hiervoor de span gemaakt om het hamburger menu te worden-->
-
-			<button>
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
-		</nav>
-
-	</header>
-    <h1>Vriendschapsverzoeken</h1>
-    <p>Request ID:<%= friendRequests %></p>
-    <ul id="vrienden">
-        <% if ((friendRequests !== undefined )&& (friendRequests.length > 0)) { %>
-            <% friendRequests.forEach(request => { %> 
-            <li>
-                <a href="/profile/<%= request._id %>">
-                    <img src="/style/images/uploads/<%= request._id %>/<%= request.profilePic %>" alt="Profielfoto">
-                    <span><%= request.username %></span>
-                </a>
-                <form action="/accept-friend-request/<%= request._id %>" method="POST">
-                    <button type="submit">Accepteren</button>
-                </form>
-                <p>Request ID:<%= request._id %></p>
-            </li>
-            <% }) %>
-        <% } else { %>
-            <p>Er zijn geen vriendschapsverzoeken</p>
-        <% } %>
-    </ul>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/style/images/Untitled_Artwork 71.png" alt="Logo">
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">My Friends</a>
+        </li>
+        <li>
+          <a href="#">My Profile</a>
+        </li>
+      </ul>
+      <button>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+  <main>
+  <h1>Vriendschapsverzoeken</h1>
+  <ul id="vrienden">
+    <% if (friendRequests && friendRequests.length > 0) { %>
+      <% friendRequests.forEach(request => { %>
+        <li>
+          <a href="/profile/<%= request.userId %>">
+            <img src="/style/images/uploads/<%= request.userId %>/<%= request.profilePic %>" alt="Profielfoto">
+            <span><%= request.username %></span>
+          </a>
+          <form action="/accept-friend-request/<%= request %>" method="POST">
+            <button type="submit" class="accept-button">Accepteren</button>
+          </form>
+          <p>Request ID: <%= request %></p>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <p>Er zijn geen vriendschapsverzoeken</p>
+    <% } %>
+  </ul>
+</main>
 </body>
+<script src="/script/hamburger.js"></script>
 </html>
