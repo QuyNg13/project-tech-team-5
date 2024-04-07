@@ -254,17 +254,18 @@ app.post('/updateprofiel', upload.single('profilePic'), async (req, res) => {
     const userId = req.session.user._id;
 
     // Update het profielgegevensobject met de ontvangen gegevens uit het formulier
-    let profileDataUpdate = {
-      age: req.body.age,
-      gender: req.body.gender,
-      language: req.body.language,
-      console: req.body.console,
-      consoleLink: req.body.consoleLink,
-      playStyle: req.body.playStyle,
-      favoriteGenres: req.body.genre,
-      favoriteGames: req.body.selectedGames.split(','),
-      bio: req.body.bio
-    };
+    let profileDataUpdate = {};
+
+    // Voeg alleen niet-lege velden toe aan het profielgegevensobject
+    if (req.body.age) profileDataUpdate.age = req.body.age;
+    if (req.body.gender) profileDataUpdate.gender = req.body.gender;
+    if (req.body.language) profileDataUpdate.language = req.body.language;
+    if (req.body.console) profileDataUpdate.console = req.body.console;
+    if (req.body.consoleLink) profileDataUpdate.consoleLink = req.body.consoleLink;
+    if (req.body.playStyle) profileDataUpdate.playStyle = req.body.playStyle;
+    if (req.body.genre) profileDataUpdate.favoriteGenres = req.body.genre;
+    if (req.body.selectedGames) profileDataUpdate.favoriteGames = req.body.selectedGames.split(',');
+    if (req.body.bio) profileDataUpdate.bio = req.body.bio;
 
     // Voeg profielfoto toe aan update als deze is geüpload
     if (req.file) {
