@@ -64,56 +64,26 @@
 	</main>
 
 	<footer>
-		<div class="dropdown">
-			<button onclick="toggleDropdown()" class="dropbtn">Filters</button>
-			<div id="myDropdown" class="dropdown-content">
-				<aside>
-					<input type="radio" name="filter" value="all" id="filter-all" checked>
-					<label for="filter-all">all</label>
-		
-					<input type="radio" name="filter" value="people" id="filter-people">
-					<label for="filter-people">people</label>
-		
-					<input type="radio" name="filter" value="animals" id="filter-animals">
-					<label for="filter-animals">animals</label>
-		
-					<input type="radio" name="filter" value="items" id="filter-items">
-					<label for="filter-items">items</label>
-		
-					<br>
-					<br>
-					<br>
-		
-					<section>
-						Toon in een:
-						<input type="radio" name="view" value="list" id="view-list" checked>
-						<label for="view-list">lijst</label>
-						<input type="radio" name="view" value="list" id="view-grid">
-						<label for="view-grid">grid</label>
-		
-					</section>
-
-		
-		
-				</aside>
-			</div>
-		  </div>
-		  
-		  <ul>
+		<h2>players:</h2>
+		<ul>
 			<% users.forEach(function(user) { %>
 				<li>
 					<a href="/profile/<%= user._id %>">
 						<img src="/style/images/uploads/<%= user._id %>/<%= user.profilePic %>" alt="<%= user.username %>">
-						<p><%= user.username %></p>
-						<p><%= user.age %></p>
-						<p><%= user.gender %></p>
+						<p>
+							<%= user.username %>
+						</p>
+						<p>
+							<%= user.age %>
+						</p>
+						<p>
+							<%= user.gender %>
+						</p>
 					</a>
 				</li>
-			<% }); %>
+				<% }); %>
 		</ul>
-
 		<button>Toon meer!</button>
-		
 	</footer>
 
 
