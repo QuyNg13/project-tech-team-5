@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friend Requests</title>
-  <!-- Add your CSS and other imports here -->
-  <link rel="stylesheet" href="/style/style.css">
+  <title>Vriendschapsverzoeken</title>
+
+  <link rel="stylesheet" href="/style/main.css">
+  <link rel="stylesheet" href="/style/vrienden.css">
+
   <link href="https://fonts.cdnfonts.com/css/techno-race" rel="stylesheet">
 </head>
 <body>
@@ -32,17 +34,18 @@
       </button>
     </nav>
   </header>
+  <main>
   <h1>Vriendschapsverzoeken</h1>
   <ul id="vrienden">
     <% if (friendRequests && friendRequests.length > 0) { %>
       <% friendRequests.forEach(request => { %>
         <li>
-          <a href="/profile/<%= request %>">
-            <img src="/style/images/uploads/<%= request %>/<%= request.profilePic %>" alt="Profielfoto">
+          <a href="/profile/<%= request.userId %>">
+            <img src="/style/images/uploads/<%= request.userId %>/<%= request.profilePic %>" alt="Profielfoto">
             <span><%= request.username %></span>
           </a>
           <form action="/accept-friend-request/<%= request %>" method="POST">
-            <button type="submit">Accepteren</button>
+            <button type="submit" class="accept-button">Accepteren</button>
           </form>
           <p>Request ID: <%= request %></p>
         </li>
@@ -51,5 +54,7 @@
       <p>Er zijn geen vriendschapsverzoeken</p>
     <% } %>
   </ul>
+</main>
 </body>
+<script src="/script/hamburger.js"></script>
 </html>

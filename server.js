@@ -329,7 +329,7 @@ app.get('/profile/:username', async (req, res) => {
     const user = await coll.findOne({ _id: new ObjectId(username)})
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found'})
+      return res.status(404).json({ error: 'Gebruiker niet gevonden'})
     }
 
     res.render('profile', {user})
@@ -431,7 +431,7 @@ app.post('/accept-friend-request/:friendId', checkLoggedIn, async (req, res) => 
     if (friendRequestIndex === -1) {
       return res.status(404).json({ error: 'Friendship request not found' })
     }
-    
+
     //Verwijderen verzoeken uit de friendRequests array na het accepteren
     currentUser.friendRequests.splice(friendRequestIndex, 1)
 
