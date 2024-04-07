@@ -21,26 +21,27 @@ function addGame() {
     }
 }
 
-// Functie om geselecteerde spellen weer te geven
 function renderSelectedGames() {
-    selectedGamesContainer.innerHTML = "";
-    selectedGames.forEach(gameName => {
-        const gameTag = document.createElement("div");
-        gameTag.textContent = gameName;
-        
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Verwijder";
-        removeButton.addEventListener("click", () => {
-            selectedGames = selectedGames.filter(name => name !== gameName);
-            renderSelectedGames();
-        });
-        
-        gameTag.appendChild(removeButton);
-        selectedGamesContainer.appendChild(gameTag);
-    });
-    document.getElementById("selectedGamesInput").value = selectedGames.join(',');
-    favoriteGamesInput.value = "";
+  selectedGamesContainer.innerHTML = "";
+  selectedGames.forEach(gameName => {
+      const gameTag = document.createElement("div");
+      gameTag.textContent = gameName;
+      
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "Verwijder";
+      removeButton.id = "verwijder";
+      removeButton.addEventListener("click", () => {
+          selectedGames = selectedGames.filter(name => name !== gameName);
+          renderSelectedGames();
+      });
+      
+      gameTag.appendChild(removeButton);
+      selectedGamesContainer.appendChild(gameTag);
+  });
+  document.getElementById("selectedGamesInput").value = selectedGames.join(',');
+  favoriteGamesInput.value = "";
 }
+
 
 // Functie om spellensuggesties op te halen
 async function getGameSuggestions() {
