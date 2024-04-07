@@ -106,7 +106,7 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-app.get('/info/:gameName', async (req, res) => {
+app.get('/info/:gameId/:gameName', async (req, res) => {
   try {
     await client.connect();
     const gameName = req.params.gameName;
