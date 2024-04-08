@@ -58,72 +58,57 @@
             <div id="myDropdown" class="dropdown-content">
                 <aside>
                     <h3>PvP or CO-Op</h3>
-                    <input type="checkbox" name="filter" value="all" id="filter-all" >
+                    <input type="checkbox" name="filter" value="all" id="filter-all">
                     <label for="filter-all">PvP</label>
-        
+
                     <input type="checkbox" name="filter" value="people" id="filter-people">
                     <label for="filter-people">CO-OP </label>
-        
+
                     <br>
                     <br>
                     <br>
 
 
-                    <div class="container">
+                    <div class="container" id="genres">
                         <label for="genres">Select Genre(s):</label>
-                        <select id="genres" multiple>
-                            <option value="action">Action</option>
-                            <option value="indie">Indie</option>
-                            <option value="adventure">Adventure</option>
-                            <option value="rpg">RPG</option>
-                            <option value="strategy">Strategy</option>
-                            <option value="shooter">Shooter</option>
-                            <option value="casual">Casual</option>
-                            <option value="simulation">Simulation</option>
-                            <option value="puzzle">Puzzle</option>
-                            <option value="arcade">Arcade</option>
-                            <option value="platformer">Platformer</option>
-                            <option value="racing">Racing</option>
-                            <option value="massively-multiplayer">Massively Multiplayer</option>
-                            <option value="sports">Sports</option>
-                            <option value="fighting">Fighting</option>
-                            <option value="family">Family</option>
-                            <option value="board-games">Board Games</option>
-                            <option value="educational">Educational</option>
-                            <option value="card">Card</option>
+                        <select class="dropdown" id="genre-select" name="genre" multiple>
+                            <option value="" disabled selected>Selecteer hier</option>
+
                         </select>
+                       <br><br>
+
+
+
                     </div>
-                    
-                    <div class="container">
-                        <label for="console">Select console(s):</label>
-                        <select id="console" multiple>
-                            <option value="Steam">Steam</option>
-                            <option value="xbox">Xbox</option>
-                            <option value="playstation4">Playstation 4</option>
-                            <option value="nintendo-switch">Nintendo Switch</option>
+
+                    <div class="container" id="console">
+                        <label for="console"  for="console-select" >Select console(s):</label>
+                        <select class="dropdown" id="console-select" name="console" multiple>
+                            <option value="" disabled selected>Selecteer hier</option>
                         </select>
+
                     </div>
-                    
+
 
 
                     <br>
                     <br>
                     <br>
-        
-                    
-    
+
+
+
                     <br>
                     <br>
                     <br>
-        
+
                     <button class="buttonHome" onclick="filterGames()">Filter</button>
-        
-        
+
+
                 </aside>
             </div>
         </div>
-         
-    
+
+
         <input type="search" class="search" placeholder="Looking for a specific game?">
 
 
@@ -134,7 +119,7 @@
 
 
     <script src="/script/script.js"></script>
-	<script src="/script/hamburger.js"></script>
+    <script src="/script/hamburger.js"></script>
     <script src="/script/homeApi.js"></script>
     <script src="/script/genre.js"></script>
     <script src="/script/countries.js"></script>
