@@ -2,7 +2,7 @@
 
 ## Introduction:
 
-This webpage is designed to provide a platform for users to register, login, update their profiles, view information about games, and interact with other users by sending and accepting friend requests. It facilitates user interaction within a gaming community.
+This webpage is designed to provide a platform for users to register, login, update their profiles, view information about games, and interact with other users by sending and accepting friend requests. It facilitates user interaction within the gaming community.
 
 ## Corporate Style:
 
@@ -10,7 +10,7 @@ The webpage follows a corporate style that aims to provide a seamless user exper
 
 ## Why, How, and What?
 
-The purpose of this webpage is to create a centralized platform for gamers to connect, share information, and build friendships within the gaming community. It achieves this by implementing features such as user registration, login authentication, profile customization, game information display, and friend request functionality.
+The purpose of this website is to create a centralized platform for gamers to connect, share information, and build friendships within the gaming community. It achieves this by implementing features such as user registration, login authentication, profile customization, game information display, and friend request functionality.
 
 ## How to Install, Step by Step:
 
