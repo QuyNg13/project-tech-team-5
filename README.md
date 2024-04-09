@@ -2,7 +2,7 @@
 
 ## Introduction:
 
-This webpage is designed to provide a platform for users to register, login, update their profiles, view information about games, and interact with other users by sending and accepting friend requests. It facilitates user interaction within the gaming community.
+This is a webpage to find mates who share the same interest in you for games, so you can find friends to play with, in whatever genre, console etc.
 
 ## Corporate Style:
 
@@ -35,7 +35,7 @@ Ensure Node.js, npm, and MongoDB are installed on your system before proceeding 
 
 ## Who Worked on this Webpage:
 
-This webpage was developed by [insert names or team name here]. For inquiries or support, please contact [insert contact information].
+This webpage was developed by Quy, Fouzia, Daan and Desitny.
 
 ---
 
@@ -57,3 +57,4 @@ This webpage was developed by [insert names or team name here]. For inquiries or
 14. cookie-parser: Middleware for parsing cookies in Express
 
 Make sure to install these dependencies in your Node.js project as well by running `npm install [dependency]` for each one listed above.
+
